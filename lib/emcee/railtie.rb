@@ -1,7 +1,7 @@
-require "webcomponents/processors/html_processor"
-require "webcomponents/compressors/html_compressor"
+require "emcee/processors/html_processor"
+require "emcee/compressors/html_compressor"
 
-module Webcomponents
+module Emcee
   class Railtie < Rails::Railtie
     initializer :add_html_processor do |app|
       app.config.assets.register_mime_type "text/html", ".html"

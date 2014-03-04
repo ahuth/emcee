@@ -1,4 +1,4 @@
-module Webcomponents
+module Emcee
   module Compressors
     class HtmlCompressor
       # Match html comments: <!-- comments -->

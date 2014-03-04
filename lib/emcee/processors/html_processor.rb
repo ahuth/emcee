@@ -1,4 +1,4 @@
-module Webcomponents
+module Emcee
   module Processors
     class HtmlProcessor < Sprockets::DirectiveProcessor
       # \A                matches the beginning of the string

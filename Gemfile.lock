@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    webcomponents (0.0.1)
+    emcee (0.0.1)
       rails (~> 4.0)
 
 GEM
@@ -84,5 +84,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  emcee!
   sqlite3
-  webcomponents!

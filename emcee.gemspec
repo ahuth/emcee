@@ -1,15 +1,15 @@
 $:.push File.expand_path("../lib", __FILE__)
 
 # Maintain your gem's version:
-require "webcomponents/version"
+require "emcee/version"
 
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
-  s.name        = "webcomponents"
-  s.version     = Webcomponents::VERSION
+  s.name        = "emcee"
+  s.version     = Emcee::VERSION
   s.authors     = ["Andrew Huth"]
   s.email       = ["andrew@legion.io"]
-  s.homepage    = "https://github.com/ahuth/webcomponents"
+  s.homepage    = "https://github.com/ahuth/emcee"
   s.summary     = "Add web components to the asset pipeline."
   s.license     = "MIT"
 
