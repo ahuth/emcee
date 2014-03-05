@@ -1,4 +1,4 @@
-require 'test_Helper'
+require 'test_helper'
 
 class CompressorsTest < ActiveSupport::TestCase
   setup do
@@ -6,36 +6,80 @@ class CompressorsTest < ActiveSupport::TestCase
   end
 
   test "compressor should remove html comments" do
-    content = "<!--\nHere\nAre\nSome Comments\n-->\n<span>test</span>\n"
-    assert_equal "<span>test</span>\n", @compressor.compress(content)
+    content = %q{
+      <!--
+        What will we do with all
+        of these html comments?
+      -->
+      <span>The span to end all spans</span>
+    }
+    assert_equal "\n" + @compressor.compress(content), %q{
+      <span>The span to end all spans</span>
+    }
   end
 
   test "compressor should remove multi-line javascript comments" do
-    content = "<script>\n/*\nHere\nAre\nA Bunch\nOf Comments\n*/\n</script>\n"
-    assert_equal "<script>\n</script>\n", @compressor.compress(content)
+    content = %q{
+      <script>
+        /*
+        Here are some comments that
+        go over many, many lines.
+        */
+      </script>
+    }
+    assert_equal "\n" + @compressor.compress(content), %q{
+      <script>
+      </script>
+    }
   end
 
   test "compressor should remove single-line javascript comments" do
-    content = "<script>\n// Here\n// Are Yet\n// Some More\n// Of The\n// Comments\n</script>\n"
-    assert_equal "<script>\n</script>\n", @compressor.compress(content)
+    content = %q{
+      <script>
+        // Here is a comment.
+        // Here is another coment.
+      </script>
+    }
+    assert_equal "\n" + @compressor.compress(content), %q{
+      <script>
+      </script>
+    }
   end
 
   test "compressor should remove css comments" do
     content = %q{
-<style>
-  h1 {
-    /*
-    Make it pink
-    */
-    color: pink;
-  }
-</style>
-}
-  assert_equal "<style>\n  h1 {\n    color: pink;\n  }\n</style>\n", @compressor.compress(content)
+      <style>
+        h1 {
+          /*
+          Make it pink
+          */
+          color: pink;
+        }
+      </style>
+    }
+    assert_equal "\n" + @compressor.compress(content), %q{
+      <style>
+        h1 {
+          color: pink;
+        }
+      </style>
+    }
   end
 
   test "compressor should remove blank lines" do
-    content = "<p>test</p>\n\n\n\n\n\n<p>oh yeah</p>"
-    assert_equal "<p>test</p>\n<p>oh yeah</p>", @compressor.compress(content)
+    content = %q{
+      <p>test</p>
+
+
+
+      <p>oh yeah</p>
+
+      <p>test</p>
+    }
+    assert_equal "\n" + @compressor.compress(content), %q{
+      <p>test</p>
+      <p>oh yeah</p>
+      <p>test</p>
+    }
   end
 end
