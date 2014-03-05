@@ -45,7 +45,6 @@ class ProcessorsTest < ActiveSupport::TestCase
     assert_equal "/dir/test.html", @context.assets[0]
 
     assert_equal processed, %q{
-
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
       <p>test</p>
@@ -56,7 +55,7 @@ class ProcessorsTest < ActiveSupport::TestCase
     processed = @processor.process_stylesheets(@body, @directory)
     assert_equal processed, %q{
       <link rel="import" href="test.html">
-<style>/* contents */</style>
+      <style>/* contents */</style>
       <script src="test.js"></script>
       <p>test</p>
     }
@@ -67,7 +66,7 @@ class ProcessorsTest < ActiveSupport::TestCase
     assert_equal processed, %q{
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
-<script>/* contents */</script>
+      <script>/* contents */</script>
       <p>test</p>
     }
   end
