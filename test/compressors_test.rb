@@ -1,4 +1,4 @@
-require 'test_Helper'
+require 'test_helper'
 
 class CompressorsTest < ActiveSupport::TestCase
   setup do
