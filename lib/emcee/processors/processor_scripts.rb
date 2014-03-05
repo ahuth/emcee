@@ -5,7 +5,7 @@ module Emcee
       #
       #   <script src="assets/example.js"></script>
       #
-      SCRIPT_PATTERN = /^ *<script .*src=["'].+\.js["']><\/script>$/
+      SCRIPT_PATTERN = /^\s*<script .*src=["'].+\.js["']><\/script>$/
 
       # Scan the body for external script references. If any are found, inline
       # the files in place of the references and return the new body.

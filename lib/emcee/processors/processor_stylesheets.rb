@@ -5,7 +5,7 @@ module Emcee
       #
       #   <link rel="stylesheet" href="assets/example.css">
       #
-      STYLESHEET_PATTERN = /^ *<link .*rel=["']stylesheet["'].*>$/
+      STYLESHEET_PATTERN = /^\s*<link .*rel=["']stylesheet["'].*>$/
 
       # Scan the body for external stylesheet references. If any are found,
       # inline the files in place of the references and return the new body.
