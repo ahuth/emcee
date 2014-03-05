@@ -1,4 +1,4 @@
-require "emcee/processors/processor_includes"
+require "emcee/processors/processor_base"
 
 module Emcee
   module Processors
