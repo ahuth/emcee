@@ -11,6 +11,7 @@ Gem::Specification.new do |s|
   s.email       = ["andrew@legion.io"]
   s.homepage    = "https://github.com/ahuth/emcee"
   s.summary     = "Add web components to the asset pipeline."
+  s.description = "Add web components to the rails asset pipeline"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
