@@ -7,15 +7,6 @@ module Emcee
       #
       STYLESHEET_PATTERN = /^ *<link .*rel=["']stylesheet["'].*>$/
 
-      # Match the path from the href attribute of an html import or stylesheet
-      # include tag. Captures the actual path.
-      #
-      #   href="/assets/example.css"
-      #
-      # This is `||=` instead of `=` because another method in this module uses
-      # the same pattern and might set it first.
-      HREF_PATH_PATTERN ||= /href=["'](?<path>[\w\.\/-]+)["']/
-
       # Scan the body for external stylesheet references. If any are found,
       # inline the files in place of the references and return the new body.
       def process_stylesheets(body, directory)

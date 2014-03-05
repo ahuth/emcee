@@ -7,12 +7,6 @@ module Emcee
       #
       SCRIPT_PATTERN = /^ *<script .*src=["'].+\.js["']><\/script>$/
 
-      # Match the source path from a script tag. Captures the actual path.
-      #
-      #   src="/assets/example.js"
-      #
-      SRC_PATH_PATTERN = /src=["'](?<path>[\w\.\/-]+)["']/
-
       # Scan the body for external script references. If any are found, inline
       # the files in place of the references and return the new body.
       def process_scripts(body, directory)
