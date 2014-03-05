@@ -54,7 +54,7 @@ class ProcessorsTest < ActiveSupport::TestCase
 
   test "processing stylesheets should work" do
     processed = @processor.process_stylesheets(@body, @directory)
-    assert_equal processed, %Q{
+    assert_equal processed, %q{
       <link rel="import" href="test.html">
 <style>/* contents */</style>
       <script src="test.js"></script>
@@ -64,7 +64,7 @@ class ProcessorsTest < ActiveSupport::TestCase
 
   test "processing scripts should work" do
     processed = @processor.process_scripts(@body, @directory)
-    assert_equal processed, %Q{
+    assert_equal processed, %q{
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
 <script>/* contents */</script>
