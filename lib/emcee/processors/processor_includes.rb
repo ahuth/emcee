@@ -38,6 +38,13 @@ module Emcee
       #
       SRC_PATH_PATTERN = /src=["'](?<path>[\w\.\/-]+)["']/
 
+      # Return a file's contents as text. This is split out as a method so that
+      # we can test the other methods in this module without actually reading from
+      # the filesystem.
+      def read_file(path)
+        File.read(path)
+      end
+
       # Scan the body for html imports. If any are found, tell sprockets to
       # require their files like we would for a directive. Then remove the import.
       def process_imports(body, context, directory)
@@ -59,8 +66,8 @@ module Emcee
         body.scan(STYLESHEET_PATTERN) do |stylesheet_tag|
           if path = stylesheet_tag[HREF_PATH_PATTERN, :path]
             absolute_path = File.absolute_path(path, directory)
-            stylesheet_contents = File.read(absolute_path)
             to_inline << [stylesheet_tag, "<style>\n" + stylesheet_contents + "</style>\n"]
+            stylesheet_contents = read_file(absolute_path)
           end
         end
 
@@ -77,8 +84,8 @@ module Emcee
         body.scan(SCRIPT_PATTERN) do |script_tag|
           if path = script_tag[SRC_PATH_PATTERN, :path]
             absolute_path = File.absolute_path(path, directory)
-            script_contents = File.read(absolute_path)
             to_inline << [script_tag, "<script>\n" + script_contents + "</script>\n"]
+            script_contents = read_file(absolute_path)
           end
         end
 

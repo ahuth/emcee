@@ -18,6 +18,7 @@ module Emcee
       protected :process_imports
       protected :process_stylesheets
       protected :process_scripts
+      private   :read_file
 
       # Matches the entire header/directive block. This is everything from the
       # top of the file, enclosed in html comments.
