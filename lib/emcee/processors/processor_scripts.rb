@@ -15,8 +15,9 @@ module Emcee
         body.scan(SCRIPT_PATTERN) do |script_tag|
           if path = script_tag[SRC_PATH_PATTERN, :path]
             absolute_path = File.absolute_path(path, directory)
+            indent = script_tag[INDENT_PATTERN, :indent] || ""
             script_contents = read_file(absolute_path)
-            to_inline << [script_tag, "<script>" + script_contents + "</script>"]
+            to_inline << [script_tag, indent + "<script>" + script_contents + "</script>"]
           end
         end
 

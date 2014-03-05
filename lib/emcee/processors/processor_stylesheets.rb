@@ -15,8 +15,9 @@ module Emcee
         body.scan(STYLESHEET_PATTERN) do |stylesheet_tag|
           if path = stylesheet_tag[HREF_PATH_PATTERN, :path]
             absolute_path = File.absolute_path(path, directory)
+            indent = stylesheet_tag[INDENT_PATTERN, :indent] || ""
             stylesheet_contents = read_file(absolute_path)
-            to_inline << [stylesheet_tag, "<style>" + stylesheet_contents + "</style>"]
+            to_inline << [stylesheet_tag, indent + "<style>" + stylesheet_contents + "</style>"]
           end
         end
 
