@@ -1,4 +1,3 @@
-require "emcee/processors/processor_includes"
 require "emcee/processors/html_processor"
 require "emcee/compressors/html_compressor"
 
