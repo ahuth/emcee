@@ -11,7 +11,7 @@ module Emcee
       #
       #   <link rel="import" href="example.html">
       #
-      IMPORT_PATTERN = /^<link .*rel=["']import["'].*>$/
+      IMPORT_PATTERN = /^ *<link .*rel=["']import["'].*>$/
 
       # Match a stylesheet link tag.
       #
