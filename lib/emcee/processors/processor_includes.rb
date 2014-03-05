@@ -66,8 +66,8 @@ module Emcee
         body.scan(STYLESHEET_PATTERN) do |stylesheet_tag|
           if path = stylesheet_tag[HREF_PATH_PATTERN, :path]
             absolute_path = File.absolute_path(path, directory)
-            to_inline << [stylesheet_tag, "<style>\n" + stylesheet_contents + "</style>\n"]
             stylesheet_contents = read_file(absolute_path)
+            to_inline << [stylesheet_tag, "<style>" + stylesheet_contents + "</style>"]
           end
         end
 
@@ -84,8 +84,8 @@ module Emcee
         body.scan(SCRIPT_PATTERN) do |script_tag|
           if path = script_tag[SRC_PATH_PATTERN, :path]
             absolute_path = File.absolute_path(path, directory)
-            to_inline << [script_tag, "<script>\n" + script_contents + "</script>\n"]
             script_contents = read_file(absolute_path)
+            to_inline << [script_tag, "<script>" + script_contents + "</script>"]
           end
         end
 
