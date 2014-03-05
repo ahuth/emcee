@@ -1,3 +1,5 @@
+require "emcee/processors/processor_base"
+
 module Emcee
   module Processors
     # HtmlProcessor processes html files by doing 4 things:
