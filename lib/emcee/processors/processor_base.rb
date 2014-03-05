@@ -24,6 +24,10 @@ module Emcee
       #
       SRC_PATH_PATTERN = /src=["'](?<path>[\w\.\/-]+)["']/
 
+      # Match the indentation whitespace of a line
+      #
+      INDENT_PATTERN = /^(?<indent>\s*)/
+
       # Return a file's contents as text. This is split out as a method so that
       # we can test the other methods in this module without actually reading from
       # the filesystem.

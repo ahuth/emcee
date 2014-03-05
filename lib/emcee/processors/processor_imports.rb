@@ -5,7 +5,7 @@ module Emcee
       #
       #   <link rel="import" href="assets/example.html">
       #
-      IMPORT_PATTERN = /^ *<link .*rel=["']import["'].*>$/
+      IMPORT_PATTERN = /^\s*<link .*rel=["']import["'].*>$/
 
       # Scan the body for html imports. If any are found, tell sprockets to
       # require their files like we would for a directive. Then remove the

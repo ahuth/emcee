@@ -5,7 +5,7 @@ module Emcee
       #
       #   <link rel="stylesheet" href="assets/example.css">
       #
-      STYLESHEET_PATTERN = /^ *<link .*rel=["']stylesheet["'].*>$/
+      STYLESHEET_PATTERN = /^\s*<link .*rel=["']stylesheet["'].*>$/
 
       # Scan the body for external stylesheet references. If any are found,
       # inline the files in place of the references and return the new body.
@@ -14,9 +14,13 @@ module Emcee
 
         body.scan(STYLESHEET_PATTERN) do |stylesheet_tag|
           if path = stylesheet_tag[HREF_PATH_PATTERN, :path]
+
+            indent = stylesheet_tag[INDENT_PATTERN, :indent] || ""
+
             absolute_path = File.absolute_path(path, directory)
             stylesheet_contents = read_file(absolute_path)
-            to_inline << [stylesheet_tag, "<style>" + stylesheet_contents + "</style>"]
+
+            to_inline << [stylesheet_tag, indent + "<style>" + stylesheet_contents + "</style>"]
           end
         end
 

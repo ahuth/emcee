@@ -5,7 +5,7 @@ module Emcee
       #
       #   <script src="assets/example.js"></script>
       #
-      SCRIPT_PATTERN = /^ *<script .*src=["'].+\.js["']><\/script>$/
+      SCRIPT_PATTERN = /^\s*<script .*src=["'].+\.js["']><\/script>$/
 
       # Scan the body for external script references. If any are found, inline
       # the files in place of the references and return the new body.
@@ -14,9 +14,13 @@ module Emcee
 
         body.scan(SCRIPT_PATTERN) do |script_tag|
           if path = script_tag[SRC_PATH_PATTERN, :path]
+            
+            indent = script_tag[INDENT_PATTERN, :indent] || ""
+
             absolute_path = File.absolute_path(path, directory)
             script_contents = read_file(absolute_path)
-            to_inline << [script_tag, "<script>" + script_contents + "</script>"]
+
+            to_inline << [script_tag, indent + "<script>" + script_contents + "</script>"]
           end
         end
 
