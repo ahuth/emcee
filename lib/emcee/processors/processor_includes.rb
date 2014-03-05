@@ -9,13 +9,13 @@ module Emcee
     module Includes
       # Match an html import tag.
       #
-      #   <link rel="import" href="example.html">
+      #   <link rel="import" href="assets/example.html">
       #
       IMPORT_PATTERN = /^ *<link .*rel=["']import["'].*>$/
 
       # Match a stylesheet link tag.
       #
-      #   <link rel="stylesheet" href="example.css">
+      #   <link rel="stylesheet" href="assets/example.css">
       #
       STYLESHEET_PATTERN = /^ *<link .*rel=["']stylesheet["'].*>$/
 
