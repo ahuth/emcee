@@ -1,12 +1,6 @@
 module Emcee
   module Processors
     module Includes
-      # Match a stylesheet link tag.
-      #
-      #   <link rel="stylesheet" href="assets/example.css">
-      #
-      STYLESHEET_PATTERN = /^\s*<link .*rel=["']stylesheet["'].*>$/
-
       # Scan the body for external stylesheet references. If any are found,
       # inline the files in place of the references and return the new body.
       def process_stylesheets(body, directory)
