@@ -1,6 +1,8 @@
 module Emcee
   module Helpers
     module Sprockets
+      # This module defines view helpers which we'll include into Sprockets.
+      #
       module View
         # Custom view helper used to create an html import. This same method is
         # already defined in ActionView. We pull out the sources here, before
