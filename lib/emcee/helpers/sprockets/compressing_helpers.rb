@@ -1,6 +1,9 @@
 module Emcee
   module Helpers
     module Sprockets
+      # This module defines methods that we will include into Sprocket, which
+      # allow us to set an html compressor.
+      #
       module Compressing
         def html_compressor
           @html_compressor if defined? @html_compressor
