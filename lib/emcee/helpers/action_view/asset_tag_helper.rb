@@ -1,7 +1,16 @@
 module Emcee
   module Helpers
     module ActionView
+      # This module defines our view helpers that we will include into ActionView.
+      #
       module AssetTagHelper
+        # Not sure why we have to define path_to_html here, which is already defined
+        # in Emcee::Helpers::ActionView::AssetUrlHelper.
+        #
+        # If we directly monkey patched ActionView, we would not have to include
+        # this here. But monkey patching through an include somehow requires this
+        # to be defined in this module.
+        #
         def path_to_html(source, options = {})
           path_to_asset(source, { type: :html }.merge!(options))
         end
