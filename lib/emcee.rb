@@ -23,6 +23,12 @@ module ActionView
 end
 
 module Sprockets
+  module Rails
+    module Helper
+      include Emcee::Helpers::Sprockets::View
+    end
+  end
+
   module Compressing
     include Emcee::Helpers::Sprockets::Compressing
   end
