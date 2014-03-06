@@ -1,12 +1,6 @@
 module Emcee
   module Processors
     module Includes
-      # Match an html import tag.
-      #
-      #   <link rel="import" href="assets/example.html">
-      #
-      IMPORT_PATTERN = /^\s*<link .*rel=["']import["'].*>$/
-
       # Scan the body for html imports. If any are found, tell sprockets to
       # require their files like we would for a directive. Then remove the
       # imports and return the new body.

@@ -31,7 +31,7 @@ class ProcessorsTest < ActiveSupport::TestCase
     @processor = ProcessorStub.new
     @context = ContextStub.new
     @directory = "/dir"
-    @body = %Q{
+    @body = %q{
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>

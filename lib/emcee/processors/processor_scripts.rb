@@ -1,12 +1,6 @@
 module Emcee
   module Processors
     module Includes
-      # Match a script tag.
-      #
-      #   <script src="assets/example.js"></script>
-      #
-      SCRIPT_PATTERN = /^\s*<script .*src=["'].+\.js["']><\/script>$/
-
       # Scan the body for external script references. If any are found, inline
       # the files in place of the references and return the new body.
       def process_scripts(body, directory)
@@ -14,7 +8,7 @@ module Emcee
 
         body.scan(SCRIPT_PATTERN) do |script_tag|
           if path = script_tag[SRC_PATH_PATTERN, :path]
-            
+
             indent = script_tag[INDENT_PATTERN, :indent] || ""
 
             absolute_path = File.absolute_path(path, directory)

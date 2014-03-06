@@ -11,6 +11,24 @@ module Emcee
     # straightforward.
     #
     module Includes
+      # Match an html import tag.
+      #
+      #   <link rel="import" href="assets/example.html">
+      #
+      IMPORT_PATTERN = /^\s*<link .*rel=["']import["'].*>$/
+
+      # Match a stylesheet link tag.
+      #
+      #   <link rel="stylesheet" href="assets/example.css">
+      #
+      STYLESHEET_PATTERN = /^\s*<link .*rel=["']stylesheet["'].*>$/
+
+      # Match a script tag.
+      #
+      #   <script src="assets/example.js"></script>
+      #
+      SCRIPT_PATTERN = /^\s*<script .*src=["'].+\.js["']><\/script>$/
+
       # Match the path from the href attribute of an html import or stylesheet
       # include tag. Captures the actual path.
       #
