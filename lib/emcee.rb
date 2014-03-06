@@ -8,12 +8,6 @@ require "emcee/helpers/sprockets/compressing_helpers"
 require "emcee/railtie"
 
 module Sprockets
-  module Rails
-    module Helper
-      include Emcee::Helpers::Sprockets::View
-    end
-  end
-
   module Compressing
     include Emcee::Helpers::Sprockets::Compressing
   end
