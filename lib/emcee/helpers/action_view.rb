@@ -3,10 +3,9 @@ module Emcee
     module ActionView
       module AssetUrlHelper
         # Convenience method for html based on javascript_path.
-        def html_path(source, options = {})
+        def path_to_html(source, options = {})
           path_to_asset(source, { type: :html }.merge!(options))
         end
-        alias_method :path_to_html, :html_path
       end
 
       module AssetTagHelper
