@@ -21,3 +21,9 @@ module ActionView
     end
   end
 end
+
+module Sprockets
+  module Compressing
+    include Emcee::Helpers::Sprockets::Compressing
+  end
+end
