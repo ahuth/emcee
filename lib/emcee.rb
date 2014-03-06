@@ -1,8 +1,8 @@
 require "emcee/version"
 
 require "emcee/helpers/action_view/action_view"
-require "emcee/helpers/sprockets/sprockets_view"
-require "emcee/helpers/sprockets/sprockets_compressing"
+require "emcee/helpers/sprockets/view_helpers"
+require "emcee/helpers/sprockets/compressing_helpers"
 
 require "emcee/railtie"
 
