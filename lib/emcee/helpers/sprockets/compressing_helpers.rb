@@ -1,5 +1,8 @@
 module Sprockets
   module Compressing
+    # Modify Sprocket's Compressing module to allow us to set and retrieve html
+    # compressors
+
     def html_compressor
       @html_compressor if defined? @html_compressor
     end
