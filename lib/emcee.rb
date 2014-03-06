@@ -7,14 +7,6 @@ require "emcee/helpers/sprockets/compressing_helpers"
 
 require "emcee/railtie"
 
-module ActionView
-  module Helpers
-    module AssetTagHelper
-      include Emcee::Helpers::ActionView::AssetTagHelper
-    end
-  end
-end
-
 module Sprockets
   module Rails
     module Helper
