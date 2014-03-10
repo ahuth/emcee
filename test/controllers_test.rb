@@ -19,6 +19,17 @@ class ControllersTest < ActionController::TestCase
     assert_match /href="\/assets\/application\.html"/, @response.body
   end
 
+  test "loose files should not be outside of compiled manifest" do
+    get :assets, file: "test.html"
+    assert_equal "null", @response.body
+
+    get :assets, file: "test/test2.html"
+    assert_equal "null", @response.body
+
+    get :assets, file: "test/test3.html"
+    assert_equal "null", @response.body
+  end
+
   # To test the contents of our compiled application.html, we have a custom route
   # and controller action. The controller action renders the compiled file as a
   # json response, which we can test against here.
