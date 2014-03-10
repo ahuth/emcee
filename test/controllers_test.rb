@@ -23,7 +23,7 @@ class ControllersTest < ActionController::TestCase
   # and controller action. The controller action renders the compiled file as a
   # json response, which we can test against here.
   test "the test files should get compiled and concatenated" do
-    get :assets
+    get :assets, file: "application.html"
     assert_response :success
     assert_equal @response.body, <<-EOS
 <script>var life = "is good";
