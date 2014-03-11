@@ -29,8 +29,7 @@ class ControllersTest < ActionController::TestCase
 <script>var life = "is good";
 </script>
 <p>test4</p>
-<style>
-p {
+<style>p {
   color: pink;
 }
 </style>
