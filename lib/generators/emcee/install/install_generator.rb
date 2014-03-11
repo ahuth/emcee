@@ -16,7 +16,7 @@ module Emcee
       end
 
       def add_html_import_to_layout
-        insert_into_file "app/views/layouts/application.html.erb", "<%= html_import_tag \"application\" %>\n\t\t", before: "<%= csrf_meta_tags %>"
+        insert_into_file "app/views/layouts/application.html.erb", "<%= html_import_tag \"application\", \"data-turbolinks-track\" => true %>\n\t\t", before: "<%= csrf_meta_tags %>"
       end
     end
   end
