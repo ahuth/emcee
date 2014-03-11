@@ -14,6 +14,11 @@ class ControllersTest < ActionController::TestCase
     assert_select "link[rel='import']"
   end
 
+  test "the compiled assets should be served from the right directory" do
+    get :index
+    assert_match /href="\/assets\/application\.html"/, @response.body
+  end
+
   # To test the contents of our compiled application.html, we have a custom route
   # and controller action. The controller action renders the compiled file as a
   # json response, which we can test against here.
@@ -24,8 +29,7 @@ class ControllersTest < ActionController::TestCase
 <script>var life = "is good";
 </script>
 <p>test4</p>
-<style>
-p {
+<style>p {
   color: pink;
 }
 </style>
