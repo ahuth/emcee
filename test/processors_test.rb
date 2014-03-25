@@ -55,7 +55,8 @@ class ProcessorsTest < ActiveSupport::TestCase
     processed = @processor.process_stylesheets(@body, @directory)
     assert_equal processed, %q{
       <link rel="import" href="test.html">
-      <style>/* contents */</style>
+      <style>/* contents */
+      </style>
       <script src="test.js"></script>
       <p>test</p>
     }
