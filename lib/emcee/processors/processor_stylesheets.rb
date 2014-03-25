@@ -14,7 +14,7 @@ module Emcee
             absolute_path = File.absolute_path(path, directory)
             stylesheet_contents = read_file(absolute_path)
 
-            to_inline << [stylesheet_tag, indent + "<style>" + stylesheet_contents + "</style>"]
+            to_inline << [stylesheet_tag, "#{indent}<style>#{stylesheet_contents}\n#{indent}</style>"]
           end
         end
 
