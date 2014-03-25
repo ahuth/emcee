@@ -14,7 +14,7 @@ module Emcee
             absolute_path = File.absolute_path(path, directory)
             script_contents = read_file(absolute_path)
 
-            to_inline << [script_tag, indent + "<script>" + script_contents + "\n</script>"]
+            to_inline << [script_tag, "#{indent}<script>#{script_contents}\n#{indent}</script>"]
           end
         end
 
