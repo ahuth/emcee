@@ -1,4 +1,4 @@
-require "emcee/processors/processor_base"
+require "emcee/processors/processor_includes"
 
 module Emcee
   module Processors
@@ -16,6 +16,8 @@ module Emcee
     # work for us.
     #
     class HtmlProcessor < Sprockets::DirectiveProcessor
+      # Include methods to process different parts of the html file. These are
+      # split out to make unit testing easier.
       include Emcee::Processors::Includes
       protected :process_imports
       protected :process_stylesheets
