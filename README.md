@@ -37,7 +37,7 @@ Use [sprockets directives](https://github.com/sstephenson/sprockets#sprockets-di
 include web components located in one of the assets directories.
 
 When referencing web components, you must point to an html file, not a directory. For example,
-if you have the following directory structure:
+if you have a sub-directory like this:
 ```
 vendor
 |- assets
