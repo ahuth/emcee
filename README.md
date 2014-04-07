@@ -47,9 +47,6 @@ You must reference this in the manifest file as:
 
 ## Contributing
 
-I'm still learning about Ruby, gems, and open source projects in general, and I
-would love for you to contribute!
-
 1. Fork it
 2. Create a feature branch
 3. Commit your changes
