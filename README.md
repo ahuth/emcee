@@ -4,6 +4,14 @@ Emcee is an extension to the [Rails Asset Pipeline](http://guides.rubyonrails.or
 It allows you to import and package [web components](http://www.w3.org/TR/components-intro/) exactly as
 you would Javascript or CSS.
 
+## Table of contents
+
+* [Installation](#installation)
+* [Usage](#usage)
+* [Concatenation](#concatenation)
+* [Contributing](#contributing)
+* [Special thanks](#special-thanks)
+
 ## Installation
 
 Add Emcee to your Gemfile:
