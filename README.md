@@ -9,6 +9,7 @@ you would Javascript or CSS.
 * [Installation](#installation)
 * [Usage](#usage)
 * [Concatenation](#concatenation)
+* [Testing](#testing)
 * [Contributing](#contributing)
 * [Special thanks](#special-thanks)
 
@@ -67,6 +68,10 @@ removed.
 ```
 Notice the fingerprint hash appended to the file name. This depends on the contents of the included
 web components, and allows proper caching and cache-busting.
+
+## Testing
+
+To run the tests, simply run `rake test`.
 
 ## Contributing
 
