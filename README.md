@@ -6,7 +6,7 @@ you would Javascript or CSS.
 
 ## Installation
 
-Add this to your Gemfile:
+Add Emcee to your Gemfile:
 
     gem 'emcee'
 
@@ -18,8 +18,8 @@ Finally, run:
 
     $ rails generate emcee:install
 
-This will insert `<%= html_import_tag "application" %>` into your application layout,
-and will create 'elements' directories under '/assets' and '/vendor/assets'.
+This will insert `<%= html_import_tag "application" %>` into your application layout. Also,
+it will create 'elements' directories under '/assets' and '/vendor/assets'.
 
 ## Usage
 
