@@ -25,9 +25,6 @@ it will create 'elements' directories under '/assets' and '/vendor/assets'.
 
 Once installed, you will have a manifest file located at `/assets/elements/application.html`.
 Use [sprockets directives](https://github.com/sstephenson/sprockets#sprockets-directives) to
-
-In a development environment, all web components referenced in the manifest will be included as
-seperate html imports. In production, they will be concatenated into one import.
 include web components located in one of the assets directories.
 
 When referencing web components, you must point to the html file, not the directory. For example,
@@ -43,6 +40,25 @@ You must reference this in the manifest file as:
 ```
 *= require ui-tabs/ui-tabs
 ```
+
+## Concatenation
+
+In a development environment, all web components referenced in the manifest will be included
+in the application as seperate html imports. Importing web components `a.html`, `b.html`, and
+`c.html` will result in:
+```html
+<link rel="import" href="a.html">
+<link rel="import" href="b.html">
+<link rel="import" href="c.html">
+```
+
+In production, they will be concatenated into one import, and will have comments and blank lines
+removed.
+```html
+<link rel="import" href="application-908e25f4bf641868d8683022a5b62f54.html">
+```
+Notice the fingerprint hash appended to the file name. This depends on the contents of the included
+web components, and allows proper caching and cache-busting.
 
 ## Contributing
 
