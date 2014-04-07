@@ -25,11 +25,10 @@ it will create 'elements' directories under '/assets' and '/vendor/assets'.
 
 Once installed, you will have a manifest file located at `/assets/elements/application.html`.
 Use [sprockets directives](https://github.com/sstephenson/sprockets#sprockets-directives) to
-include web components located in either `/assets/elements`, `/lib/assets/elements`, or
-`/vendor/assets/elements`.
 
 In a development environment, all web components referenced in the manifest will be included as
 seperate html imports. In production, they will be concatenated into one import.
+include web components located in one of the assets directories.
 
 When referencing web components, you must point to the html file, not the directory. For example,
 if you have the following directory structure:
