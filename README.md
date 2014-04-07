@@ -36,7 +36,7 @@ Once installed, you will have a manifest file located at `/assets/elements/appli
 Use [sprockets directives](https://github.com/sstephenson/sprockets#sprockets-directives) to
 include web components located in one of the assets directories.
 
-When referencing web components, you must point to the html file, not the directory. For example,
+When referencing web components, you must point to an html file, not a directory. For example,
 if you have the following directory structure:
 ```
 vendor
