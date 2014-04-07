@@ -23,17 +23,27 @@ it will create 'elements' directories under '/assets' and '/vendor/assets'.
 
 ## Usage
 
-Once installed, you can include web components just like you would javascript files.
-In the manifest file located at '/assets/elements/application.html', use asset pipeline
-directives to specify what webcomponents you want imported.
+Once installed, you will have a manifest file located at `/assets/elements/application.html`.
+Use [sprockets directives](https://github.com/sstephenson/sprockets#sprockets-directives) to
+include web components located in either `/assets/elements`, `/lib/assets/elements`, or
+`/vendor/assets/elements`.
 
-Each specified component will be included in the html as an html import. Additionally,
-if any components list their own dependencies internally with more html imports,
-the asset pipeline will package those up as well. Any references to external CSS or
-Javascript files will also be loaded and inserted inline with the component.
+In a development environment, all web components referenced in the manifest will be included as
+seperate html imports. In production, they will be concatenated into one import.
 
-Finally, in production each component will be concatenated into one file and all
-comments removed, in order to reduce http requests.
+When referencing web components, you must point to the html file, not the directory. For example,
+if you have the following directory structure:
+```
+vendor
+|- assets
+  |- elements
+    |- ui-tabs
+       |- ui-tabs.html
+```
+You must reference this in the manifest file as:
+```
+*= require ui-tabs/ui-tabs
+```
 
 ## Contributing
 
