@@ -4,7 +4,7 @@ require 'test_helper'
 # so we've split out the methods we want to test into a module, and we'll include
 # them here in a stub class.
 class ProcessorStub
-  include Emcee::Processors::Includes
+  include Emcee::ProcessorIncludes
 
   private
   def read_file(path)
