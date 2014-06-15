@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'action_controller'
 
-class ControllersTest < ActionController::TestCase
+class DummyAppIntegrationTest < ActionController::TestCase
   tests DummyController
 
   test "should get index" do
