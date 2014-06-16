@@ -1,4 +1,6 @@
 module Emcee
+  # ScriptProcessor scans a document for external script references and inlines
+  # them into the current document.
   class ScriptProcessor
     # Match a script tag.
     #

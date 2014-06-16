@@ -1,4 +1,6 @@
 module Emcee
+  # StylesheetProcessor scans a document for external stylesheet references and
+  # inlines them into the current document.
   class StylesheetProcessor
     # Match a stylesheet link tag.
     #

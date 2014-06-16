@@ -1,4 +1,6 @@
 module Emcee
+  # ImportProcessor scans a file for html imports and adds them to the current
+  # required assets.
   class ImportProcessor
     # Match an html import tag.
     #
