@@ -1,3 +1,5 @@
+require "sass"
+
 module Emcee
   # StylesheetProcessor scans a document for external stylesheet references and
   # inlines them into the current document.
@@ -53,9 +55,26 @@ module Emcee
 
     def get_contents(paths, directory)
       paths.map do |path|
-        absolute_path = File.absolute_path(path, directory)
+        absolute_path = get_absolute_path(path, directory)
+        return get_sass_content(absolute_path, directory) if sass?(absolute_path)
         read_file(absolute_path)
       end
+    end
+
+    def get_absolute_path(path, directory)
+      normal_path = File.absolute_path(path, directory)
+      sassy_path = File.absolute_path(path + ".scss", directory)
+      return sassy_path if File.file?(sassy_path)
+      normal_path
+    end
+
+    def get_sass_content(path)
+      content = read_file(path)
+      Sass::Engine.new(content, syntax: "scss").render
+    end
+
+    def sass?(path)
+      File.extname(path) == ".scss"
     end
 
     def inline_styles(data, tags, indents, contents)
