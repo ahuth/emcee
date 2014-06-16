@@ -7,10 +7,6 @@ module Emcee
       app.assets.register_mime_type "text/html", ".html"
       app.assets.register_preprocessor "text/html", HtmlProcessor
     end
-
-    initializer :add_html_compressor do |app|
-      app.assets.html_compressor = HtmlCompressor.new
-    end
   end
 end
 
