@@ -1,7 +1,6 @@
 module Emcee
-  # HTML compressor that strips out comments and blank lines. For Sprockets to
-  # use this, it must have a `compress` method that takes a string and returns
-  # the compressed output.
+  # HtmlCompressor is a very basic compressor that removes blank lines and
+  # comments from an HTML file.
   class HtmlCompressor
     HTML_COMMENTS     = /\<!\s*--(?:.*?)(?:--\s*\>)/m
     JS_MULTI_COMMENTS = /\/\*(?:.*?)\*\//m

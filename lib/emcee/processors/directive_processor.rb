@@ -6,13 +6,7 @@ module Emcee
     # top of the file, enclosed in html comments.
     HEADER_PATTERN = /\A((?m:\s*)(<!--(?m:.*?)-->))+/
 
-    # Matches the an asset pipeline directive.
-    #
-    #   *= require_tree .
-    #
-    DIRECTIVE_PATTERN = /^\W*=\s*(\w+.*?)$/
-
-    # Implement `render` so that it uses our own regex patterns.
+    # Implement `render` so that it uses our own header pattern.
     def render(context, locals)
       @context = context
       @pathname = context.pathname
