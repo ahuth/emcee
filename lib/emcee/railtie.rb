@@ -1,4 +1,4 @@
-require "emcee/html_processor"
+require "emcee/processors/html_processor"
 require "emcee/html_compressor"
 
 module Emcee

@@ -1,4 +1,4 @@
-require "emcee/processor_includes"
+require "emcee/processors/processor_includes"
 
 module Emcee
   # HtmlProcessor processes html files by doing 4 things:
