@@ -30,19 +30,16 @@ module Emcee
     end
 
     def find_script_tags(data, directory)
-      to_inline = []
-      data.scan(SCRIPT_PATTERN) do |script_tag|
-        if path = script_tag[SRC_PATH_PATTERN, :path]
+      data.scan(SCRIPT_PATTERN).reduce([]) do |output, script_tag|
+        path = script_tag[SRC_PATH_PATTERN, :path]
+        return output unless path
 
-          indent = script_tag[INDENT_PATTERN, :indent] || ""
+        indent = script_tag[INDENT_PATTERN, :indent] || ""
+        absolute_path = File.absolute_path(path, directory)
+        script_contents = read_file(absolute_path)
 
-          absolute_path = File.absolute_path(path, directory)
-          script_contents = read_file(absolute_path)
-
-          to_inline << [script_tag, "#{indent}<script>#{script_contents}\n#{indent}</script>"]
-        end
+        output << [script_tag, "#{indent}<script>#{script_contents}\n#{indent}</script>"]
       end
-      to_inline
     end
 
     def inline_scripts(data, scripts)
