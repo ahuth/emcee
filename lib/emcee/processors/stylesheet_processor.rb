@@ -20,8 +20,11 @@ module Emcee
     INDENT_PATTERN = /^(?<indent>\s*)/
 
     def process(context, data, directory)
-      to_inline = find_stylesheet_tags(data, directory)
-      inline_styles(data, to_inline)
+      tags = find_tags(data)
+      paths = get_paths(tags)
+      indents = get_indents(tags)
+      contents = get_contents(paths, directory)
+      inline_styles(data, tags, indents, contents)
     end
 
     private
@@ -30,22 +33,35 @@ module Emcee
       File.read(path)
     end
 
-    def find_stylesheet_tags(data, directory)
-      data.scan(STYLESHEET_PATTERN).reduce([]) do |output, style_tag|
-        path = style_tag[HREF_PATH_PATTERN, :path]
-        return output unless path
-
-        indent = style_tag[INDENT_PATTERN, :indent] || ""
-        absolute_path = File.absolute_path(path, directory)
-        style_contents = read_file(absolute_path)
-
-        output << [style_tag, "#{indent}<style>#{style_contents}\n#{indent}</style>"]
+    def find_tags(data)
+      data.scan(STYLESHEET_PATTERN).map do |tag|
+        tag
       end
     end
 
-    def inline_styles(data, scripts)
-      scripts.reduce(data) do |output, (tag, contents)|
-        output.gsub(tag, contents)
+    def get_paths(tags)
+      tags.map do |tag|
+        tag[HREF_PATH_PATTERN, :path]
+      end
+    end
+
+    def get_indents(tags)
+      tags.map do |tag|
+        tag[INDENT_PATTERN, :indent] || ""
+      end
+    end
+
+    def get_contents(paths, directory)
+      paths.map do |path|
+        absolute_path = File.absolute_path(path, directory)
+        read_file(absolute_path)
+      end
+    end
+
+    def inline_styles(data, tags, indents, contents)
+      tags.each_with_index.reduce(data) do |output, (tag, i)|
+        indent, content = indents[i], contents[i]
+        output.gsub(tag, "#{indent}<style>#{content}\n#{indent}</style>")
       end
     end
   end

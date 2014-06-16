@@ -19,8 +19,11 @@ module Emcee
     INDENT_PATTERN = /^(?<indent>\s*)/
 
     def process(context, data, directory)
-      to_inline = find_script_tags(data, directory)
-      inline_scripts(data, to_inline)
+      tags = find_tags(data)
+      paths = get_paths(tags)
+      indents = get_indents(tags)
+      contents = get_contents(paths, directory)
+      inline_scripts(data, tags, indents, contents)
     end
 
     private
@@ -29,22 +32,35 @@ module Emcee
       File.read(path)
     end
 
-    def find_script_tags(data, directory)
-      data.scan(SCRIPT_PATTERN).reduce([]) do |output, script_tag|
-        path = script_tag[SRC_PATH_PATTERN, :path]
-        return output unless path
-
-        indent = script_tag[INDENT_PATTERN, :indent] || ""
-        absolute_path = File.absolute_path(path, directory)
-        script_contents = read_file(absolute_path)
-
-        output << [script_tag, "#{indent}<script>#{script_contents}\n#{indent}</script>"]
+    def find_tags(data)
+      data.scan(SCRIPT_PATTERN).map do |tag|
+        tag
       end
     end
 
-    def inline_scripts(data, scripts)
-      scripts.reduce(data) do |output, (tag, contents)|
-        output.gsub(tag, contents)
+    def get_paths(tags)
+      tags.map do |tag|
+        tag[SRC_PATH_PATTERN, :path]
+      end
+    end
+
+    def get_indents(tags)
+      tags.map do |tag|
+        tag[INDENT_PATTERN, :indent] || ""
+      end
+    end
+
+    def get_contents(paths, directory)
+      paths.map do |path|
+        absolute_path = File.absolute_path(path, directory)
+        read_file(absolute_path)
+      end
+    end
+
+    def inline_scripts(data, tags, indents, contents)
+      tags.each_with_index.reduce(data) do |output, (tag, i)|
+        indent, content = indents[i], contents[i]
+        output.gsub(tag, "#{indent}<script>#{content}\n#{indent}</script>")
       end
     end
   end
