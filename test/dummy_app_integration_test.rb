@@ -24,7 +24,6 @@ class DummyAppIntegrationTest < ActionController::TestCase
   # json response, which we can test against here.
   test "the test files should get concatenated" do
     get :assets
-    assert_response :success
     assert_equal @response.body, <<-EOS
 <script>var life = "is good";
 </script>
