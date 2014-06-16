@@ -2,7 +2,7 @@ require "emcee/processors/directive_processor"
 require "emcee/processors/import_processor"
 require "emcee/processors/script_processor"
 require "emcee/processors/stylesheet_processor"
-require "emcee/html_compressor"
+require "emcee/compressors/html_compressor"
 
 module Emcee
   class Railtie < Rails::Railtie
