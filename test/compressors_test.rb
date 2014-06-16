@@ -82,37 +82,4 @@ class CompressorsTest < ActiveSupport::TestCase
       <p>test</p>
     }
   end
-
-  test "compressor should remove comments and blank lines" do
-    content = %q{
-      <h1>Title</h1>
-
-      <!-- That was a title -->
-
-      <script>
-        /* This is a script
-        block */
-        var test = "test";
-        // Hello world
-      </script>
-
-      <style>
-        body {
-          /* Green background? */
-          background: green;
-        }
-      </style>
-    }
-    assert_equal "\n" + @compressor.compress(content), %q{
-      <h1>Title</h1>
-      <script>
-        var test = "test";
-      </script>
-      <style>
-        body {
-          background: green;
-        }
-      </style>
-    }
-  end
 end
