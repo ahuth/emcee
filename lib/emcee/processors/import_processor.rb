@@ -24,10 +24,11 @@ module Emcee
 
     def require_assets(context, data, directory)
       data.scan(IMPORT_PATTERN) do |import_tag|
-        if path = import_tag[HREF_PATH_PATTERN, :path]
-          absolute_path = File.absolute_path(path, directory)
-          context.require_asset(absolute_path)
-        end
+        path = import_tag[HREF_PATH_PATTERN, :path]
+        return unless path
+
+        absolute_path = File.absolute_path(path, directory)
+        context.require_asset(absolute_path)
       end
     end
 

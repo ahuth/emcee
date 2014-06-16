@@ -31,19 +31,16 @@ module Emcee
     end
 
     def find_stylesheet_tags(data, directory)
-      to_inline = []
-      data.scan(STYLESHEET_PATTERN) do |style_tag|
-        if path = style_tag[HREF_PATH_PATTERN, :path]
+      data.scan(STYLESHEET_PATTERN).reduce([]) do |output, style_tag|
+        path = style_tag[HREF_PATH_PATTERN, :path]
+        return output unless path
 
-          indent = style_tag[INDENT_PATTERN, :indent] || ""
+        indent = style_tag[INDENT_PATTERN, :indent] || ""
+        absolute_path = File.absolute_path(path, directory)
+        style_contents = read_file(absolute_path)
 
-          absolute_path = File.absolute_path(path, directory)
-          style_contents = read_file(absolute_path)
-
-          to_inline << [style_tag, "#{indent}<style>#{style_contents}\n#{indent}</style>"]
-        end
+        output << [style_tag, "#{indent}<style>#{style_contents}\n#{indent}</style>"]
       end
-      to_inline
     end
 
     def inline_styles(data, scripts)
