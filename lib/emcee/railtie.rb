@@ -6,11 +6,11 @@ require "emcee/compressors/html_compressor"
 
 module Emcee
   class Railtie < Rails::Railtie
-    initializer :add_html_processor do |app|
+    initializer :add_preprocessors do |app|
       app.assets.register_preprocessor "text/html", DirectiveProcessor
     end
 
-    initializer :add_processors do |app|
+    initializer :add_postprocessors do |app|
       app.assets.register_postprocessor "text/html", :import_processor do |context, data|
         directory = File.dirname(context.pathname)
         ImportProcessor.new.process(context, data, directory)
@@ -25,7 +25,7 @@ module Emcee
       end
     end
 
-    initializer :add_html_compressor do |app|
+    initializer :add_compressors do |app|
       app.assets.register_bundle_processor "text/html", :html_compressor do |context, data|
         HtmlCompressor.new.compress(data)
       end
