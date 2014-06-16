@@ -9,7 +9,9 @@ module Emcee
     end
 
     initializer :add_html_compressor do |app|
-      app.assets.html_compressor = HtmlCompressor.new
+      app.assets.register_bundle_processor "text/html", :html_compressor do |context, data|
+        HtmlCompressor.new.compress(data)
+      end
     end
   end
 end
