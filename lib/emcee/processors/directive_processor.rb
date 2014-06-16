@@ -1,4 +1,6 @@
-require "emcee/processors/processor_includes"
+require "emcee/processors/import_processor"
+require "emcee/processors/script_processor"
+require "emcee/processors/stylesheet_processor"
 
 module Emcee
   # DirectiveProcessor processes html files by doing 4 things:
@@ -15,14 +17,6 @@ module Emcee
   # work for us.
   #
   class DirectiveProcessor < Sprockets::DirectiveProcessor
-    # Include methods to process different parts of the html file. These are
-    # split out to make unit testing easier.
-    include Emcee::ProcessorIncludes
-    protected :process_imports
-    protected :process_stylesheets
-    protected :process_scripts
-    private   :read_file
-
     # Matches the entire header/directive block. This is everything from the
     # top of the file, enclosed in html comments.
     #
@@ -71,9 +65,9 @@ module Emcee
       @has_written_body = false
 
       process_directives
-      @body = process_imports(@body, @context, @directory)
-      @body = process_stylesheets(@body, @directory)
-      @body = process_scripts(@body, @directory)
+      @body = Emcee::ImportProcessor.new.process(@context, @body, @directory)
+      @body = Emcee::ScriptProcessor.new.process(@context, @body, @directory)
+      @body = Emcee::StylesheetProcessor.new.process(@context, @body, @directory)
       process_source
 
       @result

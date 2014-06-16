@@ -1,12 +1,15 @@
 require 'test_helper'
+require 'emcee/processors/import_processor'
+require 'emcee/processors/script_processor'
+require 'emcee/processors/stylesheet_processor'
 
-# Testing a class that inherits from Sprockets::DirectiveProcessor is difficult,
-# so we've split out the methods we want to test into a module, and we'll include
-# them here in a stub class.
-class ProcessorStub
-  include Emcee::ProcessorIncludes
+class ScriptProcessorStub < Emcee::ScriptProcessor
+  def read_file(path)
+    "/* contents */"
+  end
+end
 
-  private
+class StylesheetProcessorStub < Emcee::StylesheetProcessor
   def read_file(path)
     "/* contents */"
   end
@@ -28,7 +31,6 @@ end
 
 class ProcessorsTest < ActiveSupport::TestCase
   setup do
-    @processor = ProcessorStub.new
     @context = ContextStub.new
     @directory = "/dir"
     @body = %q{
@@ -40,10 +42,10 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing imports should work" do
-    processed = @processor.process_imports(@body, @context, @directory)
-    assert_equal 1, @context.assets.length
-    assert_equal "/dir/test.html", @context.assets[0]
+    processor = Emcee::ImportProcessor.new
+    processed = processor.process(@context, @body, @directory)
 
+    assert_equal 1, @context.assets.length
     assert_equal processed, %q{
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
@@ -52,7 +54,9 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing stylesheets should work" do
-    processed = @processor.process_stylesheets(@body, @directory)
+    processor = StylesheetProcessorStub.new
+    processed = processor.process(@context, @body, @directory)
+
     assert_equal processed, %q{
       <link rel="import" href="test.html">
       <style>/* contents */
@@ -63,7 +67,9 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing scripts should work" do
-    processed = @processor.process_scripts(@body, @directory)
+    processor = ScriptProcessorStub.new
+    processed = processor.process(@context, @body, @directory)
+
     assert_equal processed, %q{
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
