@@ -59,12 +59,10 @@ module Emcee
     end
 
     def inline_styles(data, tags, indents, contents)
-      tags.each_with_index do |tag, i|
-        indent = indents[i]
-        content = contents[i]
-        data.gsub!(tag, "#{indent}<style>#{content}\n#{indent}</style>")
+      tags.each_with_index.reduce(data) do |output, (tag, i)|
+        indent, content = indents[i], contents[i]
+        output.gsub(tag, "#{indent}<style>#{content}\n#{indent}</style>")
       end
-      data
     end
   end
 end
