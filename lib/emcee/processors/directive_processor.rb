@@ -1,7 +1,7 @@
 require "emcee/processors/processor_includes"
 
 module Emcee
-  # HtmlProcessor processes html files by doing 4 things:
+  # DirectiveProcessor processes html files by doing 4 things:
   #
   # 1. Stripping out asset pipeline directives and processing the associated
   #    files.
@@ -14,7 +14,7 @@ module Emcee
   # It inherits from Sprocket::DirectiveProcessor, which does most of the
   # work for us.
   #
-  class HtmlProcessor < Sprockets::DirectiveProcessor
+  class DirectiveProcessor < Sprockets::DirectiveProcessor
     # Include methods to process different parts of the html file. These are
     # split out to make unit testing easier.
     include Emcee::ProcessorIncludes
