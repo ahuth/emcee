@@ -46,6 +46,7 @@ class ProcessorsTest < ActiveSupport::TestCase
     processed = processor.process(@context, @body, @directory)
 
     assert_equal 1, @context.assets.length
+    assert_equal "/dir/test.html", @context.assets[0]
     assert_equal processed, %q{
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
