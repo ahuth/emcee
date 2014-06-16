@@ -65,9 +65,6 @@ module Emcee
       @has_written_body = false
 
       process_directives
-      @body = Emcee::ImportProcessor.new.process(@context, @body, @directory)
-      @body = Emcee::ScriptProcessor.new.process(@context, @body, @directory)
-      @body = Emcee::StylesheetProcessor.new.process(@context, @body, @directory)
       process_source
 
       @result

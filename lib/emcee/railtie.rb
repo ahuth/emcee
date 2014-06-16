@@ -1,4 +1,7 @@
 require "emcee/processors/directive_processor"
+require "emcee/processors/import_processor"
+require "emcee/processors/script_processor"
+require "emcee/processors/stylesheet_processor"
 require "emcee/html_compressor"
 
 module Emcee
@@ -6,6 +9,21 @@ module Emcee
     initializer :add_html_processor do |app|
       app.assets.register_mime_type "text/html", ".html"
       app.assets.register_preprocessor "text/html", DirectiveProcessor
+    end
+
+    initializer :add_processors do |app|
+      app.assets.register_postprocessor "text/html", :import_processor do |context, data|
+        directory = File.dirname(context.pathname)
+        ImportProcessor.new.process(context, data, directory)
+      end
+      app.assets.register_postprocessor "text/html", :script_processor do |context, data|
+        directory = File.dirname(context.pathname)
+        ScriptProcessor.new.process(context, data, directory)
+      end
+      app.assets.register_postprocessor "text/html", :stylesheet_processor do |context, data|
+        directory = File.dirname(context.pathname)
+        StylesheetProcessor.new.process(context, data, directory)
+      end
     end
 
     initializer :add_html_compressor do |app|
