@@ -1,7 +1,3 @@
-require "emcee/processors/import_processor"
-require "emcee/processors/script_processor"
-require "emcee/processors/stylesheet_processor"
-
 module Emcee
   # DirectiveProcessor processes html files by doing 4 things:
   #
