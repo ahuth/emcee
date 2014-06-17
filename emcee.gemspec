@@ -10,8 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Andrew Huth"]
   s.email       = ["andrew@huth.me"]
   s.homepage    = "https://github.com/ahuth/emcee"
-  s.summary     = "Add web components to the asset pipeline."
-  s.description = "Add web components to the rails asset pipeline"
+  s.summary     = "Add web components to the Rails asset pipeline."
+  s.description = "Add web components to the Rails asset pipeline"
   s.license     = "MIT"
 
   s.files = Dir["{app,config,db,lib}/**/*", "MIT-LICENSE", "Rakefile", "README.rdoc"]
