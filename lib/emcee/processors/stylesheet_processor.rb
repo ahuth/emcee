@@ -56,8 +56,11 @@ module Emcee
     def get_contents(paths, directory)
       paths.map do |path|
         absolute_path = get_absolute_path(path, directory)
-        return get_sass_content(absolute_path, directory) if sass?(absolute_path)
-        read_file(absolute_path)
+        if sass?(absolute_path)
+          get_sass_content(absolute_path)
+        else
+          read_file(absolute_path)
+        end
       end
     end
 
