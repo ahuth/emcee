@@ -8,6 +8,7 @@ you would Javascript or CSS.
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [Sass](#sass)
 * [Concatenation](#concatenation)
 * [Testing](#testing)
 * [Contributing](#contributing)
@@ -49,6 +50,16 @@ You must reference this in the manifest file as:
 ```
 *= require ui-tabs/ui-tabs
 ```
+
+## Sass
+
+Emcee can with [Sass](http://sass-lang.com/) to precompile references to external
+stylesheets. To do this, reference the stylesheet with the regular `.css` extension:
+
+    <link rel="stylesheet" href="path/to/example.css">
+
+If you have an `example.css.scss` at that path, it will be compiled before being
+injected into the html.
 
 ## Concatenation
 
