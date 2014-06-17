@@ -70,7 +70,7 @@ module Emcee
 
     def get_sass_content(path)
       content = read_file(path)
-      Sass::Engine.new(content, syntax: "scss").render
+      Sass::Engine.new(content, syntax: :scss).render
     end
 
     def sass?(path)
