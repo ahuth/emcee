@@ -28,6 +28,10 @@ class DummyAppIntegrationTest < ActionController::TestCase
 <script>var life = "is good";
 </script>
 <p>test4</p>
+<style>em {
+  color: red; }
+</style>
+<p>compiled scss</p>
 <style>p {
   color: pink;
 }
