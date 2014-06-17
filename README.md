@@ -54,12 +54,15 @@ You must reference this in the manifest file as:
 ## Sass
 
 Emcee can with [Sass](http://sass-lang.com/) to precompile references to external
-stylesheets. To do this, reference the stylesheet with the regular `.css` extension:
+stylesheets. To do this, reference the stylesheet with the regular `.css` extension
+in your web component:
 
-    <link rel="stylesheet" href="path/to/example.css">
+```html
+<link rel="stylesheet" href="path/to/example.css">
+```
 
 If you have an `example.css.scss` at that path, it will be compiled before being
-injected into the html.
+used by your web component.
 
 ## Concatenation
 
