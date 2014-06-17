@@ -53,7 +53,7 @@ You must reference this in the manifest file as:
 
 ## Sass
 
-Emcee can with [Sass](http://sass-lang.com/) to precompile references to external
+Emcee can use [Sass](http://sass-lang.com/) to precompile references to external
 stylesheets. To do this, reference the stylesheet with the regular `.css` extension
 in your web component:
 
