@@ -29,6 +29,10 @@ class DummyAppIntegrationTest < ActionController::TestCase
 </script>
 <p>test4</p>
 <style>p {
+  color: red; }
+</style>
+<p>compiled scss</p>
+<style>p {
   color: pink;
 }
 </style>
