@@ -15,6 +15,20 @@ class StylesheetProcessorStub < Emcee::StylesheetProcessor
   end
 end
 
+class StylesheetSassProcessorStub < Emcee::StylesheetProcessor
+  def read_file(path)
+    "$color: red; p { color: $color; }"
+  end
+
+  def sass?(path)
+    true
+  end
+
+  def get_sass_content(path)
+    super(path).gsub(/\n\s?/, "")
+  end
+end
+
 # Create a stub of Sprocket's Context class, so we can test if we're 'requiring'
 # assets correctly.
 class ContextStub
@@ -76,6 +90,19 @@ class ProcessorsTest < ActiveSupport::TestCase
       <link rel="stylesheet" href="test.css">
       <script>/* contents */
       </script>
+      <p>test</p>
+    }
+  end
+
+  test "processing sass stylesheets should work" do
+    processor = StylesheetSassProcessorStub.new
+    processed = processor.process(@context, @body, @directory)
+
+    assert_equal processed, %q{
+      <link rel="import" href="test.html">
+      <style>p { color: red; }
+      </style>
+      <script src="test.js"></script>
       <p>test</p>
     }
   end
