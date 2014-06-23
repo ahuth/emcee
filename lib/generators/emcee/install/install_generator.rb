@@ -18,6 +18,10 @@ module Emcee
       def add_html_import_to_layout
         insert_into_file "app/views/layouts/application.html.erb", "<%= html_import_tag \"application\", \"data-turbolinks-track\" => true %>\n  ", before: "<%= csrf_meta_tags %>"
       end
+
+      def copy_bowerrc
+        copy_file ".bowerrc", ".bowerrc"
+      end
     end
   end
 end
