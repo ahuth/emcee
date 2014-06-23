@@ -6,6 +6,10 @@ require "emcee/compressors/html_compressor"
 
 module Emcee
   class Railtie < Rails::Railtie
+    initializer :add_asset_paths do |app|
+      app.assets.paths.unshift(Rails.root.join("vendor", "assets", "components"))
+    end
+
     initializer :add_preprocessors do |app|
       app.assets.register_mime_type "text/html", ".html"
       app.assets.register_preprocessor "text/html", DirectiveProcessor

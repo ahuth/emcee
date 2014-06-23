@@ -1,9 +1,9 @@
 module ActionView
   module Helpers
     module AssetUrlHelper
-      # Modify ActionView to recognize html files and the '/elements' path.
+      # Modify ActionView to recognize html files and the '/components' path.
       ASSET_EXTENSIONS.merge!({ html: '.html' })
-      ASSET_PUBLIC_DIRECTORIES.merge!({ html: '/elements' })
+      ASSET_PUBLIC_DIRECTORIES.merge!({ html: '/components' })
 
       # Convenience method for html. Based on ActionView's standard
       # javascript_path method.

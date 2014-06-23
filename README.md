@@ -29,11 +29,11 @@ Finally, run:
     $ rails generate emcee:install
 
 This will insert `<%= html_import_tag "application" %>` into your application layout. Also,
-it will create 'elements' directories under '/assets' and '/vendor/assets'.
+it will create 'components' directories under '/assets' and '/vendor/assets'.
 
 ## Usage
 
-Once installed, you will have a manifest file located at `/assets/elements/application.html`.
+Once installed, you will have a manifest file located at `/assets/components/application.html`.
 Use [sprockets directives](https://github.com/sstephenson/sprockets#sprockets-directives) to
 include web components located in one of the assets directories.
 
@@ -42,7 +42,7 @@ if you have a sub-directory like this:
 ```
 vendor
 |- assets
-  |- elements
+  |- components
     |- ui-tabs
        |- ui-tabs.html
 ```
