@@ -9,7 +9,6 @@ you would Javascript or CSS.
 * [Installation](#installation)
 * [Usage](#usage)
 * [Bower](#bower)
-* [Sass](#sass)
 * [Concatenation](#concatenation)
 * [Testing](#testing)
 * [Contributing](#contributing)
