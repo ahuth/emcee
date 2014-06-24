@@ -8,6 +8,7 @@ you would Javascript or CSS.
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [Bower](#bower)
 * [Sass](#sass)
 * [Concatenation](#concatenation)
 * [Testing](#testing)
@@ -50,6 +51,13 @@ You must reference this in the manifest file as:
 ```
 *= require ui-tabs/ui-tabs
 ```
+
+## Bower
+
+When installed, Emcee configures [Bower](http://bower.io/) to install components
+to `vendor/assets/components`. Anything installed with bower can be referenced
+directly in your `application.js`, `application.css`, or `application.html` manifest
+files.
 
 ## Sass
 
