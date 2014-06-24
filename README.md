@@ -8,7 +8,7 @@ you would Javascript or CSS.
 
 * [Installation](#installation)
 * [Usage](#usage)
-* [Sass](#sass)
+* [Bower](#bower)
 * [Concatenation](#concatenation)
 * [Testing](#testing)
 * [Contributing](#contributing)
@@ -51,18 +51,12 @@ You must reference this in the manifest file as:
 *= require ui-tabs/ui-tabs
 ```
 
-## Sass
+## Bower
 
-Emcee can use [Sass](http://sass-lang.com/) to precompile references to external
-stylesheets. To do this, reference the stylesheet with the regular `.css` extension
-in your web component:
-
-```html
-<link rel="stylesheet" href="path/to/example.css">
-```
-
-If you have an `example.css.scss` at that path, it will be compiled before being
-used by your web component.
+When installed, Emcee configures [Bower](http://bower.io/) to install components
+to `vendor/assets/components`. Anything installed with bower can be referenced
+directly in your `application.js`, `application.css`, or `application.html` manifest
+files.
 
 ## Concatenation
 
