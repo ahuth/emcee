@@ -59,19 +59,6 @@ to `vendor/assets/components`. Anything installed with bower can be referenced
 directly in your `application.js`, `application.css`, or `application.html` manifest
 files.
 
-## Sass
-
-Emcee can use [Sass](http://sass-lang.com/) to precompile references to external
-stylesheets. To do this, reference the stylesheet with the regular `.css` extension
-in your web component:
-
-```html
-<link rel="stylesheet" href="path/to/example.css">
-```
-
-If you have an `example.css.scss` at that path, it will be compiled before being
-used by your web component.
-
 ## Concatenation
 
 In a development environment, all web components referenced in the manifest will be included
