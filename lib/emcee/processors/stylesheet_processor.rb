@@ -1,69 +1,39 @@
+require 'nokogiri'
+
 module Emcee
   # StylesheetProcessor scans a document for external stylesheet references and
   # inlines them into the current document.
   class StylesheetProcessor
-    # Match a stylesheet link tag.
-    #
-    #   <link rel="stylesheet" href="assets/example.css">
-    #
-    STYLESHEET_PATTERN = /^\s*<link .*rel=["']stylesheet["'].*>$/
-
-    # Match the path from the href attribute of an html import or stylesheet
-    # include tag. Captures the actual path.
-    #
-    #   href="/assets/example.css"
-    #
-    HREF_PATH_PATTERN = /href=["'](?<path>[\w\.\/-]+)["']/
-
-    # Match the indentation whitespace of a line
-    #
-    INDENT_PATTERN = /^(?<indent>\s*)/
-
     def initialize(context)
       @context = context
       @directory = File.dirname(context.pathname)
     end
 
     def process(data)
-      tags = find_tags(data)
-      paths = get_paths(tags)
-      indents = get_indents(tags)
-      contents = get_contents(paths)
-      inline_styles(data, tags, indents, contents)
+      doc = Nokogiri::HTML.fragment(data)
+      inline_styles(doc)
+      doc.to_s
     end
 
     private
 
-    def find_tags(data)
-      data.scan(STYLESHEET_PATTERN).map do |tag|
-        tag
+    def inline_styles(doc)
+      doc.css("link[rel='stylesheet']").each do |node|
+        path = absolute_path(node.attribute("href"))
+        content = @context.evaluate(path)
+        style = create_style(doc, content)
+        node.replace(style)
       end
     end
 
-    def get_paths(tags)
-      tags.map do |tag|
-        tag[HREF_PATH_PATTERN, :path]
-      end
+    def absolute_path(path)
+      File.absolute_path(path, @directory)
     end
 
-    def get_indents(tags)
-      tags.map do |tag|
-        tag[INDENT_PATTERN, :indent] || ""
-      end
-    end
-
-    def get_contents(paths)
-      paths.map do |path|
-        absolute_path = File.absolute_path(path, @directory)
-        @context.evaluate(absolute_path)
-      end
-    end
-
-    def inline_styles(data, tags, indents, contents)
-      tags.each_with_index.reduce(data) do |output, (tag, i)|
-        indent, content = indents[i], contents[i]
-        output.gsub(tag, "#{indent}<style>#{content}\n#{indent}</style>")
-      end
+    def create_style(doc, content)
+      script = Nokogiri::XML::Node.new("style", doc)
+      script.content = content
+      script
     end
   end
 end

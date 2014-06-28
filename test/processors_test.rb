@@ -31,12 +31,12 @@ end
 class ProcessorsTest < ActiveSupport::TestCase
   setup do
     @context = ContextStub.new
-    @body = %q{
+    @body = <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
       <p>test</p>
-    }
+    EOS
   end
 
   test "processing imports should work" do
@@ -45,37 +45,35 @@ class ProcessorsTest < ActiveSupport::TestCase
 
     assert_equal 1, @context.assets.length
     assert_equal "/test.html", @context.assets[0]
-    assert_equal processed, %q{
+    assert_equal processed, <<-EOS.strip_heredoc
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
       <p>test</p>
-    }
+    EOS
   end
 
   test "processing stylesheets should work" do
     processor = Emcee::StylesheetProcessor.new(@context)
     processed = processor.process(@body)
 
-    assert_equal processed, %q{
+    assert_equal processed, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
-      <style>/* contents */
-      </style>
+      <style>/* contents */</style>
       <script src="test.js"></script>
       <p>test</p>
-    }
+    EOS
   end
 
   test "processing scripts should work" do
     processor = Emcee::ScriptProcessor.new(@context)
     processed = processor.process(@body)
 
-    assert_equal processed, %q{
+    assert_equal processed, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
-      <script>/* contents */
-      </script>
+      <script>/* contents */</script>
       <p>test</p>
-    }
+    EOS
   end
 
   test "processing sass stylesheets should work" do
@@ -83,13 +81,12 @@ class ProcessorsTest < ActiveSupport::TestCase
     processor = Emcee::StylesheetProcessor.new(@context)
     processed = processor.process(@body)
 
-    assert_equal processed, %q{
+    assert_equal processed, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
-      <style>/* contents */
-      </style>
+      <style>/* contents */</style>
       <script src="test.js"></script>
       <p>test</p>
-    }
+    EOS
   end
 
   test "processing CoffeeScript should work" do
@@ -97,12 +94,11 @@ class ProcessorsTest < ActiveSupport::TestCase
     processor = Emcee::ScriptProcessor.new(@context)
     processed = processor.process(@body)
 
-    assert_equal processed, %q{
+    assert_equal processed, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
-      <script>/* contents */
-      </script>
+      <script>/* contents */</script>
       <p>test</p>
-    }
+    EOS
   end
 end

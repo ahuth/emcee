@@ -1,68 +1,39 @@
+require 'nokogiri'
+
 module Emcee
   # ScriptProcessor scans a document for external script references and inlines
   # them into the current document.
   class ScriptProcessor
-    # Match a script tag.
-    #
-    #   <script src="assets/example.js"></script>
-    #
-    SCRIPT_PATTERN = /^\s*<script .*src=["'].+["']><\/script>$/
-
-    # Match the source path from a script tag. Captures the actual path.
-    #
-    #   src="/assets/example.js"
-    #
-    SRC_PATH_PATTERN = /src=["'](?<path>[\w\.\/-]+)["']/
-
-    # Match the indentation whitespace of a line
-    #
-    INDENT_PATTERN = /^(?<indent>\s*)/
-
     def initialize(context)
       @context = context
       @directory = File.dirname(context.pathname)
     end
 
     def process(data)
-      tags = find_tags(data)
-      paths = get_paths(tags)
-      indents = get_indents(tags)
-      contents = get_contents(paths)
-      inline_scripts(data, tags, indents, contents)
+      doc = Nokogiri::HTML.fragment(data)
+      inline_scripts(doc)
+      doc.to_s
     end
 
     private
 
-    def find_tags(data)
-      data.scan(SCRIPT_PATTERN).map do |tag|
-        tag
+    def inline_scripts(doc)
+      doc.css("script").each do |node|
+        path = absolute_path(node.attribute("src"))
+        content = @context.evaluate(path)
+        script = create_script(doc, content)
+        node.replace(script)
       end
     end
 
-    def get_paths(tags)
-      tags.map do |tag|
-        tag[SRC_PATH_PATTERN, :path]
-      end
+    def absolute_path(path)
+      File.absolute_path(path, @directory)
     end
 
-    def get_indents(tags)
-      tags.map do |tag|
-        tag[INDENT_PATTERN, :indent] || ""
-      end
-    end
-
-    def get_contents(paths)
-      paths.map do |path|
-        absolute_path = File.absolute_path(path, @directory)
-        @context.evaluate(absolute_path)
-      end
-    end
-
-    def inline_scripts(data, tags, indents, contents)
-      tags.each_with_index.reduce(data) do |output, (tag, i)|
-        indent, content = indents[i], contents[i]
-        output.gsub(tag, "#{indent}<script>#{content}\n#{indent}</script>")
-      end
+    def create_script(doc, content)
+      script = Nokogiri::XML::Node.new("script", doc)
+      script.content = content
+      script
     end
   end
 end
