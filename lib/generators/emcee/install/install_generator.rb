@@ -28,6 +28,7 @@ module Emcee
       end
 
       private
+
       def preprocessor?(preprocessor_name)
         layout_file_name = 'app/views/layouts/application'
         File.exists?("#{layout_file_name}.html.#{preprocessor_name}") || File.exists?("#{layout_file_name}.#{preprocessor_name}")
