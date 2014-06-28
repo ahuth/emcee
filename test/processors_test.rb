@@ -16,16 +16,8 @@ class StylesheetProcessorStub < Emcee::StylesheetProcessor
 end
 
 class StylesheetSassProcessorStub < Emcee::StylesheetProcessor
-  def read_file(path)
-    "$color: red; p { color: $color; }"
-  end
-
   def sass?(path)
     true
-  end
-
-  def get_sass_content(path)
-    super(path).gsub(/\n\s?/, "")
   end
 end
 
@@ -40,6 +32,10 @@ class ContextStub
 
   def require_asset(asset)
     @assets << asset
+  end
+
+  def evaluate(path, options = {})
+    "p { color: red; }"
   end
 end
 
