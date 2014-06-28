@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.0"
 
+  s.add_development_dependency "coffee-rails", "~> 4.0"
   s.add_development_dependency "sass", "~> 3.0"
   s.add_development_dependency "sqlite3"
 end
