@@ -1,5 +1,3 @@
-require "sass"
-
 module Emcee
   # StylesheetProcessor scans a document for external stylesheet references and
   # inlines them into the current document.
@@ -22,6 +20,8 @@ module Emcee
     INDENT_PATTERN = /^(?<indent>\s*)/
 
     def process(context, data, directory)
+      @context = context
+
       tags = find_tags(data)
       paths = get_paths(tags)
       indents = get_indents(tags)
@@ -72,8 +72,7 @@ module Emcee
     end
 
     def get_sass_content(path)
-      content = read_file(path)
-      Sass::Engine.new(content, syntax: :scss).render
+      @context.evaluate(path)
     end
 
     def sass?(path)
