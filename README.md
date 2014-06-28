@@ -59,7 +59,7 @@ and [Sass](http://sass-lang.com/). Any external stylesheet or script tag referen
 have an extension that Sprockets recognizes will automatically be compiled.
 
 For example, `<link rel="stylesheet" href="test.css.scss">` and `<script src="test.js.coffee">`
-will be compiled to CSS and Javascript respectively.
+will be respectively compiled to CSS and Javascript.
 
 ## Bower
 
