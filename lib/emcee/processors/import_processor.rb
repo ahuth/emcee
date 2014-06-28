@@ -15,20 +15,25 @@ module Emcee
     #
     HREF_PATH_PATTERN = /href=["'](?<path>[\w\.\/-]+)["']/
 
-    def process(context, data, directory)
-      require_assets(context, data, directory)
+    def initialize(context, directory)
+      @context = context
+      @directory = directory
+    end
+
+    def process(data)
+      require_assets(data)
       remove_imports(data)
     end
 
     private
 
-    def require_assets(context, data, directory)
+    def require_assets(data)
       data.scan(IMPORT_PATTERN) do |import_tag|
         path = import_tag[HREF_PATH_PATTERN, :path]
         return unless path
 
-        absolute_path = File.absolute_path(path, directory)
-        context.require_asset(absolute_path)
+        absolute_path = File.absolute_path(path, @directory)
+        @context.require_asset(absolute_path)
       end
     end
 
