@@ -3,31 +3,8 @@ require 'emcee/processors/import_processor'
 require 'emcee/processors/script_processor'
 require 'emcee/processors/stylesheet_processor'
 
-class ScriptProcessorStub < Emcee::ScriptProcessor
-  def read_file(path)
-    "/* contents */"
-  end
-end
-
-class StylesheetProcessorStub < Emcee::StylesheetProcessor
-  def read_file(path)
-    "/* contents */"
-  end
-end
-
-class StylesheetSassProcessorStub < Emcee::StylesheetProcessor
-  def read_file(path)
-    "$color: red; p { color: $color; }"
-  end
-
-  def sass?(path)
-    true
-  end
-
-  def get_sass_content(path)
-    super(path).gsub(/\n\s?/, "")
-  end
-end
+require 'coffee-rails'
+require 'sass'
 
 # Create a stub of Sprocket's Context class, so we can test if we're 'requiring'
 # assets correctly.
@@ -40,6 +17,10 @@ class ContextStub
 
   def require_asset(asset)
     @assets << asset
+  end
+
+  def evaluate(path, options = {})
+    "/* contents */"
   end
 end
 
@@ -69,7 +50,7 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing stylesheets should work" do
-    processor = StylesheetProcessorStub.new
+    processor = Emcee::StylesheetProcessor.new
     processed = processor.process(@context, @body, @directory)
 
     assert_equal processed, %q{
@@ -82,7 +63,7 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing scripts should work" do
-    processor = ScriptProcessorStub.new
+    processor = Emcee::ScriptProcessor.new
     processed = processor.process(@context, @body, @directory)
 
     assert_equal processed, %q{
@@ -95,14 +76,29 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing sass stylesheets should work" do
-    processor = StylesheetSassProcessorStub.new
+    @body.gsub!("test.css", "test.css.scss")
+    processor = Emcee::StylesheetProcessor.new
     processed = processor.process(@context, @body, @directory)
 
     assert_equal processed, %q{
       <link rel="import" href="test.html">
-      <style>p { color: red; }
+      <style>/* contents */
       </style>
       <script src="test.js"></script>
+      <p>test</p>
+    }
+  end
+
+  test "processing CoffeeScript should work" do
+    @body.gsub!("test.js", "test.js.coffee")
+    processor = Emcee::ScriptProcessor.new
+    processed = processor.process(@context, @body, @directory)
+
+    assert_equal processed, %q{
+      <link rel="import" href="test.html">
+      <link rel="stylesheet" href="test.css">
+      <script>/* contents */
+      </script>
       <p>test</p>
     }
   end

@@ -6,7 +6,7 @@ module Emcee
     #
     #   <script src="assets/example.js"></script>
     #
-    SCRIPT_PATTERN = /^\s*<script .*src=["'].+\.js["']><\/script>$/
+    SCRIPT_PATTERN = /^\s*<script .*src=["'].+["']><\/script>$/
 
     # Match the source path from a script tag. Captures the actual path.
     #
@@ -19,6 +19,8 @@ module Emcee
     INDENT_PATTERN = /^(?<indent>\s*)/
 
     def process(context, data, directory)
+      @context = context
+
       tags = find_tags(data)
       paths = get_paths(tags)
       indents = get_indents(tags)
@@ -27,10 +29,6 @@ module Emcee
     end
 
     private
-
-    def read_file(path)
-      File.read(path)
-    end
 
     def find_tags(data)
       data.scan(SCRIPT_PATTERN).map do |tag|
@@ -53,7 +51,7 @@ module Emcee
     def get_contents(paths, directory)
       paths.map do |path|
         absolute_path = File.absolute_path(path, directory)
-        read_file(absolute_path)
+        @context.evaluate(absolute_path)
       end
     end
 

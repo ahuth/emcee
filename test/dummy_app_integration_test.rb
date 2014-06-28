@@ -31,7 +31,12 @@ class DummyAppIntegrationTest < ActionController::TestCase
 <style>p {
   color: red; }
 </style>
-<p>compiled scss</p>
+<script>(function() {
+  var hello;
+  hello = \"world\";
+}).call(this);
+</script>
+<p>compiled scss and CoffeeScript</p>
 <style>p {
   color: pink;
 }
