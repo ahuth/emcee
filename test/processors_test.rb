@@ -72,8 +72,7 @@ class ProcessorsTest < ActiveSupport::TestCase
     assert_equal processed, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
-      <script>/* contents */
-      </script>
+      <script>/* contents */</script>
       <p>test</p>
     EOS
   end
@@ -100,8 +99,7 @@ class ProcessorsTest < ActiveSupport::TestCase
     assert_equal processed, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
-      <script>/* contents */
-      </script>
+      <script>/* contents */</script>
       <p>test</p>
     EOS
   end
