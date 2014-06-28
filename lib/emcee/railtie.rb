@@ -17,16 +17,13 @@ module Emcee
 
     initializer :add_postprocessors do |app|
       app.assets.register_postprocessor "text/html", :import_processor do |context, data|
-        processor = ImportProcessor.new(context)
-        processor.process(data)
+        ImportProcessor.new(context).process(data)
       end
       app.assets.register_postprocessor "text/html", :script_processor do |context, data|
-        processor = ScriptProcessor.new(context)
-        processor.process(data)
+        ScriptProcessor.new(context).process(data)
       end
       app.assets.register_postprocessor "text/html", :stylesheet_processor do |context, data|
-        processor = StylesheetProcessor.new(context)
-        processor.process(data)
+        StylesheetProcessor.new(context).process(data)
       end
     end
 
