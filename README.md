@@ -8,6 +8,7 @@ you would Javascript or CSS.
 
 * [Installation](#installation)
 * [Usage](#usage)
+* [Compilation](#compilation)
 * [Bower](#bower)
 * [Concatenation](#concatenation)
 * [Testing](#testing)
@@ -50,6 +51,15 @@ You must reference this in the manifest file as:
 ```
 *= require ui-tabs/ui-tabs
 ```
+
+## Compilation
+
+Emcee works great with compiling assets, such as [CoffeeScript](http://coffeescript.org/)
+and [Sass](http://sass-lang.com/). Any external stylesheet or script tag references that
+have an extension that Sprockets recognizes will automatically be compiled.
+
+For example, `<link rel="stylesheet" href="test.css.scss">` and `<script src="test.js.coffee">`
+will be compiled to CSS and Javascript respectively.
 
 ## Bower
 
