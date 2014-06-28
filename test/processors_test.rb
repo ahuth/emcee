@@ -3,23 +3,6 @@ require 'emcee/processors/import_processor'
 require 'emcee/processors/script_processor'
 require 'emcee/processors/stylesheet_processor'
 
-class ScriptProcessorStub < Emcee::ScriptProcessor
-  def read_file(path)
-    "/* contents */"
-  end
-end
-
-class StylesheetProcessorStub < Emcee::StylesheetProcessor
-  def read_file(path)
-    "/* contents */"
-  end
-end
-
-class StylesheetSassProcessorStub < Emcee::StylesheetProcessor
-  def sass?(path)
-    true
-  end
-end
 
 # Create a stub of Sprocket's Context class, so we can test if we're 'requiring'
 # assets correctly.
@@ -65,7 +48,7 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing stylesheets should work" do
-    processor = StylesheetProcessorStub.new
+    processor = Emcee::StylesheetProcessor.new
     processed = processor.process(@context, @body, @directory)
 
     assert_equal processed, %q{
@@ -78,7 +61,7 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing scripts should work" do
-    processor = ScriptProcessorStub.new
+    processor = Emcee::ScriptProcessor.new
     processed = processor.process(@context, @body, @directory)
 
     assert_equal processed, %q{
@@ -91,7 +74,7 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing sass stylesheets should work" do
-    processor = StylesheetSassProcessorStub.new
+    processor = Emcee::StylesheetProcessor.new
     processed = processor.process(@context, @body, @directory)
 
     assert_equal processed, %q{
