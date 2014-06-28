@@ -18,7 +18,7 @@ module Emcee
     private
 
     def inline_scripts(doc)
-      doc.css("script").each do |node|
+      doc.css("script[src]").each do |node|
         path = absolute_path(node.attribute("src"))
         content = @context.evaluate(path)
         script = create_script(doc, content)
