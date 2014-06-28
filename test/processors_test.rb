@@ -19,7 +19,7 @@ class ContextStub
   end
 
   def evaluate(path, options = {})
-    "p { color: red; }"
+    "/* contents */"
   end
 end
 
@@ -75,12 +75,13 @@ class ProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing sass stylesheets should work" do
+    @body.gsub!("test.css", "test.css.scss")
     processor = Emcee::StylesheetProcessor.new
     processed = processor.process(@context, @body, @directory)
 
     assert_equal processed, %q{
       <link rel="import" href="test.html">
-      <style>p { color: red; }
+      <style>/* contents */
       </style>
       <script src="test.js"></script>
       <p>test</p>
