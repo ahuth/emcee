@@ -3,6 +3,7 @@ require 'emcee/processors/import_processor'
 require 'emcee/processors/script_processor'
 require 'emcee/processors/stylesheet_processor'
 
+require 'sass'
 
 # Create a stub of Sprocket's Context class, so we can test if we're 'requiring'
 # assets correctly.
