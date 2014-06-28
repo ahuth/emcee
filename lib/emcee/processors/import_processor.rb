@@ -15,9 +15,9 @@ module Emcee
     #
     HREF_PATH_PATTERN = /href=["'](?<path>[\w\.\/-]+)["']/
 
-    def initialize(context, directory)
+    def initialize(context)
       @context = context
-      @directory = directory
+      @directory = File.dirname(context.pathname)
     end
 
     def process(data)

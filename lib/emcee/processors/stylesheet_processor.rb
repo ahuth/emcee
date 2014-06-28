@@ -19,9 +19,9 @@ module Emcee
     #
     INDENT_PATTERN = /^(?<indent>\s*)/
 
-    def initialize(context, directory)
+    def initialize(context)
       @context = context
-      @directory = directory
+      @directory = File.dirname(context.pathname)
     end
 
     def process(data)
