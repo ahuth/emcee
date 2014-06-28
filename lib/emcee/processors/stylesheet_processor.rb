@@ -31,10 +31,6 @@ module Emcee
 
     private
 
-    def read_file(path)
-      File.read(path)
-    end
-
     def find_tags(data)
       data.scan(STYLESHEET_PATTERN).map do |tag|
         tag
@@ -55,28 +51,9 @@ module Emcee
 
     def get_contents(paths, directory)
       paths.map do |path|
-        absolute_path = get_absolute_path(path, directory)
-        if sass?(absolute_path)
-          get_sass_content(absolute_path)
-        else
-          read_file(absolute_path)
-        end
+        absolute_path = File.absolute_path(path, directory)
+        @context.evaluate(absolute_path)
       end
-    end
-
-    def get_absolute_path(path, directory)
-      normal_path = File.absolute_path(path, directory)
-      sassy_path = File.absolute_path(path + ".scss", directory)
-      return sassy_path if File.file?(sassy_path)
-      normal_path
-    end
-
-    def get_sass_content(path)
-      @context.evaluate(path)
-    end
-
-    def sass?(path)
-      File.extname(path) == ".scss"
     end
 
     def inline_styles(data, tags, indents, contents)
