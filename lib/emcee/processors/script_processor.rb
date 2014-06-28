@@ -18,13 +18,16 @@ module Emcee
     #
     INDENT_PATTERN = /^(?<indent>\s*)/
 
-    def process(context, data, directory)
+    def initialize(context)
       @context = context
+      @directory = File.dirname(context.pathname)
+    end
 
+    def process(data)
       tags = find_tags(data)
       paths = get_paths(tags)
       indents = get_indents(tags)
-      contents = get_contents(paths, directory)
+      contents = get_contents(paths)
       inline_scripts(data, tags, indents, contents)
     end
 
@@ -48,9 +51,9 @@ module Emcee
       end
     end
 
-    def get_contents(paths, directory)
+    def get_contents(paths)
       paths.map do |path|
-        absolute_path = File.absolute_path(path, directory)
+        absolute_path = File.absolute_path(path, @directory)
         @context.evaluate(absolute_path)
       end
     end
