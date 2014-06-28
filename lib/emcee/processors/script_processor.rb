@@ -6,7 +6,7 @@ module Emcee
     #
     #   <script src="assets/example.js"></script>
     #
-    SCRIPT_PATTERN = /^\s*<script .*src=["'].+\.js["']><\/script>$/
+    SCRIPT_PATTERN = /^\s*<script .*src=["'].+["']><\/script>$/
 
     # Match the source path from a script tag. Captures the actual path.
     #
