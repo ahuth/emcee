@@ -10,10 +10,10 @@ module Emcee
     end
 
     def process(data)
-      doc = Nokogiri::HTML("<body>#{data}</body>")
+      doc = Nokogiri::HTML.fragment(data)
       require_assets(doc)
       remove_imports(doc)
-      doc.at("body").children.to_s.lstrip
+      doc.to_s.lstrip
     end
 
     private
@@ -26,7 +26,7 @@ module Emcee
     end
 
     def remove_imports(doc)
-      doc.search("link[rel='import']").each do |node|
+      doc.css("link[rel='import']").each do |node|
         node.remove
       end
     end
