@@ -16,9 +16,9 @@ module Emcee
       end
 
       def add_html_import_to_layout
-        if preprocessor? 'erb'
+        if preprocessor? "erb"
           insert_into_file "app/views/layouts/application.html.erb", "<%= html_import_tag \"application\", \"data-turbolinks-track\" => true %>\n  ", before: "<%= csrf_meta_tags %>"
-        elsif preprocessor? 'slim'
+        elsif preprocessor? "slim"
           insert_into_file "app/views/layouts/application.slim", "= html_import_tag \"application\", \"data-turbolinks-track\" => true\n  ", before: "= csrf_meta_tags"
         end
       end
@@ -28,8 +28,9 @@ module Emcee
       end
 
       private
+
       def preprocessor?(preprocessor_name)
-        layout_file_name = 'app/views/layouts/application'
+        layout_file_name = "app/views/layouts/application"
         File.exists?("#{layout_file_name}.html.#{preprocessor_name}") || File.exists?("#{layout_file_name}.#{preprocessor_name}")
       end
     end
