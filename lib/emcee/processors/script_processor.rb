@@ -31,9 +31,9 @@ module Emcee
     end
 
     def create_script(doc, content)
-      script = Nokogiri::XML::Node.new("script", doc)
-      script.content = content
-      script
+      node = Nokogiri::XML::Node.new("script", doc)
+      node.content = content
+      node
     end
   end
 end
