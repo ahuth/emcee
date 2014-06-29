@@ -19,9 +19,8 @@ class DummyAppIntegrationTest < ActionController::TestCase
     assert_match /href="\/assets\/application\.html"/, @response.body
   end
 
-  # To test the contents of our compiled application.html, we have a custom route
-  # and controller action. The controller action renders the compiled file as a
-  # json response, which we can test against here.
+  # The dummy app has a custom route and controller action that renders the
+  # compiled html import as a json response. We test against that here.
   test "the test files should get concatenated" do
     get :assets
     assert_equal @response.body, <<-EOS.strip_heredoc
