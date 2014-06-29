@@ -6,8 +6,8 @@ require 'emcee/processors/stylesheet_processor'
 require 'coffee-rails'
 require 'sass'
 
-# Create a stub of Sprocket's Context class, so we can test if we're 'requiring'
-# assets correctly.
+# Create a stub of Sprocket's Context class, so we can test if we're sending
+# the correct messages to it.
 class ContextStub
   attr_reader :assets
 
