@@ -31,9 +31,9 @@ module Emcee
     end
 
     def create_style(doc, content)
-      script = Nokogiri::XML::Node.new("style", doc)
-      script.content = content
-      script
+      node = Nokogiri::XML::Node.new("style", doc)
+      node.content = content
+      node
     end
   end
 end
