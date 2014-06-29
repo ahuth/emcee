@@ -24,26 +24,26 @@ class DummyAppIntegrationTest < ActionController::TestCase
   # json response, which we can test against here.
   test "the test files should get concatenated" do
     get :assets
-    assert_equal @response.body, <<-EOS
-<script>var life = "is good";
-</script>
-<p>test4</p>
-<style>p {
-  color: red; }
-</style>
-<script>(function() {
-  var hello;
-  hello = \"world\";
-}).call(this);
-</script>
-<p>compiled scss and CoffeeScript</p>
-<style>p {
-  color: pink;
-}
-</style>
-<p>test3</p>
-<p>test2</p>
-<p>test1</p>
-EOS
+    assert_equal @response.body, <<-EOS.strip_heredoc
+      <script>var life = "is good";
+      </script>
+      <p>test4</p>
+      <style>p {
+        color: red; }
+      </style>
+      <script>(function() {
+        var hello;
+        hello = "world";
+      }).call(this);
+      </script>
+      <p>compiled scss and CoffeeScript</p>
+      <style>p {
+        color: pink;
+      }
+      </style>
+      <p>test3</p>
+      <p>test2</p>
+      <p>test1</p>
+    EOS
   end
 end
