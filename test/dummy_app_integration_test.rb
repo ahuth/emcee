@@ -4,11 +4,6 @@ require 'action_controller'
 class DummyAppIntegrationTest < ActionController::TestCase
   tests DummyController
 
-  test "should succesfully load the app and show index" do
-    get :index
-    assert_response :success
-  end
-
   test "index should have html imports" do
     get :index
     assert_select "link[rel='import']"
