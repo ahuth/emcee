@@ -76,19 +76,6 @@ class ProcessorsTest < ActiveSupport::TestCase
     EOS
   end
 
-  test "processing sass stylesheets should work" do
-    @body.gsub!("test.css", "test.css.scss")
-    processor = Emcee::StylesheetProcessor.new(@context)
-    processed = processor.process(@body)
-
-    assert_equal processed, <<-EOS.strip_heredoc
-      <link rel="import" href="test.html">
-      <style>/* contents */</style>
-      <script src="test.js"></script>
-      <p>test</p>
-    EOS
-  end
-
   test "processing CoffeeScript should work" do
     @body.gsub!("test.js", "test.js.coffee")
     processor = Emcee::ScriptProcessor.new(@context)
