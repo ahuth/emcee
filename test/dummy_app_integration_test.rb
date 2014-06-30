@@ -4,11 +4,6 @@ require 'action_controller'
 class DummyAppIntegrationTest < ActionController::TestCase
   tests DummyController
 
-  test "index should have html imports" do
-    get :index
-    assert_select "link[rel='import']"
-  end
-
   test "the compiled assets should be served from the right directory" do
     get :index
     assert_match /href="\/assets\/application\.html"/, @response.body
