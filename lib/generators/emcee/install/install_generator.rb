@@ -24,7 +24,7 @@ module Emcee
       end
 
       def copy_bowerrc
-        copy_file ".bowerrc", ".bowerrc"
+        copy_file "template.bowerrc", ".bowerrc"
       end
 
       private
