@@ -28,7 +28,7 @@ class ContextStub
   end
 end
 
-class ProcessorsTest < ActiveSupport::TestCase
+class PostProcessorsTest < ActiveSupport::TestCase
   setup do
     @context = ContextStub.new
     @body = <<-EOS.strip_heredoc
