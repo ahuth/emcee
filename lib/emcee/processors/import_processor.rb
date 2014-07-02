@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'uri'
 
 module Emcee
   # ImportProcessor scans a file for html imports and adds them to the current
@@ -13,7 +14,7 @@ module Emcee
       doc = Nokogiri::HTML.fragment(data)
       require_assets(doc)
       remove_imports(doc)
-      unescape(doc.to_s.lstrip)
+      URI.unescape(doc.to_s.lstrip)
     end
 
     private
@@ -28,17 +29,6 @@ module Emcee
     def remove_imports(doc)
       doc.css("link[rel='import']").each do |node|
         node.remove
-      end
-    end
-
-    def unescape(html)
-      chars = {
-        "{" => "%7B",
-        " " => "%20",
-        "}" => "%7D"
-      }
-      chars.reduce(html) do |output, (key, value)|
-        output.gsub(value, key)
       end
     end
   end
