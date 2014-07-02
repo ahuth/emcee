@@ -17,19 +17,19 @@ module Emcee
 
     initializer :add_postprocessors do |app|
       app.assets.register_postprocessor "text/html", :import_processor do |context, data|
-        ImportProcessor.new(context).process(data)
+        Emcee::PostProcessors::ImportProcessor.new(context).process(data)
       end
       app.assets.register_postprocessor "text/html", :script_processor do |context, data|
-        ScriptProcessor.new(context).process(data)
+        Emcee::PostProcessors::ScriptProcessor.new(context).process(data)
       end
       app.assets.register_postprocessor "text/html", :stylesheet_processor do |context, data|
-        StylesheetProcessor.new(context).process(data)
+        Emcee::PostProcessors::StylesheetProcessor.new(context).process(data)
       end
     end
 
     initializer :add_compressors do |app|
       app.assets.register_bundle_processor "text/html", :html_compressor do |context, data|
-        HtmlCompressor.new.compress(data)
+        Emcee::Compressors::HtmlCompressor.new.compress(data)
       end
     end
   end
