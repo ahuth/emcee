@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'uri'
 
 module Emcee
   # ScriptProcessor scans a document for external script references and inlines
@@ -12,7 +13,7 @@ module Emcee
     def process(data)
       doc = Nokogiri::HTML.fragment(data)
       inline_scripts(doc)
-      doc.to_s
+      URI.unescape(doc.to_s)
     end
 
     private

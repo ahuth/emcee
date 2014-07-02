@@ -1,4 +1,5 @@
 require 'nokogiri'
+require 'uri'
 
 module Emcee
   # StylesheetProcessor scans a document for external stylesheet references and
@@ -12,7 +13,7 @@ module Emcee
     def process(data)
       doc = Nokogiri::HTML.fragment(data)
       inline_styles(doc)
-      doc.to_s
+      URI.unescape(doc.to_s)
     end
 
     private
