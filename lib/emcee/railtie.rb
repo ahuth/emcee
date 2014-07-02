@@ -12,7 +12,7 @@ module Emcee
 
     initializer :add_preprocessors do |app|
       app.assets.register_mime_type "text/html", ".html"
-      app.assets.register_preprocessor "text/html", DirectiveProcessor
+      app.assets.register_preprocessor "text/html", Emcee::PreProcessors::DirectiveProcessor
     end
 
     initializer :add_postprocessors do |app|
