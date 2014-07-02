@@ -40,7 +40,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing imports should work" do
-    processor = Emcee::ImportProcessor.new(@context)
+    processor = Emcee::PostProcessors::ImportProcessor.new(@context)
     processed = processor.process(@body)
 
     assert_equal 1, @context.assets.length
@@ -53,7 +53,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing stylesheets should work" do
-    processor = Emcee::StylesheetProcessor.new(@context)
+    processor = Emcee::PostProcessors::StylesheetProcessor.new(@context)
     processed = processor.process(@body)
 
     assert_equal processed, <<-EOS.strip_heredoc
@@ -65,7 +65,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing scripts should work" do
-    processor = Emcee::ScriptProcessor.new(@context)
+    processor = Emcee::PostProcessors::ScriptProcessor.new(@context)
     processed = processor.process(@body)
 
     assert_equal processed, <<-EOS.strip_heredoc

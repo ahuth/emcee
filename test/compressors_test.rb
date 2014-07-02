@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CompressorsTest < ActiveSupport::TestCase
   setup do
-    @compressor = Emcee::HtmlCompressor.new
+    @compressor = Emcee::Compressors::HtmlCompressor.new
   end
 
   test "compressor should remove html comments" do
