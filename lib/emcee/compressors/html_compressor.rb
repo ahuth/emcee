@@ -5,7 +5,7 @@ module Emcee
     class HtmlCompressor
       HTML_COMMENTS     = /\<!\s*--(?:.*?)(?:--\s*\>)/m
       JS_MULTI_COMMENTS = /\/\*(?:.*?)\*\//m
-      JS_COMMENTS       = /\/\/.*$/
+      JS_COMMENTS       = /^\s*\/\/.*$/
       BLANK_LINES       = /^[\s]*$\n/
 
       def compress(string)
