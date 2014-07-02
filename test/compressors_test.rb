@@ -82,4 +82,17 @@ class CompressorsTest < ActiveSupport::TestCase
       <p>test</p>
     }
   end
+
+  test "compressor should not attempt to remove javascript comments within a string" do
+    content = %q{
+      <script>
+        var url = 'http://www.w3.org/2000/svg';
+      </script>
+    }
+    assert_equal "\n" + @compressor.compress(content), %q{
+      <script>
+        var url = 'http://www.w3.org/2000/svg';
+      </script>
+    }
+  end
 end
