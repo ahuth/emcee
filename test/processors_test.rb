@@ -1,7 +1,7 @@
 require 'test_helper'
-require 'emcee/processors/import_processor'
-require 'emcee/processors/script_processor'
-require 'emcee/processors/stylesheet_processor'
+require 'emcee/post_processors/import_processor'
+require 'emcee/post_processors/script_processor'
+require 'emcee/post_processors/stylesheet_processor'
 
 require 'coffee-rails'
 require 'sass'
