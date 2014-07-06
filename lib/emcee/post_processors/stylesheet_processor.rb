@@ -19,19 +19,13 @@ module Emcee
         doc.css("link[rel='stylesheet']").each do |node|
           path = absolute_path(node.attribute("href"))
           content = @context.evaluate(path)
-          style = create_style(doc, content)
+          style = doc.create_node("style", content)
           node.replace(style)
         end
       end
 
       def absolute_path(path)
         File.absolute_path(path, @directory)
-      end
-
-      def create_style(doc, content)
-        node = Nokogiri::XML::Node.new("style", doc)
-        node.content = content
-        node
       end
     end
   end

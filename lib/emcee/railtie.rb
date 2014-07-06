@@ -1,11 +1,9 @@
-require 'nokogiri'
-require 'uri'
-
 require "emcee/pre_processors/directive_processor"
 require "emcee/post_processors/import_processor"
 require "emcee/post_processors/script_processor"
 require "emcee/post_processors/stylesheet_processor"
 require "emcee/compressors/html_compressor"
+require "emcee/documents/html_document"
 
 module Emcee
   class Railtie < Rails::Railtie
@@ -20,11 +18,11 @@ module Emcee
 
     initializer :add_postprocessors do |app|
       app.assets.register_postprocessor "text/html", :web_components do |context, data|
-        doc = Nokogiri::HTML.fragment(data)
+        doc = Emcee::Documents::HtmlDocument.new(data)
         Emcee::PostProcessors::ImportProcessor.new(context).process(doc)
         Emcee::PostProcessors::ScriptProcessor.new(context).process(doc)
         Emcee::PostProcessors::StylesheetProcessor.new(context).process(doc)
-        URI.unescape(doc.to_s)
+        doc.to_s
       end
     end
 
