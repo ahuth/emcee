@@ -1,6 +1,3 @@
-require 'nokogiri'
-require 'uri'
-
 module Emcee
   module PostProcessors
     # StylesheetProcessor scans a document for external stylesheet references and
@@ -11,10 +8,9 @@ module Emcee
         @directory = File.dirname(context.pathname)
       end
 
-      def process(data)
-        doc = Nokogiri::HTML.fragment(data)
+      def process(doc)
         inline_styles(doc)
-        URI.unescape(doc.to_s)
+        doc
       end
 
       private

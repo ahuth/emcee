@@ -6,6 +6,8 @@ require 'emcee/post_processors/stylesheet_processor'
 require 'coffee-rails'
 require 'sass'
 
+require 'nokogiri'
+
 # Create a stub of Sprocket's Context class, so we can test if we're sending
 # the correct messages to it.
 class ContextStub
@@ -37,15 +39,16 @@ class PostProcessorsTest < ActiveSupport::TestCase
       <script src="test.js"></script>
       <p>test</p>
     EOS
+    @doc = Nokogiri::HTML.fragment(@body)
   end
 
   test "processing imports should work" do
     processor = Emcee::PostProcessors::ImportProcessor.new(@context)
-    processed = processor.process(@body)
+    processed = processor.process(@doc)
 
     assert_equal 1, @context.assets.length
     assert_equal "/test.html", @context.assets[0]
-    assert_equal processed, <<-EOS.strip_heredoc
+    assert_equal processed.to_s.lstrip, <<-EOS.strip_heredoc
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
       <p>test</p>
@@ -54,9 +57,9 @@ class PostProcessorsTest < ActiveSupport::TestCase
 
   test "processing stylesheets should work" do
     processor = Emcee::PostProcessors::StylesheetProcessor.new(@context)
-    processed = processor.process(@body)
+    processed = processor.process(@doc)
 
-    assert_equal processed, <<-EOS.strip_heredoc
+    assert_equal processed.to_s, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <style>/* contents */</style>
       <script src="test.js"></script>
@@ -66,9 +69,9 @@ class PostProcessorsTest < ActiveSupport::TestCase
 
   test "processing scripts should work" do
     processor = Emcee::PostProcessors::ScriptProcessor.new(@context)
-    processed = processor.process(@body)
+    processed = processor.process(@doc)
 
-    assert_equal processed, <<-EOS.strip_heredoc
+    assert_equal processed.to_s, <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
       <script>/* contents */</script>

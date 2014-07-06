@@ -1,3 +1,6 @@
+require 'nokogiri'
+require 'uri'
+
 require "emcee/pre_processors/directive_processor"
 require "emcee/post_processors/import_processor"
 require "emcee/post_processors/script_processor"
@@ -16,14 +19,12 @@ module Emcee
     end
 
     initializer :add_postprocessors do |app|
-      app.assets.register_postprocessor "text/html", :import_processor do |context, data|
-        Emcee::PostProcessors::ImportProcessor.new(context).process(data)
-      end
-      app.assets.register_postprocessor "text/html", :script_processor do |context, data|
-        Emcee::PostProcessors::ScriptProcessor.new(context).process(data)
-      end
-      app.assets.register_postprocessor "text/html", :stylesheet_processor do |context, data|
-        Emcee::PostProcessors::StylesheetProcessor.new(context).process(data)
+      app.assets.register_postprocessor "text/html", :web_components do |context, data|
+        doc = Nokogiri::HTML.fragment(data)
+        Emcee::PostProcessors::ImportProcessor.new(context).process(doc)
+        Emcee::PostProcessors::ScriptProcessor.new(context).process(doc)
+        Emcee::PostProcessors::StylesheetProcessor.new(context).process(doc)
+        URI.unescape(doc.to_s)
       end
     end
 
