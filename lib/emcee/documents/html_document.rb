@@ -6,8 +6,6 @@ module Emcee
     # HtmlDocument presents a stable interface for an HTML document to the
     # processors.
     class HtmlDocument
-      attr_reader :doc
-
       def initialize(data)
         @doc = Nokogiri::HTML.fragment(data)
       end
