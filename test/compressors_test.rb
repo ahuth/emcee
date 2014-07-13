@@ -89,10 +89,6 @@ class CompressorsTest < ActiveSupport::TestCase
         var url = 'http://www.w3.org/2000/svg';
       </script>
     }
-    assert_equal "\n" + @compressor.compress(content), %q{
-      <script>
-        var url = 'http://www.w3.org/2000/svg';
-      </script>
-    }
+    assert_equal "\n" + @compressor.compress(content), content
   end
 end

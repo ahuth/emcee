@@ -2,8 +2,8 @@ require 'nokogiri'
 
 module Emcee
   module Documents
-    # HtmlDocument presents a stable interface for an HTML document to the
-    # processors.
+    # HtmlDocument is responsible for parsing HTML and handling interaction
+    # with the resulting document.
     class HtmlDocument
       def initialize(data)
         data = wrap_templates(data)
@@ -27,15 +27,15 @@ module Emcee
 
       private
 
-      # Prevent the content of <template> tags from being parsed by wrapping
-      # their contents in <script> tags.
+      # Prevent the content of <template> tags from being parsed. Wraps the
+      # content in <script> tags.
       def wrap_templates(data)
         tags = /<template>(.+)<\/template>/m
         wrap = '<template><script>"\1"</script></template>'
         data.gsub(tags, wrap)
       end
 
-      # Remove <script> tags wrapping the contents of <template> tags.
+      # Remove <script> tags wrapping the content of <template> tags.
       def unwrap_templates(data)
         tags = /<template><script>"(.+)"<\/script><\/template>/m
         unwrap = '<template>\1</template>'
