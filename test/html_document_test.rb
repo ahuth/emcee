@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'emcee/documents/html_document.rb'
 
 class HtmlDocumentTest < ActiveSupport::TestCase
   setup do
