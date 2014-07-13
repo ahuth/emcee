@@ -1,6 +1,3 @@
-require 'nokogiri'
-require 'uri'
-
 module Emcee
   module PostProcessors
     # ImportProcessor scans a file for html imports and adds them to the current
@@ -11,11 +8,10 @@ module Emcee
         @directory = File.dirname(context.pathname)
       end
 
-      def process(data)
-        doc = Nokogiri::HTML.fragment(data)
+      def process(doc)
         require_assets(doc)
         remove_imports(doc)
-        URI.unescape(doc.to_s.lstrip)
+        doc
       end
 
       private

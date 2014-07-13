@@ -3,6 +3,7 @@ require "emcee/post_processors/import_processor"
 require "emcee/post_processors/script_processor"
 require "emcee/post_processors/stylesheet_processor"
 require "emcee/compressors/html_compressor"
+require "emcee/documents/html_document"
 
 module Emcee
   class Railtie < Rails::Railtie
@@ -16,14 +17,12 @@ module Emcee
     end
 
     initializer :add_postprocessors do |app|
-      app.assets.register_postprocessor "text/html", :import_processor do |context, data|
-        Emcee::PostProcessors::ImportProcessor.new(context).process(data)
-      end
-      app.assets.register_postprocessor "text/html", :script_processor do |context, data|
-        Emcee::PostProcessors::ScriptProcessor.new(context).process(data)
-      end
-      app.assets.register_postprocessor "text/html", :stylesheet_processor do |context, data|
-        Emcee::PostProcessors::StylesheetProcessor.new(context).process(data)
+      app.assets.register_postprocessor "text/html", :web_components do |context, data|
+        doc = Emcee::Documents::HtmlDocument.new(data)
+        Emcee::PostProcessors::ImportProcessor.new(context).process(doc)
+        Emcee::PostProcessors::ScriptProcessor.new(context).process(doc)
+        Emcee::PostProcessors::StylesheetProcessor.new(context).process(doc)
+        doc.to_s
       end
     end
 
