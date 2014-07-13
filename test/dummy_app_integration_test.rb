@@ -35,6 +35,7 @@ class DummyAppIntegrationTest < ActionController::TestCase
       <p>test1</p>
       <polymer-element name="test6" attributes="source">
         <template>
+          <p hidden?="{{ hidden }}">hidden</p>
           <img src="{{ source }}">
         </template>
       </polymer-element>
