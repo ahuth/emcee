@@ -29,11 +29,15 @@ module Emcee
       private
 
       def wrap_templates(data)
-        data.gsub(/<template>/, "<template><script>'").gsub(/<\/template>/, "'</script></template>")
+        tags = /<template>(.+)<\/template>/m
+        wrap = '<template><script>"\1"</script></template>'
+        data.gsub(tags, wrap)
       end
 
       def unwrap_templates(data)
-        data.gsub(/<template><script>'/, "<template>").gsub(/'<\/script><\/template>/, "</template>")
+        tags = /<template><script>"(.+)"<\/script><\/template>/m
+        unwrap = '<template>\1</template>'
+        data.gsub(tags, unwrap)
       end
     end
   end
