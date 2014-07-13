@@ -42,4 +42,14 @@ class HtmlDocumentTest < ActiveSupport::TestCase
     node = @doc.css("span").first
     assert_equal node.attribute("class").value, "test"
   end
+
+  test "malformed template tag content should not be corrected" do
+    @body = <<-EOS.strip_heredoc
+      <template>
+        <p hidden?="{{ hidden }}">hidden</p>
+      </template>
+    EOS
+    @doc = Emcee::Documents::HtmlDocument.new(@body)
+    assert_equal @doc.to_s, @body
+  end
 end
