@@ -1,5 +1,4 @@
 require 'nokogiri'
-require 'uri'
 
 module Emcee
   module Documents
@@ -18,7 +17,7 @@ module Emcee
       end
 
       def to_s
-        data = URI.unescape(@doc.to_s.lstrip)
+        data = @doc.to_s.lstrip
         unwrap_templates(data)
       end
 
