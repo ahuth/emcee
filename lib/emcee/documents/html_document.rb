@@ -2,8 +2,8 @@ require 'nokogiri'
 
 module Emcee
   module Documents
-    # HtmlDocument presents a stable interface for an HTML document to the
-    # processors.
+    # HtmlDocument is responsible for parsing HTML and handling interaction
+    # with the resulting document.
     class HtmlDocument
       def initialize(data)
         data = wrap_templates(data)
