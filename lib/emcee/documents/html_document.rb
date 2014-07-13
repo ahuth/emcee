@@ -7,6 +7,7 @@ module Emcee
     # processors.
     class HtmlDocument
       def initialize(data)
+        data = wrap_templates(data)
         @doc = Nokogiri::HTML.fragment(data)
       end
 
@@ -17,11 +18,22 @@ module Emcee
       end
 
       def to_s
-        URI.unescape(@doc.to_s.lstrip)
+        data = URI.unescape(@doc.to_s.lstrip)
+        unwrap_templates(data)
       end
 
       def css(*args)
         @doc.css(*args)
+      end
+
+      private
+
+      def wrap_templates(data)
+        data.gsub(/<template>/, "<template><script>'").gsub(/<\/template>/, "'</script></template>")
+      end
+
+      def unwrap_templates(data)
+        data.gsub(/<template><script>'/, "<template>").gsub(/'<\/script><\/template>/, "</template>")
       end
     end
   end
