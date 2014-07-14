@@ -7,18 +7,14 @@ require 'emcee/document'
 # Create a stub of our asset resolver, so we can test if we're sending the
 # correct messages to it.
 class ResolverStub
-  attr_reader :assets
-
-  def initialize
-    @assets = []
-  end
+  attr_reader :asset_required
 
   def directory
     "/"
   end
 
   def require_asset(asset)
-    @assets << asset
+    @asset_required = true
   end
 
   def evaluate(path)
@@ -46,8 +42,7 @@ class ProcessorsTest < ActiveSupport::TestCase
     processor = Emcee::Processors::ImportProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
-    assert_equal 1, @resolver.assets.length
-    assert_equal "/test.html", @resolver.assets[0]
+    assert @resolver.asset_required
     assert_equal processed, <<-EOS.strip_heredoc
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
