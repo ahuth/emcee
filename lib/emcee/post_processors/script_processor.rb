@@ -3,9 +3,8 @@ module Emcee
     # ScriptProcessor scans a document for external script references and inlines
     # them into the current document.
     class ScriptProcessor
-      def initialize(context)
-        @context = context
-        @directory = File.dirname(context.pathname)
+      def initialize(resolver)
+        @resolver = resolver
       end
 
       def process(doc)
@@ -18,14 +17,14 @@ module Emcee
       def inline_scripts(doc)
         doc.css("script[src]").each do |node|
           path = absolute_path(node.attribute("src"))
-          content = @context.evaluate(path)
+          content = @resolver.evaluate(path)
           script = doc.create_node("script", content)
           node.replace(script)
         end
       end
 
       def absolute_path(path)
-        File.absolute_path(path, @directory)
+        File.absolute_path(path, @resolver.directory)
       end
     end
   end

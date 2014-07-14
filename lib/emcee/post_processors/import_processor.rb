@@ -3,9 +3,8 @@ module Emcee
     # ImportProcessor scans a file for html imports and adds them to the current
     # required assets.
     class ImportProcessor
-      def initialize(context)
-        @context = context
-        @directory = File.dirname(context.pathname)
+      def initialize(resolver)
+        @resolver = resolver
       end
 
       def process(doc)
@@ -18,8 +17,8 @@ module Emcee
 
       def require_assets(doc)
         doc.css("link[rel='import']").each do |node|
-          path = File.absolute_path(node.attribute("href"), @directory)
-          @context.require_asset(path)
+          path = File.absolute_path(node.attribute("href"), @resolver.directory)
+          @resolver.require_asset(path)
         end
       end
 
