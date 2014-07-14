@@ -4,9 +4,6 @@ require 'emcee/post_processors/script_processor'
 require 'emcee/post_processors/stylesheet_processor'
 require 'emcee/documents/html_document'
 
-require 'coffee-rails'
-require 'sass'
-
 # Create a stub of our asset resolver, so we can test if we're sending the
 # correct messages to it.
 class ResolverStub
