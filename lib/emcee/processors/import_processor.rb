@@ -1,5 +1,5 @@
 module Emcee
-  module PostProcessors
+  module Processors
     # ImportProcessor scans a file for html imports and adds them to the current
     # required assets.
     class ImportProcessor

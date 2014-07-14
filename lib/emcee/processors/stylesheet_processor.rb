@@ -1,5 +1,5 @@
 module Emcee
-  module PostProcessors
+  module Processors
     # StylesheetProcessor scans a document for external stylesheet references and
     # inlines them into the current document.
     class StylesheetProcessor

@@ -1,8 +1,8 @@
 require 'test_helper'
-require 'emcee/post_processors/import_processor'
-require 'emcee/post_processors/script_processor'
-require 'emcee/post_processors/stylesheet_processor'
-require 'emcee/documents/html_document'
+require 'emcee/processors/import_processor'
+require 'emcee/processors/script_processor'
+require 'emcee/processors/stylesheet_processor'
+require 'emcee/document'
 
 # Create a stub of our asset resolver, so we can test if we're sending the
 # correct messages to it.
@@ -26,7 +26,7 @@ class ResolverStub
   end
 end
 
-class PostProcessorsTest < ActiveSupport::TestCase
+class ProcessorsTest < ActiveSupport::TestCase
   setup do
     @resolver = ResolverStub.new
     @body = <<-EOS.strip_heredoc
@@ -35,11 +35,11 @@ class PostProcessorsTest < ActiveSupport::TestCase
       <script src="test.js"></script>
       <p>test</p>
     EOS
-    @doc = Emcee::Documents::HtmlDocument.new(@body)
+    @doc = Emcee::Document.new(@body)
   end
 
   test "processing imports should work" do
-    processor = Emcee::PostProcessors::ImportProcessor.new(@resolver)
+    processor = Emcee::Processors::ImportProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
     assert_equal 1, @resolver.assets.length
@@ -52,7 +52,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing stylesheets should work" do
-    processor = Emcee::PostProcessors::StylesheetProcessor.new(@resolver)
+    processor = Emcee::Processors::StylesheetProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
     assert_equal processed, <<-EOS.strip_heredoc
@@ -64,7 +64,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing scripts should work" do
-    processor = Emcee::PostProcessors::ScriptProcessor.new(@resolver)
+    processor = Emcee::Processors::ScriptProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
     assert_equal processed, <<-EOS.strip_heredoc

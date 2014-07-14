@@ -1,5 +1,5 @@
 module Emcee
-  module PostProcessors
+  module Processors
     # ScriptProcessor scans a document for external script references and inlines
     # them into the current document.
     class ScriptProcessor

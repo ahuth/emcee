@@ -1,9 +1,9 @@
-require "emcee/pre_processors/directive_processor"
-require "emcee/post_processors/import_processor"
-require "emcee/post_processors/script_processor"
-require "emcee/post_processors/stylesheet_processor"
+require "emcee/directive_processor"
+require "emcee/processors/import_processor"
+require "emcee/processors/script_processor"
+require "emcee/processors/stylesheet_processor"
 require "emcee/compressors/html_compressor"
-require "emcee/documents/html_document"
+require "emcee/document"
 require "emcee/resolver"
 
 module Emcee
@@ -14,16 +14,16 @@ module Emcee
 
     initializer :add_preprocessors do |app|
       app.assets.register_mime_type "text/html", ".html"
-      app.assets.register_preprocessor "text/html", Emcee::PreProcessors::DirectiveProcessor
+      app.assets.register_preprocessor "text/html", Emcee::DirectiveProcessor
     end
 
     initializer :add_postprocessors do |app|
       app.assets.register_postprocessor "text/html", :web_components do |context, data|
-        doc = Emcee::Documents::HtmlDocument.new(data)
+        doc = Emcee::Document.new(data)
         resolver = Emcee::Resolver.new(context)
-        Emcee::PostProcessors::ImportProcessor.new(resolver).process(doc)
-        Emcee::PostProcessors::ScriptProcessor.new(resolver).process(doc)
-        Emcee::PostProcessors::StylesheetProcessor.new(resolver).process(doc)
+        Emcee::Processors::ImportProcessor.new(resolver).process(doc)
+        Emcee::Processors::ScriptProcessor.new(resolver).process(doc)
+        Emcee::Processors::StylesheetProcessor.new(resolver).process(doc)
         doc.to_s
       end
     end
