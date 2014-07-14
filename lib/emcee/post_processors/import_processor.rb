@@ -17,7 +17,7 @@ module Emcee
 
       def require_assets(doc)
         doc.css("link[rel='import']").each do |node|
-          path = File.absolute_path(node.attribute("href"), @resolver.directory)
+          path = absolute_path(node.attribute("href"))
           @resolver.require_asset(path)
         end
       end
@@ -26,6 +26,10 @@ module Emcee
         doc.css("link[rel='import']").each do |node|
           node.remove
         end
+      end
+
+      def absolute_path(path)
+        File.absolute_path(path, @resolver.directory)
       end
     end
   end
