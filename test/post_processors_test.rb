@@ -2,7 +2,7 @@ require 'test_helper'
 require 'emcee/post_processors/import_processor'
 require 'emcee/post_processors/script_processor'
 require 'emcee/post_processors/stylesheet_processor'
-require 'emcee/documents/html_document'
+require 'emcee/document'
 
 # Create a stub of our asset resolver, so we can test if we're sending the
 # correct messages to it.
@@ -35,7 +35,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
       <script src="test.js"></script>
       <p>test</p>
     EOS
-    @doc = Emcee::Documents::HtmlDocument.new(@body)
+    @doc = Emcee::Document.new(@body)
   end
 
   test "processing imports should work" do

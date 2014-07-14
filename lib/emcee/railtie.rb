@@ -3,7 +3,7 @@ require "emcee/post_processors/import_processor"
 require "emcee/post_processors/script_processor"
 require "emcee/post_processors/stylesheet_processor"
 require "emcee/compressors/html_compressor"
-require "emcee/documents/html_document"
+require "emcee/document"
 require "emcee/resolver"
 
 module Emcee
@@ -19,7 +19,7 @@ module Emcee
 
     initializer :add_postprocessors do |app|
       app.assets.register_postprocessor "text/html", :web_components do |context, data|
-        doc = Emcee::Documents::HtmlDocument.new(data)
+        doc = Emcee::Document.new(data)
         resolver = Emcee::Resolver.new(context)
         Emcee::PostProcessors::ImportProcessor.new(resolver).process(doc)
         Emcee::PostProcessors::ScriptProcessor.new(resolver).process(doc)

@@ -1,14 +1,14 @@
 require 'test_helper'
-require 'emcee/documents/html_document.rb'
+require 'emcee/document'
 
-class HtmlDocumentTest < ActiveSupport::TestCase
+class DocumentTest < ActiveSupport::TestCase
   setup do
     @body = <<-EOS.strip_heredoc
       <p>test1</p>
       <span class="test">test2</span>
       <p>test3</p>
     EOS
-    @doc = Emcee::Documents::HtmlDocument.new(@body)
+    @doc = Emcee::Document.new(@body)
   end
 
   test "converts itself into a string" do
@@ -49,7 +49,7 @@ class HtmlDocumentTest < ActiveSupport::TestCase
         <p hidden?="{{ hidden }}">hidden</p>
       </template>
     EOS
-    @doc = Emcee::Documents::HtmlDocument.new(@body)
+    @doc = Emcee::Document.new(@body)
     assert_equal @doc.to_s, @body
   end
 end
