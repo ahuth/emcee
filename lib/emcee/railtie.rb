@@ -1,7 +1,7 @@
 require "emcee/directive_processor"
-require "emcee/post_processors/import_processor"
-require "emcee/post_processors/script_processor"
-require "emcee/post_processors/stylesheet_processor"
+require "emcee/processors/import_processor"
+require "emcee/processors/script_processor"
+require "emcee/processors/stylesheet_processor"
 require "emcee/compressors/html_compressor"
 require "emcee/document"
 require "emcee/resolver"
@@ -21,9 +21,9 @@ module Emcee
       app.assets.register_postprocessor "text/html", :web_components do |context, data|
         doc = Emcee::Document.new(data)
         resolver = Emcee::Resolver.new(context)
-        Emcee::PostProcessors::ImportProcessor.new(resolver).process(doc)
-        Emcee::PostProcessors::ScriptProcessor.new(resolver).process(doc)
-        Emcee::PostProcessors::StylesheetProcessor.new(resolver).process(doc)
+        Emcee::Processors::ImportProcessor.new(resolver).process(doc)
+        Emcee::Processors::ScriptProcessor.new(resolver).process(doc)
+        Emcee::Processors::StylesheetProcessor.new(resolver).process(doc)
         doc.to_s
       end
     end
