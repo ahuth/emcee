@@ -41,6 +41,8 @@ class DummyAppIntegrationTest < ActionController::TestCase
           <img src="{{ source }}">
         </template>
       </polymer-element>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <p>External script</p>
     EOS
   end
 end
