@@ -1,5 +1,7 @@
 require 'test_helper'
 require 'action_controller'
+require 'coffee-rails'
+require 'sass'
 
 class DummyAppIntegrationTest < ActionController::TestCase
   tests DummyController
