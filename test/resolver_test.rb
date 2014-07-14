@@ -42,4 +42,12 @@ class ResolverTest < ActiveSupport::TestCase
   test "should evaluate an asset" do
     assert_equal @resolver.evaluate("/test"), "/* contents */"
   end
+
+  test "should indicate if asset should be inlined" do
+    assert @resolver.should_inline?("test.css")
+    assert @resolver.should_inline?("/vendor/assets/test.js")
+
+    assert_not @resolver.should_inline?("//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en")
+    assert_not @resolver.should_inline?("//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+  end
 end
