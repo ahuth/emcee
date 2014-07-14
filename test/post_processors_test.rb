@@ -7,16 +7,16 @@ require 'emcee/documents/html_document'
 require 'coffee-rails'
 require 'sass'
 
-# Create a stub of Sprocket's Context class, so we can test if we're sending
-# the correct messages to it.
-class ContextStub
+# Create a stub of our asset resolver, so we can test if we're sending the
+# correct messages to it.
+class ResolverStub
   attr_reader :assets
 
   def initialize
     @assets = []
   end
 
-  def pathname
+  def directory
     "/"
   end
 
@@ -24,14 +24,14 @@ class ContextStub
     @assets << asset
   end
 
-  def evaluate(path, options = {})
+  def evaluate(path)
     "/* contents */"
   end
 end
 
 class PostProcessorsTest < ActiveSupport::TestCase
   setup do
-    @context = ContextStub.new
+    @resolver = ResolverStub.new
     @body = <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
@@ -42,11 +42,11 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing imports should work" do
-    processor = Emcee::PostProcessors::ImportProcessor.new(@context)
+    processor = Emcee::PostProcessors::ImportProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
-    assert_equal 1, @context.assets.length
-    assert_equal "/test.html", @context.assets[0]
+    assert_equal 1, @resolver.assets.length
+    assert_equal "/test.html", @resolver.assets[0]
     assert_equal processed, <<-EOS.strip_heredoc
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
@@ -55,7 +55,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing stylesheets should work" do
-    processor = Emcee::PostProcessors::StylesheetProcessor.new(@context)
+    processor = Emcee::PostProcessors::StylesheetProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
     assert_equal processed, <<-EOS.strip_heredoc
@@ -67,7 +67,7 @@ class PostProcessorsTest < ActiveSupport::TestCase
   end
 
   test "processing scripts should work" do
-    processor = Emcee::PostProcessors::ScriptProcessor.new(@context)
+    processor = Emcee::PostProcessors::ScriptProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
     assert_equal processed, <<-EOS.strip_heredoc
