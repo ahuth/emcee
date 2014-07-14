@@ -24,6 +24,10 @@ class ResolverStub
   def evaluate(path)
     "/* contents */"
   end
+
+  def should_inline?(path)
+    true
+  end
 end
 
 class ProcessorsTest < ActiveSupport::TestCase

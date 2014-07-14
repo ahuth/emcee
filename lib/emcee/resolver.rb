@@ -15,5 +15,9 @@ module Emcee
     def evaluate(path)
       @context.evaluate(path)
     end
+
+    def should_inline?(path)
+      path !~ /\A\/\//
+    end
   end
 end
