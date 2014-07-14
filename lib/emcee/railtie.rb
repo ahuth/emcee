@@ -1,4 +1,4 @@
-require "emcee/pre_processors/directive_processor"
+require "emcee/directive_processor"
 require "emcee/post_processors/import_processor"
 require "emcee/post_processors/script_processor"
 require "emcee/post_processors/stylesheet_processor"
@@ -14,7 +14,7 @@ module Emcee
 
     initializer :add_preprocessors do |app|
       app.assets.register_mime_type "text/html", ".html"
-      app.assets.register_preprocessor "text/html", Emcee::PreProcessors::DirectiveProcessor
+      app.assets.register_preprocessor "text/html", Emcee::DirectiveProcessor
     end
 
     initializer :add_postprocessors do |app|
