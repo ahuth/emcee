@@ -16,10 +16,13 @@ module Emcee
       end
 
       def add_html_import_to_layout
-        if preprocessor? "erb"
-          insert_into_file "app/views/layouts/application.html.erb", "<%= html_import_tag \"application\", \"data-turbolinks-track\" => true %>\n  ", before: "<%= csrf_meta_tags %>"
-        elsif preprocessor? "slim"
-          insert_into_file "app/views/layouts/application.slim", "= html_import_tag \"application\", \"data-turbolinks-track\" => true\n  ", before: "= csrf_meta_tags"
+        case
+          when erb?
+            insert_html_import("<%= html_import_tag \"application\", \"data-turbolinks-track\" => true %>\n  ", before: "<%= csrf_meta_tags %>")
+          when haml?
+            insert_html_import("= html_import_tag \"application\", \"data-turbolinks-track\" => true\n  ", before: "= csrf_meta_tags")
+          when slim?
+            insert_html_import("= html_import_tag \"application\", \"data-turbolinks-track\" => true\n  ", before: "= csrf_meta_tags")
         end
       end
 
@@ -29,10 +32,29 @@ module Emcee
 
       private
 
-      def preprocessor?(preprocessor_name)
-        layout_file_name = "app/views/layouts/application"
-        File.exists?("#{layout_file_name}.html.#{preprocessor_name}") || File.exists?("#{layout_file_name}.#{preprocessor_name}")
+      def insert_html_import(content, options={})
+        insert_into_file(layout_file, content, options)
       end
+
+      def erb?
+        layout_file.match(/\.erb/)
+      end
+
+      def haml?
+        layout_file.match(/\.haml/)
+      end
+
+      def slim?
+        layout_file.match(/\.slim/)
+      end
+
+      def layout_file
+        @layout_file ||= begin
+                           file = Pathname(Dir[Rails.root.join("app","views","layouts","application*")].first)
+                           file.relative_path_from(Rails.root).to_s
+                         end
+      end
+
     end
   end
 end
