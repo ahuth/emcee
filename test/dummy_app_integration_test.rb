@@ -34,6 +34,11 @@ class DummyAppIntegrationTest < ActionController::TestCase
       <script>var hello = "world";
       </script>
       <p>Test js</p>
+      <polymer-element name="test" attributes="hidden">
+        <template>
+          <p hidden?="{{ hidden }}">Test template</p>
+        </template>
+      </polymer-element>
     EOS
   end
 end
