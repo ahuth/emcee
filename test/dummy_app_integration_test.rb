@@ -11,6 +11,10 @@ class DummyAppIntegrationTest < ActionController::TestCase
   test "the test files should get compiled and concatenated" do
     get :assets
     assert_equal @response.body, <<-EOS.strip_heredoc
+      <style>p {
+        color: red; }
+      </style>
+      <p>Test scss</p>
       <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
       <p>Test external css</p>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
