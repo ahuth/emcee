@@ -1,1 +1,0 @@
-var life = "is good";
