@@ -11,6 +11,12 @@ class DummyAppIntegrationTest < ActionController::TestCase
   test "the test files should get compiled and concatenated" do
     get :assets
     assert_equal @response.body, <<-EOS.strip_heredoc
+      <script>(function() {
+        var hello;
+        hello = "world";
+      }).call(this);
+      </script>
+      <p>Test CoffeeScript</p>
       <style>p {
         color: red; }
       </style>
