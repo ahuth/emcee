@@ -11,6 +11,7 @@ class DummyAppIntegrationTest < ActionController::TestCase
   test "the test files should get compiled and concatenated" do
     get :assets
     assert_equal @response.body, <<-EOS.strip_heredoc
+      <p>Test simple import</p>
     EOS
   end
 end
