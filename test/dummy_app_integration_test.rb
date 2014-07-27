@@ -6,11 +6,6 @@ require 'sass'
 class DummyAppIntegrationTest < ActionController::TestCase
   tests DummyController
 
-  test "the compiled assets should be served from the right directory" do
-    get :index
-    assert_match /href="\/assets\/application\.html"/, @response.body
-  end
-
   # The dummy app has a custom route and controller action that renders the
   # compiled html import as a json response. We test against that here.
   test "the test files should get compiled and concatenated" do
