@@ -17,6 +17,9 @@ class DummyAppIntegrationTest < ActionController::TestCase
       }
       </style>
       <p>Test css</p>
+      <script>var hello = "world";
+      </script>
+      <p>Test js</p>
     EOS
   end
 end
