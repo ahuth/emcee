@@ -4,9 +4,10 @@ require 'emcee/document'
 class DocumentTest < ActiveSupport::TestCase
   setup do
     @body = <<-EOS.strip_heredoc
-      <p>test1</p>
-      <span class="test">test2</span>
-      <p>test3</p>
+      <link rel="import" href="test1.html">
+      <link rel="stylesheet" href="test1.css">
+      <script src="test1.js"></script>
+      <link rel="import" href="test2.html">
     EOS
     @doc = Emcee::Document.new(@body)
   end
@@ -15,32 +16,42 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal @doc.to_s, @body
   end
 
-  test "finds nodes via css selectors" do
-    assert_equal @doc.css("p").length, 2
-    assert_equal @doc.css("span").length, 1
-    assert_equal @doc.css(".test").length, 1
+  test "can access html imports" do
+    assert_equal @doc.html_imports.length, 2
   end
 
-  test "nodes can be created" do
-    node = @doc.create_node("span", "test3")
-    assert_equal node.content, "test3"
+  test "can access scripts" do
+    assert_equal @doc.script_references.length, 1
+  end
+
+  test "can access stylesheets" do
+    assert_equal @doc.style_references.length, 1
   end
 
   test "nodes can be removed" do
-    assert_difference "@doc.css('p').length", -1 do
-      @doc.css("p").first.remove
+    assert_difference "@doc.html_imports.length", -1 do
+      @doc.html_imports.first.remove
     end
   end
 
-  test "nodes can be replaced" do
-    node = @doc.create_node("span", "test3")
-    @doc.css("span").first.replace(node)
-    assert_equal @doc.css("span").first, node
+  test "nodes can access their attributes" do
+    assert_equal @doc.html_imports.first.attribute("href").to_s, "test1.html"
+    assert_equal @doc.script_references.first.attribute("src").to_s, "test1.js"
+    assert_equal @doc.style_references.first.attribute("href").to_s, "test1.css"
   end
 
-  test "nodes can access their attributes" do
-    node = @doc.css("span").first
-    assert_equal node.attribute("class").value, "test"
+  test "nodes can be created" do
+    node = @doc.create_node("script", "test")
+    assert_equal node.to_s, "<script>test</script>"
+  end
+
+  test "nodes can be replaced" do
+    node = @doc.create_node("script", "")
+    node.set_attribute("src", "test2.js")
+    @doc.html_imports.first.replace(node)
+
+    assert_equal @doc.html_imports.length, 1
+    assert_equal @doc.script_references.length, 2
   end
 
   test "malformed template tag content should not be corrected" do
