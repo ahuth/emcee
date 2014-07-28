@@ -20,8 +20,16 @@ module Emcee
       unwrap_templates(data)
     end
 
-    def css(*args)
-      @doc.css(*args)
+    def html_imports
+      @doc.css("link[rel='import']")
+    end
+
+    def script_references
+      @doc.css("script[src]")
+    end
+
+    def style_references
+      @doc.css("link[rel='stylesheet']")
     end
 
     private
