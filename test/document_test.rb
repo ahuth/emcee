@@ -46,12 +46,15 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "nodes can be replaced" do
-    node = @doc.create_node("script", "")
-    node.set_attribute("src", "test2.js")
+    node = @doc.create_node("script", "test")
     @doc.html_imports.first.replace(node)
 
-    assert_equal @doc.html_imports.length, 1
-    assert_equal @doc.script_references.length, 2
+    assert_equal @doc.to_s, <<-EOS.strip_heredoc
+      <script>test</script>
+      <link rel="stylesheet" href="test1.css">
+      <script src="test1.js"></script>
+      <link rel="import" href="test2.html">
+    EOS
   end
 
   test "malformed template tag content should not be corrected" do
