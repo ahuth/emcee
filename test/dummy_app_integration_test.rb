@@ -37,9 +37,9 @@ class DummyAppIntegrationTest < ActionController::TestCase
       <polymer-element name="test" attributes="hidden">
         <template>
           <style>:host {
-            color: pink;
-          }
-          </style>
+        color: pink;
+      }
+      </style>
           <p hidden?="{{ hidden }}">Test template</p>
         </template>
       </polymer-element>
