@@ -66,4 +66,10 @@ class DocumentTest < ActiveSupport::TestCase
     @doc = Emcee::Document.new(@body)
     assert_equal @doc.to_s, @body
   end
+
+  test "special characters should be rendered correctly" do
+    @body = "<p src='{{ src }}'>test</p>"
+    @doc = Emcee::Document.new(@body)
+    assert_equal @doc.to_s, @body
+  end
 end
