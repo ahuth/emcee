@@ -1,11 +1,12 @@
 require 'nokogiri'
+require 'nokogumbo'
 
 module Emcee
   # Document is responsible for parsing HTML and handling interaction with the
   # resulting document.
   class Document
     def initialize(data)
-      @doc = Nokogiri::HTML.fragment(data)
+      @doc = Nokogiri::HTML5.parse(data)
     end
 
     def create_node(type, content)
@@ -15,7 +16,8 @@ module Emcee
     end
 
     def to_s
-      @doc.to_s.lstrip
+      output = @doc.at("body").children
+      output.to_s.lstrip
     end
 
     def html_imports
