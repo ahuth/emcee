@@ -15,7 +15,7 @@ module Emcee
     end
 
     def to_s
-      body = @doc.at("body").inner_html.lstrip
+      @doc.at("body").inner_html.lstrip
     end
 
     def html_imports
