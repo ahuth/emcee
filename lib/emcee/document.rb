@@ -5,7 +5,6 @@ module Emcee
   # resulting document.
   class Document
     def initialize(data)
-      data = wrap_templates(data)
       @doc = Nokogiri::HTML.fragment(data)
     end
 
@@ -16,8 +15,7 @@ module Emcee
     end
 
     def to_s
-      data = @doc.to_s.lstrip
-      unwrap_templates(data)
+      @doc.to_s.lstrip
     end
 
     def html_imports
@@ -30,23 +28,6 @@ module Emcee
 
     def style_references
       @doc.css("link[rel='stylesheet']")
-    end
-
-    private
-
-    # Prevent the content of <template> tags from being parsed. Wraps the
-    # content in <script> tags.
-    def wrap_templates(data)
-      tags = /<template>(.+)<\/template>/m
-      wrap = '<template><script>"\1"</script></template>'
-      data.gsub(tags, wrap)
-    end
-
-    # Remove <script> tags wrapping the content of <template> tags.
-    def unwrap_templates(data)
-      tags = /<template><script>"(.+)"<\/script><\/template>/m
-      unwrap = '<template>\1</template>'
-      data.gsub(tags, unwrap)
     end
   end
 end
