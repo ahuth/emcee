@@ -16,8 +16,8 @@ module Emcee
 
     def to_s
       body = @doc.at("body").inner_html.lstrip
-      html_unescaped = CGI.unescapeHTML(body)
-      URI.unescape(html_unescaped)
+      unescaped = CGI.unescapeHTML(body)
+      URI.unescape(unescaped)
     end
 
     def html_imports
