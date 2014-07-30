@@ -6,7 +6,7 @@ module Emcee
   # resulting document.
   class Document
     def initialize(data)
-      @doc = Nokogiri::HTML5.parse(data)
+      @doc = Nokogiri::HTML5.parse("<html><body>#{data}</body></html")
     end
 
     def create_node(type, content)
