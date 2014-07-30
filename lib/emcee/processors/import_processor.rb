@@ -16,14 +16,14 @@ module Emcee
       private
 
       def require_assets(doc)
-        doc.css("link[rel='import']").each do |node|
+        doc.html_imports.each do |node|
           path = absolute_path(node.attribute("href"))
           @resolver.require_asset(path)
         end
       end
 
       def remove_imports(doc)
-        doc.css("link[rel='import']").each do |node|
+        doc.html_imports.each do |node|
           node.remove
         end
       end

@@ -21,7 +21,7 @@ class DummyAppIntegrationTest < ActionController::TestCase
         color: red; }
       </style>
       <p>Test scss</p>
-      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en">
       <p>Test external css</p>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
       <p>Test external js</p>
@@ -36,6 +36,10 @@ class DummyAppIntegrationTest < ActionController::TestCase
       <p>Test js</p>
       <polymer-element name="test" attributes="hidden">
         <template>
+          <style>:host {
+            color: pink;
+          }
+          </style>
           <p hidden?="{{ hidden }}">Test template</p>
         </template>
       </polymer-element>

@@ -1,12 +1,11 @@
-require 'nokogiri'
+require 'nokogumbo'
 
 module Emcee
   # Document is responsible for parsing HTML and handling interaction with the
   # resulting document.
   class Document
     def initialize(data)
-      data = wrap_templates(data)
-      @doc = Nokogiri::HTML.fragment(data)
+      @doc = Nokogiri::HTML5.parse("<html><body>#{data}</body></html")
     end
 
     def create_node(type, content)
@@ -16,29 +15,20 @@ module Emcee
     end
 
     def to_s
-      data = @doc.to_s.lstrip
-      unwrap_templates(data)
+      body = @doc.at("body").inner_html.lstrip
+      CGI.unescapeHTML(body)
     end
 
-    def css(*args)
-      @doc.css(*args)
+    def html_imports
+      @doc.css("link[rel='import']")
     end
 
-    private
-
-    # Prevent the content of <template> tags from being parsed. Wraps the
-    # content in <script> tags.
-    def wrap_templates(data)
-      tags = /<template>(.+)<\/template>/m
-      wrap = '<template><script>"\1"</script></template>'
-      data.gsub(tags, wrap)
+    def script_references
+      @doc.css("script[src]")
     end
 
-    # Remove <script> tags wrapping the content of <template> tags.
-    def unwrap_templates(data)
-      tags = /<template><script>"(.+)"<\/script><\/template>/m
-      unwrap = '<template>\1</template>'
-      data.gsub(tags, unwrap)
+    def style_references
+      @doc.css("link[rel='stylesheet']")
     end
   end
 end
