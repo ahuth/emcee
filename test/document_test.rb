@@ -72,4 +72,10 @@ class DocumentTest < ActiveSupport::TestCase
     @doc = Emcee::Document.new(@body)
     assert_equal @doc.to_s, @body
   end
+
+  test "the selected attribute should be rendered correctly" do
+    @body = "<p selected=\"{{ selected }}\">test</p>"
+    @doc = Emcee::Document.new(@body)
+    assert_equal @doc.to_s, @body
+  end
 end
