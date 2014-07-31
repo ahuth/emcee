@@ -57,12 +57,8 @@ class DocumentTest < ActiveSupport::TestCase
     EOS
   end
 
-  test "malformed template tag content should not be corrected" do
-    @body = <<-EOS.strip_heredoc
-      <template>
-        <p hidden?="{{ hidden }}">hidden</p>
-      </template>
-    EOS
+  test "optional attribute syntax should not be removed" do
+    @body = "<p hidden?=\"{{ hidden }}\">hidden</p>"
     @doc = Emcee::Document.new(@body)
     assert_equal @doc.to_s, @body
   end
