@@ -40,25 +40,15 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Convert a document into a string. Using `children.to_s` instead of
-    # `to_html` prevents 'selected' attributes from having their values removed.
-    # This also results in tags being self-closed that shouldn't, which we fix.
+    # Convert a document into a string. For some reason, 'selected' attributes
+    # have their values removed. Fix that by replacing their `to_html` output
+    # with `to_xhtml`.
     def stringify(doc)
-      content = doc.children.to_s
-      fixed = fix_closed_link_tags(content)
-      fix_closed_script_tags(fixed)
-    end
-
-    def fix_closed_link_tags(content)
-      closed_tag = /<link (.*)\/>/
-      unclosed = '<link \1>'
-      content.gsub(closed_tag, unclosed)
-    end
-
-    def fix_closed_script_tags(content)
-      closed_tag = /<script (.*)\/>/
-      unclosed = '<script \1></script>'
-      content.gsub(closed_tag, unclosed)
+      selected = doc.css("*[selected]")
+      content = doc.children.to_html
+      selected.reduce(content) do |output, node|
+        output.gsub(node.to_html, node.to_xhtml)
+      end
     end
   end
 end
