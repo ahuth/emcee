@@ -34,8 +34,7 @@ module Emcee
 
     private
 
-    # Unescape html entities, such as &, and other special characters, such as
-    # curly brackets.
+    # Unescape html entities and other special characters, such as &, {, and }.
     def unescape(content)
       unescaped = CGI.unescapeHTML(content)
       URI.unescape(unescaped)
