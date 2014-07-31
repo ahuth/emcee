@@ -40,18 +40,15 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Convert a document into a string. Prevent 'selected' attribute values from
-    # being stripped away by treating those nodes as xhtml. Treat all others as
-    # html.
+    # Convert a document into a string. For some reason, 'selected' attributes
+    # have their values removed. Fix that by replacing their `to_html` output
+    # with `to_xhtml`.
     def stringify(doc)
-      doc.children.map do |node|
-        return node.to_xhtml if has_selected_attribute?(node)
-        node.to_html
-      end.join
-    end
-
-    def has_selected_attribute?(node)
-      node.attributes.has_key?("selected")
+      selected = doc.css("*[selected]")
+      content = doc.children.to_html
+      selected.reduce(content) do |output, node|
+        output.gsub(node.to_html, node.to_xhtml)
+      end
     end
   end
 end
