@@ -35,6 +35,9 @@ module Emcee
 
     private
 
+    # Convert a document into a string. Prevent 'selected' attribute values from
+    # being stripped away by treating those nodes as xhtml. Treat all others as
+    # html.
     def stringify(doc)
       doc.children.map do |node|
         return node.to_xhtml if has_selected_attribute?(node)
