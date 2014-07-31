@@ -17,8 +17,7 @@ module Emcee
     def to_s
       body = @doc.at("body")
       content = stringify(body).lstrip
-      unescaped = CGI.unescapeHTML(content)
-      URI.unescape(unescaped)
+      unescape(content)
     end
 
     def html_imports
@@ -34,6 +33,13 @@ module Emcee
     end
 
     private
+
+    # Unescape html entities, such as &, and other special characters, such as
+    # curly brackets.
+    def unescape(content)
+      unescaped = CGI.unescapeHTML(content)
+      URI.unescape(unescaped)
+    end
 
     # Convert a document into a string. Prevent 'selected' attribute values from
     # being stripped away by treating those nodes as xhtml. Treat all others as
