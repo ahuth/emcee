@@ -40,18 +40,24 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Convert a document into a string. Prevent 'selected' attribute values from
-    # being stripped away by treating those nodes as xhtml. Treat all others as
-    # html.
+    # Convert a document into a string. While doing so, prevent 'selected'
+    # attributes from having their value removed, and try to make valid html5.
     def stringify(doc)
-      doc.children.map do |node|
-        return node.to_xhtml if has_selected_attribute?(node)
-        node.to_html
-      end.join
+      content = doc.children.to_s
+      fixed = fix_closed_link_tags(content)
+      fix_closed_script_tags(fixed)
     end
 
-    def has_selected_attribute?(node)
-      node.attributes.has_key?("selected")
+    def fix_closed_link_tags(content)
+      closed_tag = /<link (.*)\/>/
+      unclosed = '<link \1>'
+      content.gsub(closed_tag, unclosed)
+    end
+
+    def fix_closed_script_tags(content)
+      closed_tag = /<script (.*)\/>/
+      unclosed = '<script \1></script>'
+      content.gsub(closed_tag, unclosed)
     end
   end
 end
