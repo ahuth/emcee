@@ -74,4 +74,11 @@ class DocumentTest < ActiveSupport::TestCase
     doc = Emcee::Document.new(body)
     assert_equal doc.to_s, body
   end
+
+  test "html entities should be unescaped" do
+    url = "//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en"
+    body = "<link rel=\"stylesheet\" href=\"#{url}\">"
+    doc = Emcee::Document.new(body)
+    assert_equal doc.to_s, body
+  end
 end
