@@ -5,7 +5,7 @@ module Emcee
   # resulting document.
   class Document
     def initialize(data)
-      @doc = Nokogiri::HTML5.parse("<html><body>#{data}</body></html")
+      @doc = Nokogiri::HTML5.parse("<html><body>#{data}</body></html>")
     end
 
     def create_node(type, content)
@@ -17,8 +17,7 @@ module Emcee
     def to_s
       body = @doc.at("body")
       content = stringify(body).lstrip
-      unescaped = CGI.unescapeHTML(content)
-      URI.unescape(unescaped)
+      unescape(content)
     end
 
     def html_imports
@@ -34,6 +33,12 @@ module Emcee
     end
 
     private
+
+    # Unescape html entities and other special characters, such as &, {, and }.
+    def unescape(content)
+      unescaped = CGI.unescapeHTML(content)
+      URI.unescape(unescaped)
+    end
 
     # Convert a document into a string. Prevent 'selected' attribute values from
     # being stripped away by treating those nodes as xhtml. Treat all others as

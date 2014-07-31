@@ -57,25 +57,28 @@ class DocumentTest < ActiveSupport::TestCase
     EOS
   end
 
-  test "malformed template tag content should not be corrected" do
-    @body = <<-EOS.strip_heredoc
-      <template>
-        <p hidden?="{{ hidden }}">hidden</p>
-      </template>
-    EOS
-    @doc = Emcee::Document.new(@body)
-    assert_equal @doc.to_s, @body
+  test "optional attribute syntax should not be removed" do
+    body = "<p hidden?=\"{{ hidden }}\">hidden</p>"
+    doc = Emcee::Document.new(body)
+    assert_equal doc.to_s, body
   end
 
   test "special characters should be rendered correctly" do
-    @body = "<p src=\"{{ src }}\">test</p>"
-    @doc = Emcee::Document.new(@body)
-    assert_equal @doc.to_s, @body
+    body = "<p src=\"{{ src }}\">test</p>"
+    doc = Emcee::Document.new(body)
+    assert_equal doc.to_s, body
   end
 
   test "the selected attribute should be rendered correctly" do
-    @body = "<p selected=\"{{ selected }}\">test</p>"
-    @doc = Emcee::Document.new(@body)
-    assert_equal @doc.to_s, @body
+    body = "<p selected=\"{{ selected }}\">test</p>"
+    doc = Emcee::Document.new(body)
+    assert_equal doc.to_s, body
+  end
+
+  test "html entities should be unescaped" do
+    url = "//fonts.googleapis.com/css?family=RobotoDraft&lang=en"
+    body = "<link rel=\"stylesheet\" href=\"#{url}\">"
+    doc = Emcee::Document.new(body)
+    assert_equal doc.to_s, body
   end
 end
