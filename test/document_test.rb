@@ -76,7 +76,11 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "nested selected attributes should be rendered correctly" do
-    body = "<div><p selected=\"{{ selected }}\">test</p></div>"
+    body = <<-EOS.strip_heredoc
+      <div>
+        <p selected="{{ selected }}">test</p>
+      </div>
+    EOS
     doc = Emcee::Document.new(body)
     assert_equal doc.to_s, body
   end
