@@ -40,8 +40,9 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Convert a document into a string. While doing so, prevent 'selected'
-    # attributes from having their value removed, and try to make valid html5.
+    # Convert a document into a string. Using `children.to_s` instead of
+    # `to_html` prevents 'selected' attributes from having their values removed.
+    # This also results in tags being self-closed that shouldn't, which we fix.
     def stringify(doc)
       content = doc.children.to_s
       fixed = fix_closed_link_tags(content)
