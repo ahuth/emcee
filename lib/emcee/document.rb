@@ -15,8 +15,9 @@ module Emcee
     end
 
     def to_s
-      body = @doc.at("body").inner_html.lstrip
-      unescaped = CGI.unescapeHTML(body)
+      body = @doc.at("body")
+      content = stringify(body).lstrip
+      unescaped = CGI.unescapeHTML(content)
       URI.unescape(unescaped)
     end
 
@@ -30,6 +31,19 @@ module Emcee
 
     def style_references
       @doc.css("link[rel='stylesheet']")
+    end
+
+    private
+
+    def stringify(doc)
+      doc.children.map do |node|
+        return node.to_xhtml if has_selected_attribute?(node)
+        node.to_html
+      end.join
+    end
+
+    def has_selected_attribute?(node)
+      node.attributes.has_key?("selected")
     end
   end
 end
