@@ -30,11 +30,11 @@ class NodeTest < ActiveSupport::TestCase
   end
 
   test "should have href attribute" do
-    assert_equal @node.href, "test.css"
+    assert_equal "test.css", @node.href
   end
 
   test "should have src attribute" do
-    assert_equal @node.src, "test.js"
+    assert_equal "test.js", @node.src
   end
 
   test "should have remove method" do

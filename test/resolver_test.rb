@@ -26,7 +26,7 @@ class ResolverTest < ActiveSupport::TestCase
   end
 
   test "should have directory" do
-    assert_equal @resolver.directory, "/"
+    assert_equal "/", @resolver.directory
   end
 
   test "should require assets" do
