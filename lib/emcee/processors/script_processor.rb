@@ -16,7 +16,7 @@ module Emcee
 
       def inline_scripts(doc)
         doc.script_references.each do |node|
-          path = absolute_path(node.attribute("src"))
+          path = absolute_path(node.src)
           return unless @resolver.should_inline?(path)
           content = @resolver.evaluate(path)
           script = doc.create_node("script", content)

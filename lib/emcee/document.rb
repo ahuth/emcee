@@ -21,15 +21,15 @@ module Emcee
     end
 
     def html_imports
-      @doc.css("link[rel='import']")
+      @doc.css("link[rel='import']").map { |node| Emcee::Node.new(node) }
     end
 
     def script_references
-      @doc.css("script[src]")
+      @doc.css("script[src]").map { |node| Emcee::Node.new(node) }
     end
 
     def style_references
-      @doc.css("link[rel='stylesheet']")
+      @doc.css("link[rel='stylesheet']").map { |node| Emcee::Node.new(node) }
     end
 
     private
