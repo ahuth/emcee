@@ -21,18 +21,23 @@ module Emcee
     end
 
     def html_imports
-      @doc.css("link[rel='import']").map { |node| Emcee::Node.new(node) }
+      wrap_nodes(@doc.css("link[rel='import']"))
     end
 
     def script_references
-      @doc.css("script[src]").map { |node| Emcee::Node.new(node) }
+      wrap_nodes(@doc.css("script[src]"))
     end
 
     def style_references
-      @doc.css("link[rel='stylesheet']").map { |node| Emcee::Node.new(node) }
+      wrap_nodes(@doc.css("link[rel='stylesheet']"))
     end
 
     private
+
+    # Wrap a list of parsed nodes in our own Node class.
+    def wrap_nodes(nodes)
+      nodes.map { |node| Emcee::Node.new(node) }
+    end
 
     # Unescape html entities and other special characters, such as &, {, and }.
     def unescape(content)
