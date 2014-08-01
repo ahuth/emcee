@@ -17,7 +17,7 @@ module Emcee
 
       def require_assets(doc)
         doc.html_imports.each do |node|
-          path = absolute_path(node.attribute("href"))
+          path = absolute_path(node.href)
           @resolver.require_asset(path)
         end
       end

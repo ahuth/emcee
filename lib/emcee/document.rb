@@ -11,7 +11,7 @@ module Emcee
     def create_node(type, content)
       node = Nokogiri::XML::Node.new(type, @doc)
       node.content = content
-      node
+      Emcee::Node.new(node)
     end
 
     def to_s
@@ -21,18 +21,23 @@ module Emcee
     end
 
     def html_imports
-      @doc.css("link[rel='import']")
+      wrap_nodes(@doc.css("link[rel='import']"))
     end
 
     def script_references
-      @doc.css("script[src]")
+      wrap_nodes(@doc.css("script[src]"))
     end
 
     def style_references
-      @doc.css("link[rel='stylesheet']")
+      wrap_nodes(@doc.css("link[rel='stylesheet']"))
     end
 
     private
+
+    # Wrap a list of parsed nodes in our own Node class.
+    def wrap_nodes(nodes)
+      nodes.map { |node| Emcee::Node.new(node) }
+    end
 
     # Unescape html entities and other special characters, such as &, {, and }.
     def unescape(content)
