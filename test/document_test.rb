@@ -40,11 +40,6 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal @doc.style_references.first.href.to_s, "test1.css"
   end
 
-  test "nodes can be created" do
-    node = @doc.create_node("script", "test")
-    assert_equal node.to_s, "<script>test</script>"
-  end
-
   test "nodes can be replaced" do
     node = @doc.create_node("script", "test")
     @doc.html_imports.first.replace(node)
