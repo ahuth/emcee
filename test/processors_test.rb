@@ -42,35 +42,41 @@ class ProcessorsTest < ActiveSupport::TestCase
     processor = Emcee::Processors::ImportProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
-    assert @resolver.asset_required
-    assert_equal processed, <<-EOS.strip_heredoc
+    test = <<-EOS.strip_heredoc
       <link rel="stylesheet" href="test.css">
       <script src="test.js"></script>
       <p>test</p>
     EOS
+
+    assert @resolver.asset_required
+    assert_equal test, processed
   end
 
   test "processing stylesheets should work" do
     processor = Emcee::Processors::StylesheetProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
-    assert_equal processed, <<-EOS.strip_heredoc
+    test = <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <style>/* contents */</style>
       <script src="test.js"></script>
       <p>test</p>
     EOS
+
+    assert_equal test, processed
   end
 
   test "processing scripts should work" do
     processor = Emcee::Processors::ScriptProcessor.new(@resolver)
     processed = processor.process(@doc).to_s
 
-    assert_equal processed, <<-EOS.strip_heredoc
+    test = <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
       <script>/* contents */</script>
       <p>test</p>
     EOS
+
+    assert_equal test, processed
   end
 end
