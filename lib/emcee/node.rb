@@ -19,7 +19,11 @@ module Emcee
     end
 
     def replace(new_node)
-      @parser_node.replace(new_node)
+      @parser_node.replace(new_node.parser_node)
     end
+
+    protected
+
+    attr_reader :parser_node
   end
 end

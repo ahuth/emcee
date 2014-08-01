@@ -11,7 +11,7 @@ module Emcee
     def create_node(type, content)
       node = Nokogiri::XML::Node.new(type, @doc)
       node.content = content
-      node
+      Emcee::Node.new(node)
     end
 
     def to_s
