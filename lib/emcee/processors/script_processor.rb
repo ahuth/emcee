@@ -16,16 +16,12 @@ module Emcee
 
       def inline_scripts(doc)
         doc.script_references.each do |node|
-          path = absolute_path(node.src)
+          path = @resolver.absolute_path(node.src)
           return unless @resolver.should_inline?(path)
           content = @resolver.evaluate(path)
           script = doc.create_node("script", content)
           node.replace(script)
         end
-      end
-
-      def absolute_path(path)
-        File.absolute_path(path, @resolver.directory)
       end
     end
   end
