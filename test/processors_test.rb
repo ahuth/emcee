@@ -9,8 +9,8 @@ require 'emcee/document'
 class ResolverStub
   attr_reader :asset_required
 
-  def directory
-    "/"
+  def absolute_path(path)
+    "/#{path}"
   end
 
   def require_asset(asset)

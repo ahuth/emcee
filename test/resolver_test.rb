@@ -25,8 +25,8 @@ class ResolverTest < ActiveSupport::TestCase
     @resolver = Emcee::Resolver.new(@context)
   end
 
-  test "should have directory" do
-    assert_equal "/", @resolver.directory
+  test "should resolve absolute path" do
+    assert_equal "/test.js", @resolver.absolute_path("test.js")
   end
 
   test "should require assets" do

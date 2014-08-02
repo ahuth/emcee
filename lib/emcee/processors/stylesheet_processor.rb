@@ -16,16 +16,12 @@ module Emcee
 
       def inline_styles(doc)
         doc.style_references.each do |node|
-          path = absolute_path(node.href)
+          path = @resolver.absolute_path(node.href)
           return unless @resolver.should_inline?(path)
           content = @resolver.evaluate(path)
           style = doc.create_node("style", content)
           node.replace(style)
         end
-      end
-
-      def absolute_path(path)
-        File.absolute_path(path, @resolver.directory)
       end
     end
   end

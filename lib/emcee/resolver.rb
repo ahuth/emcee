@@ -1,8 +1,6 @@
 module Emcee
   # Resolver is responsible for interfacing with Sprockets.
   class Resolver
-    attr_reader :directory
-
     def initialize(context)
       @context = context
       @directory = File.dirname(context.pathname)
@@ -18,6 +16,10 @@ module Emcee
 
     def should_inline?(path)
       path !~ /\A\/\//
+    end
+
+    def absolute_path(path)
+      File.absolute_path(path, @directory)
     end
   end
 end
