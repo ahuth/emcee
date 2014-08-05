@@ -16,7 +16,7 @@ module Emcee
 
       def inline_styles(doc)
         doc.style_references.each do |node|
-          path = @resolver.absolute_path(node.href)
+          path = @resolver.absolute_path(node.path)
           return unless @resolver.should_inline?(path)
           content = @resolver.evaluate(path)
           style = doc.create_node("style", content)
