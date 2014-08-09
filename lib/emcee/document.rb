@@ -42,15 +42,15 @@ module Emcee
       nodes.map { |node| Emcee::Node.new(node) }
     end
 
-    # Unescape html entities and other special characters, such as &, {, and }.
+    # Unescape special characters such as &, {, and }.
     def unescape(content)
       unescaped = CGI.unescapeHTML(content)
       URI.unescape(unescaped)
     end
 
-    # Convert a document into a string. For some reason, 'selected' attributes
-    # have their values removed. Fix that by replacing their `to_html` output
-    # with `to_xhtml`.
+    # Convert nodes into a string. For some reason, 'selected' attributes have
+    # their values removed. Fix that by replacing their `to_html` output with
+    # `to_xhtml`.
     def stringify(parent)
       selected = parent.css("*[selected]")
       content = parent.children.to_html
