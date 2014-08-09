@@ -3,6 +3,9 @@ module Emcee
     # ImportProcessor scans a file for html imports and adds them to the current
     # required assets.
     class ImportProcessor
+      attr_reader :resolver
+      private :resolver
+
       def initialize(resolver)
         @resolver = resolver
       end
@@ -17,8 +20,8 @@ module Emcee
 
       def require_assets(doc)
         doc.html_imports.each do |node|
-          path = @resolver.absolute_path(node.path)
-          @resolver.require_asset(path)
+          path = resolver.absolute_path(node.path)
+          resolver.require_asset(path)
         end
       end
 
