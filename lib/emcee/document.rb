@@ -11,12 +11,6 @@ module Emcee
       @doc = Nokogiri::HTML5.parse("<html><body>#{data}</body></html>")
     end
 
-    def create_node(type, content)
-      node = Nokogiri::XML::Node.new(type, doc)
-      node.content = content
-      Emcee::Node.new(node)
-    end
-
     def to_s
       body = doc.at("body")
       content = stringify(body).lstrip

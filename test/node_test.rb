@@ -21,6 +21,10 @@ class ParserNodeStub
   def replace(new_node)
     @replaced = true
   end
+
+  def document
+    Nokogiri::HTML::Document.new
+  end
 end
 
 class NodeTest < ActiveSupport::TestCase
@@ -39,9 +43,8 @@ class NodeTest < ActiveSupport::TestCase
   end
 
   test "should have replace method" do
-    new_parser_node = ParserNodeStub.new
-    new_node = Emcee::Node.new(new_parser_node)
-    @node.replace(new_node)
+    new_content = "/* test */"
+    @node.replace("style", new_content)
     assert @parser_node.replaced
   end
 end
