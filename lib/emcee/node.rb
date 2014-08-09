@@ -3,7 +3,7 @@ module Emcee
   # make up the parsed document.
   class Node
     attr_reader :parser_node
-    protected :parser_node
+    private :parser_node
 
     def initialize(parser_node)
       @parser_node = parser_node
