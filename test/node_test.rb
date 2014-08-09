@@ -7,7 +7,7 @@ class ParserNodeStub
   attr_reader :removed, :replaced
 
   def initialize
-    @attributes = { href: "test.css", src: "test.js" }
+    @attributes = { href: "test.css" }
   end
 
   def attribute(name)
@@ -29,12 +29,8 @@ class NodeTest < ActiveSupport::TestCase
     @node = Emcee::Node.new(@parser_node)
   end
 
-  test "should have href attribute" do
-    assert_equal "test.css", @node.href
-  end
-
-  test "should have src attribute" do
-    assert_equal "test.js", @node.src
+  test "should have path" do
+    assert_equal "test.css", @node.path
   end
 
   test "should have remove method" do

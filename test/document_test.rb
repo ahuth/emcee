@@ -35,9 +35,9 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "nodes can access their attributes" do
-    assert_equal "test1.html", @doc.html_imports.first.href.to_s
-    assert_equal "test1.js", @doc.script_references.first.src.to_s
-    assert_equal "test1.css", @doc.style_references.first.href.to_s
+    assert_equal "test1.html", @doc.html_imports.first.path.to_s
+    assert_equal "test1.js", @doc.script_references.first.path.to_s
+    assert_equal "test1.css", @doc.style_references.first.path.to_s
   end
 
   test "nodes can be replaced" do
