@@ -1,50 +1,32 @@
 require 'test_helper'
 require 'emcee/node.rb'
 
-# Create a stub of the native nodes used by the html parser, so we can test if
-# we're sending the correct messages to it.
-class ParserNodeStub
-  attr_reader :removed, :replaced
-
-  def initialize
-    @attributes = { href: "test.css" }
-  end
-
-  def attribute(name)
-    @attributes[name.to_sym]
-  end
-
-  def remove
-    @removed = true
-  end
-
-  def replace(new_node)
-    @replaced = true
-  end
-
-  def document
-    Nokogiri::HTML::Document.new
-  end
-end
-
 class NodeTest < ActiveSupport::TestCase
   setup do
-    @parser_node = ParserNodeStub.new
+    @body = "<link rel=\"stylesheet\" href=\"test.css\">"
+    @document = Nokogiri::HTML.fragment(@body)
+    @parser_node = @document.children.first
     @node = Emcee::Node.new(@parser_node)
   end
 
   test "should have path" do
-    assert_equal "test.css", @node.path
+    assert_equal "test.css", @node.path.to_s
   end
 
-  test "should have remove method" do
+  test "should remove itself" do
     @node.remove
-    assert @parser_node.removed
+    assert_equal 0, @document.children.length
   end
 
-  test "should have replace method" do
+  test "can be replaced by a <style>" do
     new_content = "/* test */"
     @node.replace("style", new_content)
-    assert @parser_node.replaced
+    assert_equal "<style>/* test */</style>", @document.to_s
+  end
+
+  test "can be replaced by a <script>" do
+    new_content = "/* test */"
+    @node.replace("script", new_content)
+    assert_equal "<script>/* test */</script>", @document.to_s
   end
 end
