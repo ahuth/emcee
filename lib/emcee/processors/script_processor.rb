@@ -3,6 +3,9 @@ module Emcee
     # ScriptProcessor scans a document for external script references and inlines
     # them into the current document.
     class ScriptProcessor
+      attr_reader :resolver
+      private :resolver
+
       def initialize(resolver)
         @resolver = resolver
       end
@@ -16,9 +19,9 @@ module Emcee
 
       def inline_scripts(doc)
         doc.script_references.each do |node|
-          path = @resolver.absolute_path(node.path)
-          return unless @resolver.should_inline?(path)
-          content = @resolver.evaluate(path)
+          path = resolver.absolute_path(node.path)
+          return unless resolver.should_inline?(path)
+          content = resolver.evaluate(path)
           node.replace("script", content)
         end
       end
