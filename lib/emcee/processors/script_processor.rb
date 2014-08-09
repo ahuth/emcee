@@ -19,8 +19,7 @@ module Emcee
           path = @resolver.absolute_path(node.path)
           return unless @resolver.should_inline?(path)
           content = @resolver.evaluate(path)
-          script = doc.create_node("script", content)
-          node.replace(script)
+          node.replace("script", content)
         end
       end
     end

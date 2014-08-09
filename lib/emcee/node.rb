@@ -17,8 +17,10 @@ module Emcee
       parser_node.remove
     end
 
-    def replace(new_node)
-      parser_node.replace(new_node.parser_node)
+    def replace(type, new_content)
+      new_node = Nokogiri::XML::Node.new(type, document)
+      new_node.content = new_content
+      parser_node.replace(new_node)
     end
 
     private
@@ -29,6 +31,10 @@ module Emcee
 
     def src
       parser_node.attribute("src")
+    end
+
+    def document
+      parser_node.document
     end
   end
 end
