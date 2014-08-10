@@ -12,8 +12,7 @@ module Emcee
     end
 
     def to_s
-      selected = doc.css("*[selected]")
-      stringified = replace_html_with_xhtml(content, selected)
+      stringified = replace_html_with_xhtml(content, elements_with_selected)
       unescape(stringified)
     end
 
@@ -33,6 +32,10 @@ module Emcee
 
     def content
       doc.at("body").children.to_html.lstrip
+    end
+
+    def elements_with_selected
+      doc.css("*[selected]")
     end
 
     # Wrap a list of parsed nodes in our own Node class.
