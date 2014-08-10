@@ -12,9 +12,7 @@ module Emcee
     end
 
     def to_s
-      body = doc.at("body")
-      content = stringify(body).lstrip
-      unescape(content)
+      unescape(replace_html_with_xhtml)
     end
 
     def html_imports
@@ -31,6 +29,14 @@ module Emcee
 
     private
 
+    def to_html
+      doc.at("body").children.to_html.lstrip
+    end
+
+    def selected
+      doc.css("*[selected]")
+    end
+
     # Wrap a list of parsed nodes in our own Node class.
     def wrap_nodes(nodes)
       nodes.map { |node| Emcee::Node.new(node) }
@@ -42,13 +48,10 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Convert nodes into a string. For some reason, 'selected' attributes have
-    # their values removed. Fix that by replacing their `to_html` output with
-    # `to_xhtml`.
-    def stringify(parent)
-      selected = parent.css("*[selected]")
-      content = parent.children.to_html
-      selected.reduce(content) do |output, node|
+    # Take the html string and replace any elements that have a 'selected'
+    # attribute with their xhtml string.
+    def replace_html_with_xhtml
+      selected.reduce(to_html) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
