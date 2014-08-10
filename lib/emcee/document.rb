@@ -12,8 +12,7 @@ module Emcee
     end
 
     def to_s
-      stringified = replace_html_with_xhtml(content, elements_with_selected)
-      unescape(stringified)
+      unescape(replace_html_with_xhtml)
     end
 
     def html_imports
@@ -51,8 +50,8 @@ module Emcee
 
     # Replace the html of certain nodes with their xhtml representation. This
     # is to prevent 'selected' attributes from having their values removed.
-    def replace_html_with_xhtml(content, nodes)
-      nodes.reduce(content) do |output, node|
+    def replace_html_with_xhtml
+      elements_with_selected.reduce(content) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
