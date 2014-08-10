@@ -48,7 +48,13 @@ module Emcee
     def stringify(parent)
       selected = parent.css("*[selected]")
       content = parent.children.to_html
-      selected.reduce(content) do |output, node|
+      replace_html_with_xhtml(content, selected)
+    end
+
+    # Replace the html of certain nodes with their xhtml representation. This
+    # is to prevent 'selected' attributes from having their values removed.
+    def replace_html_with_xhtml(content, nodes)
+      nodes.reduce(content) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
