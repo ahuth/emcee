@@ -12,7 +12,7 @@ module Emcee
     end
 
     def to_s
-      unescape(stringify)
+      unescape(replace_html_with_xhtml)
     end
 
     def html_imports
@@ -33,7 +33,7 @@ module Emcee
       doc.at("body").children.to_html.lstrip
     end
 
-    def elements_with_selected_attribute
+    def selected
       doc.css("*[selected]")
     end
 
@@ -50,8 +50,8 @@ module Emcee
 
     # Turn this doc into its html string representation. For any elements that
     # have a 'selected' attribute, swap it out for its xhtml representation.
-    def stringify
-      elements_with_selected_attribute.reduce(to_html) do |output, node|
+    def replace_html_with_xhtml
+      selected.reduce(to_html) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
