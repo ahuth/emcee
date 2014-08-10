@@ -33,7 +33,7 @@ module Emcee
       doc.at("body").children.to_html.lstrip
     end
 
-    def elements_with_selected
+    def elements_with_selected_attribute
       doc.css("*[selected]")
     end
 
@@ -51,7 +51,7 @@ module Emcee
     # Replace the html of certain nodes with their xhtml representation. This
     # is to prevent 'selected' attributes from having their values removed.
     def stringify
-      elements_with_selected.reduce(content) do |output, node|
+      elements_with_selected_attribute.reduce(content) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
