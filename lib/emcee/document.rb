@@ -29,7 +29,7 @@ module Emcee
 
     private
 
-    def content
+    def to_html
       doc.at("body").children.to_html.lstrip
     end
 
@@ -51,7 +51,7 @@ module Emcee
     # Turn this doc into its html string representation. For any elements that
     # have a 'selected' attribute, swap it out for its xhtml representation.
     def stringify
-      elements_with_selected_attribute.reduce(content) do |output, node|
+      elements_with_selected_attribute.reduce(to_html) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
