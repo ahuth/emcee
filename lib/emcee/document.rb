@@ -48,8 +48,8 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Turn this doc into its html string representation. For any elements that
-    # have a 'selected' attribute, swap it out for its xhtml representation.
+    # Take the html string and replace any elements that have a 'selected'
+    # attribute with their xhtml string.
     def replace_html_with_xhtml
       selected.reduce(to_html) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
