@@ -48,8 +48,8 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Replace the html of certain nodes with their xhtml representation. This
-    # is to prevent 'selected' attributes from having their values removed.
+    # Turn this doc into its html string representation. For any elements that
+    # have a 'selected' attribute, swap it out for its xhtml representation.
     def stringify
       elements_with_selected_attribute.reduce(content) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
