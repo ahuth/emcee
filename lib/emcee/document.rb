@@ -13,8 +13,10 @@ module Emcee
 
     def to_s
       body = doc.at("body")
-      content = stringify(body).lstrip
-      unescape(content)
+      content = body.children.to_html.lstrip
+      selected = body.css("*[selected]")
+      stringified = replace_html_with_xhtml(content, selected)
+      unescape(stringified)
     end
 
     def html_imports
@@ -40,15 +42,6 @@ module Emcee
     def unescape(content)
       unescaped = CGI.unescapeHTML(content)
       URI.unescape(unescaped)
-    end
-
-    # Convert nodes into a string. For some reason, 'selected' attributes have
-    # their values removed. Fix that by replacing their `to_html` output with
-    # `to_xhtml`.
-    def stringify(parent)
-      selected = parent.css("*[selected]")
-      content = parent.children.to_html
-      replace_html_with_xhtml(content, selected)
     end
 
     # Replace the html of certain nodes with their xhtml representation. This
