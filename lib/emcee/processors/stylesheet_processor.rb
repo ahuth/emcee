@@ -3,9 +3,6 @@ module Emcee
     # StylesheetProcessor scans a document for external stylesheet references and
     # inlines them into the current document.
     class StylesheetProcessor
-      attr_reader :resolver
-      private :resolver
-
       def initialize(resolver)
         @resolver = resolver
       end
@@ -19,9 +16,9 @@ module Emcee
 
       def inline_styles(doc)
         doc.style_references.each do |node|
-          path = resolver.absolute_path(node.path)
-          return unless resolver.should_inline?(path)
-          content = resolver.evaluate(path)
+          path = @resolver.absolute_path(node.path)
+          return unless @resolver.should_inline?(path)
+          content = @resolver.evaluate(path)
           node.replace("style", content)
         end
       end
