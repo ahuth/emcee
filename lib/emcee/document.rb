@@ -4,9 +4,6 @@ module Emcee
   # Document is responsible for parsing HTML and handling interaction with the
   # resulting document.
   class Document
-    attr_reader :doc
-    private :doc
-
     def initialize(data)
       @doc = Nokogiri::HTML5.parse("<html><body>#{data}</body></html>")
     end
@@ -16,25 +13,25 @@ module Emcee
     end
 
     def html_imports
-      wrap_nodes(doc.css("link[rel='import']"))
+      wrap_nodes(@doc.css("link[rel='import']"))
     end
 
     def script_references
-      wrap_nodes(doc.css("script[src]"))
+      wrap_nodes(@doc.css("script[src]"))
     end
 
     def style_references
-      wrap_nodes(doc.css("link[rel='stylesheet']"))
+      wrap_nodes(@doc.css("link[rel='stylesheet']"))
     end
 
     private
 
     def to_html
-      doc.at("body").children.to_html.lstrip
+      @doc.at("body").children.to_html.lstrip
     end
 
     def selected
-      doc.css("*[selected]")
+      @doc.css("*[selected]")
     end
 
     # Wrap a list of parsed nodes in our own Node class.
