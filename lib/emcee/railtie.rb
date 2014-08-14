@@ -4,6 +4,7 @@ require "emcee/processors/script_processor"
 require "emcee/processors/stylesheet_processor"
 require "emcee/compressors/html_compressor"
 require "emcee/document"
+require "emcee/node"
 require "emcee/resolver"
 
 module Emcee
