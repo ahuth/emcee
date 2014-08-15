@@ -1,3 +1,4 @@
+require "emcee/node"
 require 'nokogumbo'
 
 module Emcee
