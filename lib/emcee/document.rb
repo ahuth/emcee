@@ -1,4 +1,5 @@
-require 'nokogumbo'
+require "emcee/node"
+require "nokogumbo"
 
 module Emcee
   # Document is responsible for parsing HTML and handling interaction with the
