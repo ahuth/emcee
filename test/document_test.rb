@@ -46,16 +46,6 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal body, doc.to_s
   end
 
-  test "nested selected attributes should be rendered correctly" do
-    body = <<-EOS.strip_heredoc
-      <div>
-        <p selected="{{ selected }}">test</p>
-      </div>
-    EOS
-    doc = Emcee::Document.new(body)
-    assert_equal body, doc.to_s
-  end
-
   test "html entities should be unescaped" do
     url = "//fonts.googleapis.com/css?family=RobotoDraft&lang=en"
     body = "<link rel=\"stylesheet\" href=\"#{url}\">"
