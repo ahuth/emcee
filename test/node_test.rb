@@ -5,8 +5,7 @@ class NodeTest < ActiveSupport::TestCase
   setup do
     @body = "<link rel=\"stylesheet\" href=\"test.css\">"
     @document = Nokogiri::HTML.fragment(@body)
-    @parser_node = @document.children.first
-    @node = Emcee::Node.new(@parser_node)
+    @node = Emcee::Node.new(@document.children.first)
   end
 
   test "should have a stylesheet path" do
@@ -14,10 +13,8 @@ class NodeTest < ActiveSupport::TestCase
   end
 
   test "should have a script path" do
-    body = "<script src=\"test.js\"></script>"
-    document = Nokogiri::HTML.fragment(body)
-    parser_node = document.children.first
-    node = Emcee::Node.new(parser_node)
+    document = Nokogiri::HTML.fragment("<script src=\"test.js\"></script>")
+    node = Emcee::Node.new(document.children.first)
     assert_equal "test.js", node.path.to_s
   end
 
