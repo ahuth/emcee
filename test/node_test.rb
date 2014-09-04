@@ -14,8 +14,9 @@ class NodeTest < ActiveSupport::TestCase
   end
 
   test "should remove itself" do
-    @node.remove
-    assert_equal 0, @document.children.length
+    assert_difference "@document.children.length", -1 do
+      @node.remove
+    end
   end
 
   test "can be replaced by a <style>" do
