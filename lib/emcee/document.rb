@@ -27,10 +27,12 @@ module Emcee
 
     private
 
+    # Get the html content of the document as a string.
     def to_html
       @doc.at("body").children.to_html.lstrip
     end
 
+    # Get a list of nodes with a 'selected' attribute.
     def selected
       @doc.css("*[selected]")
     end
