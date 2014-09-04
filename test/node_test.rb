@@ -9,8 +9,16 @@ class NodeTest < ActiveSupport::TestCase
     @node = Emcee::Node.new(@parser_node)
   end
 
-  test "should have path" do
+  test "should have a stylesheet path" do
     assert_equal "test.css", @node.path.to_s
+  end
+
+  test "should have a script path" do
+    body = "<script src=\"test.js\"></script>"
+    document = Nokogiri::HTML.fragment(body)
+    parser_node = document.children.first
+    node = Emcee::Node.new(parser_node)
+    assert_equal "test.js", node.path.to_s
   end
 
   test "should remove itself" do
