@@ -5,17 +5,23 @@ class NodeTest < ActiveSupport::TestCase
   setup do
     @body = "<link rel=\"stylesheet\" href=\"test.css\">"
     @document = Nokogiri::HTML.fragment(@body)
-    @parser_node = @document.children.first
-    @node = Emcee::Node.new(@parser_node)
+    @node = Emcee::Node.new(@document.children.first)
   end
 
-  test "should have path" do
+  test "should have a stylesheet path" do
     assert_equal "test.css", @node.path.to_s
   end
 
+  test "should have a script path" do
+    document = Nokogiri::HTML.fragment("<script src=\"test.js\"></script>")
+    node = Emcee::Node.new(document.children.first)
+    assert_equal "test.js", node.path.to_s
+  end
+
   test "should remove itself" do
-    @node.remove
-    assert_equal 0, @document.children.length
+    assert_difference "@document.children.length", -1 do
+      @node.remove
+    end
   end
 
   test "can be replaced by a <style>" do
