@@ -35,17 +35,14 @@ module Emcee
       @doc.at("body").children.to_html.lstrip
     end
 
-    # Get a list of nodes with a 'selected' attribute.
     def nodes_with_selected_attribute
       @doc.css("*[selected]")
     end
 
-    # Wrap a list of parsed nodes in our own Node class.
     def wrap_nodes(nodes)
       nodes.map { |node| Emcee::Node.new(node) }
     end
 
-    # Unescape & characters.
     def unescape(content)
       content.gsub("&amp;", "&")
     end
