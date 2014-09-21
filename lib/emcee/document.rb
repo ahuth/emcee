@@ -10,7 +10,11 @@ module Emcee
     end
 
     def to_s
-      unescape(replace_html_with_xhtml)
+      # Generate the html string for the document, but use xhtml for any nodes
+      # with a 'selected' attribute. This prevents the parser from removing
+      # those attributes.
+      html = htmlify_except(selected)
+      unescape(html)
     end
 
     def html_imports
@@ -48,10 +52,10 @@ module Emcee
       URI.unescape(unescaped)
     end
 
-    # Take the html string and replace any elements that have a 'selected'
-    # attribute with their xhtml string.
-    def replace_html_with_xhtml
-      selected.reduce(to_html) do |output, node|
+    # Generate an html string for the current document, but replace the provided
+    # nodes with their xhtml strings.
+    def htmlify_except(nodes)
+      nodes.reduce(to_html) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
