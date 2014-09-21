@@ -29,19 +29,19 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "optional attribute syntax should not be removed" do
-    body = "<p hidden?=\"test\">hidden</p>"
+    body = '<p hidden?="test">hidden</p>'
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
 
   test "the selected attribute should be rendered correctly" do
-    body = "<p selected=\"selected\">test</p>"
+    body = '<p selected="selected">test</p>'
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
 
   test "ampersands, spaces, and curly-brackets should be unescaped" do
-    body = "<p test=\"{{ & }}\"></p>"
+    body = '<p test="{{ & }}"></p>'
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
