@@ -29,26 +29,19 @@ class DocumentTest < ActiveSupport::TestCase
   end
 
   test "optional attribute syntax should not be removed" do
-    body = "<p hidden?=\"{{ hidden }}\">hidden</p>"
-    doc = Emcee::Document.new(body)
-    assert_equal body, doc.to_s
-  end
-
-  test "special characters should be rendered correctly" do
-    body = "<p src=\"{{ src }}\">test</p>"
+    body = "<p hidden?=\"test\">hidden</p>"
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
 
   test "the selected attribute should be rendered correctly" do
-    body = "<p selected=\"{{ selected }}\">test</p>"
+    body = "<p selected=\"selected\">test</p>"
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
 
-  test "html entities should be unescaped" do
-    url = "//fonts.googleapis.com/css?family=RobotoDraft&lang=en"
-    body = "<link rel=\"stylesheet\" href=\"#{url}\">"
+  test "ampersands, spaces, and curly-brackets should be unescaped" do
+    body = "<p test=\"{{ & }}\"></p>"
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
