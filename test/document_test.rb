@@ -52,4 +52,10 @@ class DocumentTest < ActiveSupport::TestCase
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
+
+  test "html entities in JavaScript should not be unescaped" do
+    body = "<script>var test = '&#39;';</script>"
+    doc = Emcee::Document.new(body)
+    assert_equal body, doc.to_s
+  end
 end
