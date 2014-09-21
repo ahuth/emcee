@@ -12,7 +12,7 @@ module Emcee
     def to_s
       # Make an html string. To prevent 'selected' attributes from being
       # removed, use xhtml for nodes with them.
-      html = htmlify_except(selected)
+      html = htmlify_except(nodes_with_selected_attribute)
       unescape(html)
     end
 
@@ -36,7 +36,7 @@ module Emcee
     end
 
     # Get a list of nodes with a 'selected' attribute.
-    def selected
+    def nodes_with_selected_attribute
       @doc.css("*[selected]")
     end
 
