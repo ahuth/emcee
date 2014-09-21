@@ -10,7 +10,10 @@ module Emcee
     end
 
     def to_s
-      unescape(replace_html_with_xhtml)
+      # Make an html string. To prevent 'selected' attributes from being
+      # removed, use xhtml for nodes with them.
+      html = htmlify_except(nodes_with_selected_attribute)
+      unescape(html)
     end
 
     def html_imports
@@ -32,26 +35,22 @@ module Emcee
       @doc.at("body").children.to_html.lstrip
     end
 
-    # Get a list of nodes with a 'selected' attribute.
-    def selected
+    def nodes_with_selected_attribute
       @doc.css("*[selected]")
     end
 
-    # Wrap a list of parsed nodes in our own Node class.
     def wrap_nodes(nodes)
       nodes.map { |node| Emcee::Node.new(node) }
     end
 
-    # Unescape special characters such as &, {, and }.
     def unescape(content)
-      unescaped = CGI.unescapeHTML(content)
-      URI.unescape(unescaped)
+      content.gsub("&amp;", "&")
     end
 
-    # Take the html string and replace any elements that have a 'selected'
-    # attribute with their xhtml string.
-    def replace_html_with_xhtml
-      selected.reduce(to_html) do |output, node|
+    # Generate an html string for the current document, but replace the provided
+    # nodes with their xhtml strings.
+    def htmlify_except(nodes)
+      nodes.reduce(to_html) do |output, node|
         output.gsub(node.to_html, node.to_xhtml)
       end
     end
