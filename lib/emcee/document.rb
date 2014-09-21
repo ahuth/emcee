@@ -10,9 +10,8 @@ module Emcee
     end
 
     def to_s
-      # Generate the html string for the document, but use xhtml for any nodes
-      # with a 'selected' attribute. This prevents the parser from removing
-      # those attributes.
+      # Make an html string. To prevent 'selected' attributes from being
+      # removed, use xhtml for nodes with them.
       html = htmlify_except(selected)
       unescape(html)
     end
