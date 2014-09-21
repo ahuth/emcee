@@ -46,10 +46,12 @@ module Emcee
       nodes.map { |node| Emcee::Node.new(node) }
     end
 
-    # Unescape special characters such as &, {, and }.
+    # Unescape the special characters &, {, and }.
     def unescape(content)
-      unescaped = CGI.unescapeHTML(content)
-      URI.unescape(unescaped)
+      special_chars = { "&amp;" => "&", "%7B" => "{", "%7D" => "}", "%20" => " " }
+      special_chars.reduce(content) do |output, (escaped, normal)|
+        output.gsub(escaped, normal)
+      end
     end
 
     # Generate an html string for the current document, but replace the provided
