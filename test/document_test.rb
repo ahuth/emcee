@@ -57,4 +57,10 @@ class DocumentTest < ActiveSupport::TestCase
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
+
+  test "curly brackets in src attributes should be unescaped" do
+    body = '<core-icon src="{{iconSrc}}"></core-icon>'
+    doc = Emcee::Document.new(body)
+    assert_equal body, doc.to_s
+  end
 end
