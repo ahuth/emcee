@@ -1,6 +1,7 @@
-<polymer-element name="test" attributes="hidden">
+<polymer-element name="test" attributes="hidden src">
   <template>
     <link rel="stylesheet" href="test.css">
+    <core-icon src="{{ iconSrc }}"></core-icon>
     <p hidden?="{{ hidden }}">Test template</p>
   </template>
 </polymer-element>
