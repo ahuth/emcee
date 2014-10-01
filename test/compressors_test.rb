@@ -13,10 +13,9 @@ class CompressorsTest < ActiveSupport::TestCase
       -->
       <span>The span to end all spans</span>
     EOS
-    correct = <<-EOS.strip_heredoc
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <span>The span to end all spans</span>
     EOS
-    assert_equal correct, @compressor.compress(content)
   end
 
   test "compressor should remove multi-line javascript comments" do
@@ -28,11 +27,10 @@ class CompressorsTest < ActiveSupport::TestCase
         */
       </script>
     EOS
-    correct = <<-EOS.strip_heredoc
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <script>
       </script>
     EOS
-    assert_equal correct, @compressor.compress(content)
   end
 
   test "compressor should remove single-line javascript comments" do
@@ -42,11 +40,10 @@ class CompressorsTest < ActiveSupport::TestCase
         // Here is another coment.
       </script>
     EOS
-    correct = <<-EOS.strip_heredoc
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <script>
       </script>
     EOS
-    assert_equal correct, @compressor.compress(content)
   end
 
   test "compressor should remove css comments" do
@@ -60,14 +57,13 @@ class CompressorsTest < ActiveSupport::TestCase
         }
       </style>
     EOS
-    correct = <<-EOS.strip_heredoc
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <style>
         h1 {
           color: pink;
         }
       </style>
     EOS
-    assert_equal correct, @compressor.compress(content)
   end
 
   test "compressor should remove blank lines" do
@@ -80,12 +76,11 @@ class CompressorsTest < ActiveSupport::TestCase
 
       <p>test</p>
     EOS
-    correct = <<-EOS.strip_heredoc
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <p>test</p>
       <p>oh yeah</p>
       <p>test</p>
     EOS
-    assert_equal correct, @compressor.compress(content)
   end
 
   test "compressor should not attempt to remove javascript comments within a string" do
@@ -94,6 +89,6 @@ class CompressorsTest < ActiveSupport::TestCase
         var url = 'http://www.w3.org/2000/svg';
       </script>
     EOS
-    assert_equal content, @compressor.compress(content)
+    assert_equal @compressor.compress(content), content
   end
 end
