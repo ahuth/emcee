@@ -10,9 +10,10 @@ module Emcee
     end
 
     def to_s
-      # Make an html string. To prevent 'selected' attributes from being
-      # removed, use xhtml for nodes with them.
-      html = htmlify_except(nodes_with_selected_attribute)
+      # Make an html string. The parser does weird things with certain
+      # attributes, so turn those nodes into xhtml.
+      xhtml_nodes = nodes_with_selected_attribute + nodes_with_src_attribute
+      html = htmlify_except(xhtml_nodes)
       unescape(html)
     end
 
@@ -37,6 +38,10 @@ module Emcee
 
     def nodes_with_selected_attribute
       @doc.css("*[selected]")
+    end
+
+    def nodes_with_src_attribute
+      @doc.css("*[src]:not(script)")
     end
 
     def wrap_nodes(nodes)

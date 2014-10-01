@@ -34,12 +34,13 @@ class DummyAppIntegrationTest < ActionController::TestCase
       <script>var hello = "world";
       </script>
       <p>Test js</p>
-      <polymer-element name="test" attributes="hidden">
+      <polymer-element name="test" attributes="hidden src">
         <template>
           <style>:host {
         color: pink;
       }
       </style>
+          <core-icon src="{{ iconSrc }}"></core-icon>
           <p hidden?="{{ hidden }}">Test template</p>
         </template>
       </polymer-element>
