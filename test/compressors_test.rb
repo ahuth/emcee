@@ -6,48 +6,48 @@ class CompressorsTest < ActiveSupport::TestCase
   end
 
   test "compressor should remove html comments" do
-    content = %q{
+    content = <<-EOS.strip_heredoc
       <!--
         What will we do with all
         of these html comments?
       -->
       <span>The span to end all spans</span>
-    }
-    assert_equal "\n" + @compressor.compress(content), %q{
+    EOS
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <span>The span to end all spans</span>
-    }
+    EOS
   end
 
   test "compressor should remove multi-line javascript comments" do
-    content = %q{
+    content = <<-EOS.strip_heredoc
       <script>
         /*
         Here are some comments that
         go over many, many lines.
         */
       </script>
-    }
-    assert_equal "\n" + @compressor.compress(content), %q{
+    EOS
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <script>
       </script>
-    }
+    EOS
   end
 
   test "compressor should remove single-line javascript comments" do
-    content = %q{
+    content = <<-EOS.strip_heredoc
       <script>
         // Here is a comment.
         // Here is another coment.
       </script>
-    }
-    assert_equal "\n" + @compressor.compress(content), %q{
+    EOS
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <script>
       </script>
-    }
+    EOS
   end
 
   test "compressor should remove css comments" do
-    content = %q{
+    content = <<-EOS.strip_heredoc
       <style>
         h1 {
           /*
@@ -56,18 +56,18 @@ class CompressorsTest < ActiveSupport::TestCase
           color: pink;
         }
       </style>
-    }
-    assert_equal "\n" + @compressor.compress(content), %q{
+    EOS
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <style>
         h1 {
           color: pink;
         }
       </style>
-    }
+    EOS
   end
 
   test "compressor should remove blank lines" do
-    content = %q{
+    content = <<-EOS.strip_heredoc
       <p>test</p>
 
 
@@ -75,20 +75,20 @@ class CompressorsTest < ActiveSupport::TestCase
       <p>oh yeah</p>
 
       <p>test</p>
-    }
-    assert_equal "\n" + @compressor.compress(content), %q{
+    EOS
+    assert_equal @compressor.compress(content), <<-EOS.strip_heredoc
       <p>test</p>
       <p>oh yeah</p>
       <p>test</p>
-    }
+    EOS
   end
 
   test "compressor should not attempt to remove javascript comments within a string" do
-    content = %q{
+    content = <<-EOS.strip_heredoc
       <script>
         var url = 'http://www.w3.org/2000/svg';
       </script>
-    }
-    assert_equal "\n" + @compressor.compress(content), content
+    EOS
+    assert_equal @compressor.compress(content), content
   end
 end
