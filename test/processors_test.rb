@@ -9,6 +9,10 @@ require 'emcee/document'
 class ResolverStub
   attr_reader :asset_required
 
+  def initialize(contents)
+    @contents = contents
+  end
+
   def absolute_path(path)
     "/#{path}"
   end
@@ -18,7 +22,7 @@ class ResolverStub
   end
 
   def evaluate(path)
-    "/* contents */"
+    @contents
   end
 
   def should_inline?(path)
@@ -28,7 +32,7 @@ end
 
 class ProcessorsTest < ActiveSupport::TestCase
   setup do
-    @resolver = ResolverStub.new
+    @resolver = ResolverStub.new "/* contents */"
     @body = <<-EOS.strip_heredoc
       <link rel="import" href="test.html">
       <link rel="stylesheet" href="test.css">
@@ -79,4 +83,37 @@ class ProcessorsTest < ActiveSupport::TestCase
 
     assert_equal correct, processed
   end
+
+  test "processing scripts escapes </script>" do
+    @resolver = ResolverStub.new "// </script>"
+
+    processor = Emcee::Processors::ScriptProcessor.new(@resolver)
+    processed = processor.process(@doc).to_s
+
+    correct = <<-EOS.strip_heredoc
+      <link rel="import" href="test.html">
+      <link rel="stylesheet" href="test.css">
+      <script>// <\\/script></script>
+      <p>test</p>
+    EOS
+
+    assert_equal correct, processed
+  end
+
+  test "processing scripts escapes <!--" do
+    @resolver = ResolverStub.new "// <!--"
+
+    processor = Emcee::Processors::ScriptProcessor.new(@resolver)
+    processed = processor.process(@doc).to_s
+
+    correct = <<-EOS.strip_heredoc
+      <link rel="import" href="test.html">
+      <link rel="stylesheet" href="test.css">
+      <script>// <!\\--</script>
+      <p>test</p>
+    EOS
+
+    assert_equal correct, processed
+  end
 end
+
