@@ -18,9 +18,17 @@ module Emcee
         doc.script_references.each do |node|
           path = @resolver.absolute_path(node.path)
           return unless @resolver.should_inline?(path)
-          content = @resolver.evaluate(path)
-          node.replace("script", content)
+          script = @resolver.evaluate(path)
+          node.replace("script", escape_with_slash(script))
         end
+      end
+
+      def escape_with_slash(script)
+        script = script.sub('<!--', '<!\\--')
+        script.gsub!(/<\/\s*script/i) do |match|
+          match.sub '</', '<\\/'
+        end
+        script
       end
     end
   end
