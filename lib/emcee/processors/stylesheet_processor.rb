@@ -20,6 +20,7 @@ module Emcee
           return unless @resolver.should_inline?(path)
           content = @resolver.evaluate(path)
           node.replace("style", content)
+          @resolver.depend_on_asset(path)
         end
       end
     end

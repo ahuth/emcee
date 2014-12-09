@@ -7,7 +7,7 @@ require 'emcee/document'
 # Create a stub of our asset resolver, so we can test if we're sending the
 # correct messages to it.
 class ResolverStub
-  attr_reader :asset_required
+  attr_reader :asset_required, :asset_dependent
 
   def initialize(contents)
     @contents = contents
@@ -19,6 +19,10 @@ class ResolverStub
 
   def require_asset(asset)
     @asset_required = true
+  end
+
+  def depend_on_asset(asset)
+    @asset_dependent = true
   end
 
   def evaluate(path)
@@ -67,6 +71,7 @@ class ProcessorsTest < ActiveSupport::TestCase
       <p>test</p>
     EOS
 
+    assert @resolver.asset_dependent
     assert_equal correct, processed
   end
 
@@ -81,6 +86,7 @@ class ProcessorsTest < ActiveSupport::TestCase
       <p>test</p>
     EOS
 
+    assert @resolver.asset_dependent
     assert_equal correct, processed
   end
 
@@ -116,4 +122,3 @@ class ProcessorsTest < ActiveSupport::TestCase
     assert_equal correct, processed
   end
 end
-

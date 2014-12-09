@@ -12,6 +12,11 @@ module Emcee
       @context.require_asset(path)
     end
 
+    # Allows to state an asset dependency without including it
+    def depend_on_asset(path)
+      @context.depend_on_asset(path)
+    end
+
     # Return the contents of a file. Does any required processing, such as SCSS
     # or CoffeeScript.
     def evaluate(path)
