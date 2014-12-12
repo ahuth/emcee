@@ -4,7 +4,7 @@ require 'emcee/resolver.rb'
 # Create a stub of Sprocket's Context class, so we can test if we're sending
 # the correct messages to it.
 class ContextStub
-  attr_reader :asset_required, :evaluated
+  attr_reader :asset_required, :asset_dependent, :evaluated
 
   def pathname
     "/"
@@ -12,6 +12,10 @@ class ContextStub
 
   def require_asset(asset)
     @asset_required = true
+  end
+
+  def depend_on_asset(asset)
+    @asset_dependent = true
   end
 
   def evaluate(path, options = {})
@@ -32,6 +36,11 @@ class ResolverTest < ActiveSupport::TestCase
   test "should require assets" do
     @resolver.require_asset("/asset1")
     assert @context.asset_required
+  end
+
+  test "should set dependencies on assets" do
+    @resolver.depend_on_asset("/dependency")
+    assert @context.asset_dependent
   end
 
   test "should evaluate an asset" do

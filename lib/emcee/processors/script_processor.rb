@@ -20,6 +20,7 @@ module Emcee
           return unless @resolver.should_inline?(path)
           script = @resolver.evaluate(path)
           node.replace("script", escape_with_slash(script))
+          @resolver.depend_on_asset(path)
         end
       end
 
