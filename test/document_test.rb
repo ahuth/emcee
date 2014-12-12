@@ -63,4 +63,15 @@ class DocumentTest < ActiveSupport::TestCase
     doc = Emcee::Document.new(body)
     assert_equal body, doc.to_s
   end
+
+  test "umlauts and other utf-8 characters should be unescaped" do
+    body = '<script>var test = "äåüöëýß©ø字"</script>'
+    doc = Emcee::Document.new(body)
+    assert_equal body, doc.to_s
+  end
+
+  test "document encoding should be utf-8" do
+    doc = Emcee::Document.new('')
+    assert_equal Encoding.find('UTF-8'), doc.to_s.encoding
+  end
 end

@@ -5,6 +5,8 @@ module Emcee
   # Document is responsible for parsing HTML and handling interaction with the
   # resulting document.
   class Document
+    ENCODING = 'UTF-8'
+
     def initialize(data)
       @doc = Nokogiri::HTML5.parse("<html><body>#{data}</body></html>")
     end
@@ -14,7 +16,7 @@ module Emcee
       # attributes, so turn those nodes into xhtml.
       xhtml_nodes = nodes_with_selected_attribute + nodes_with_src_attribute
       html = htmlify_except(xhtml_nodes)
-      unescape(html)
+      unescape(html).encode(ENCODING)
     end
 
     def html_imports
@@ -33,7 +35,7 @@ module Emcee
 
     # Get the html content of the document as a string.
     def to_html
-      @doc.at("body").children.to_html.lstrip
+      @doc.at("body").children.to_html(encoding: ENCODING).lstrip
     end
 
     def nodes_with_selected_attribute
