@@ -1,3 +1,9 @@
+Thank you to everyone who's helped make, fix, and spread this gem! Unfortunately, I no longer have the need or motivation to work on it, anymore. Sorry!
+
+I will still look at pull requests, however.
+
+- - -
+
 # Emcee
 
 Emcee is an extension to the [Rails Asset Pipeline](http://guides.rubyonrails.org/asset_pipeline.html).
