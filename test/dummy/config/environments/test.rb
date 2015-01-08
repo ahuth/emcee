@@ -33,4 +33,7 @@ Dummy::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Silence a deprecation warning by explicitly setting sorted test order.
+  config.active_support.test_order = :sorted
 end
