@@ -1,5 +1,7 @@
 Thank you to everyone who's helped make, fix, and spread this gem! Unfortunately, I no longer have the need or motivation to work on it, anymore. Sorry!
 
+**_This project is no longer under development._**
+
 I will still look at pull requests, however.
 
 - - -
