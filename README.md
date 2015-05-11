@@ -2,8 +2,6 @@ Thank you to everyone who's helped make, fix, and spread this gem! Unfortunately
 
 **_This project is no longer under development._**
 
-I will still look at pull requests, however.
-
 - - -
 
 # Emcee
